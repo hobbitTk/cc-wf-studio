@@ -5,13 +5,13 @@
  * Based on: /specs/001-cc-wf-studio/contracts/extension-webview-api.md section 3
  */
 
-import { vscode } from '../main';
 import type {
-  Workflow,
-  SaveWorkflowPayload,
   ExportWorkflowPayload,
   ExtensionMessage,
+  SaveWorkflowPayload,
+  Workflow,
 } from '@shared/types/messages';
+import { vscode } from '../main';
 
 /**
  * Send a save workflow request to the extension
@@ -63,10 +63,7 @@ export function saveWorkflow(workflow: Workflow): Promise<void> {
  * @param overwriteExisting - Whether to overwrite existing files
  * @returns Promise that resolves when export is successful
  */
-export function exportWorkflow(
-  workflow: Workflow,
-  overwriteExisting = false
-): Promise<string[]> {
+export function exportWorkflow(workflow: Workflow, overwriteExisting = false): Promise<string[]> {
   return new Promise((resolve, reject) => {
     const requestId = `req-${Date.now()}-${Math.random()}`;
 

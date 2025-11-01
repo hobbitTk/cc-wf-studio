@@ -14,10 +14,7 @@ import * as vscode from 'vscode';
  * @param extensionUri - Extension URI for resource loading
  * @returns HTML string with CSP, nonce, and resource URIs
  */
-export function getWebviewContent(
-  webview: vscode.Webview,
-  extensionUri: vscode.Uri
-): string {
+export function getWebviewContent(webview: vscode.Webview, extensionUri: vscode.Uri): string {
   // Generate a nonce for Content Security Policy
   const nonce = getNonce();
 

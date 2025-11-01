@@ -4,7 +4,7 @@
  * Main activation and deactivation logic for the VSCode extension.
  */
 
-import * as vscode from 'vscode';
+import type * as vscode from 'vscode';
 import { registerOpenEditorCommand } from './commands/open-editor';
 
 /**

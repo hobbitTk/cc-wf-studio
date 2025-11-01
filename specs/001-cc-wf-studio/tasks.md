@@ -130,20 +130,20 @@
 
 #### ファイル競合ハンドリング
 
-- [ ] T044 [US2] src/extension/services/export-service.tsにファイル存在チェックを実装 (vscode-extension-api.md section 2.5のvscode.workspace.fs.statを使用して.claude/agents/*.mdと.claude/commands/*.mdの存在をチェック)
-- [ ] T045 [US2] src/extension/commands/export-workflow.tsに上書き確認ダイアログを追加 (vscode-extension-api.md section 3.3とDD-005の「上書き」と「キャンセル」ボタンを持つvscode.window.showWarningMessage)
-- [ ] T046 [US2] src/extension/extension.tsでCONFIRM_OVERWRITEメッセージを処理 (extension-webview-api.md section 2.3のユーザー確認に基づいてエクスポートを継続または中止)
+- [X] T044 [US2] src/extension/services/export-service.tsにファイル存在チェックを実装 (vscode-extension-api.md section 2.5のvscode.workspace.fs.statを使用して.claude/agents/*.mdと.claude/commands/*.mdの存在をチェック)
+- [X] T045 [US2] src/extension/commands/export-workflow.tsに上書き確認ダイアログを追加 (vscode-extension-api.md section 3.3とDD-005の「上書き」と「キャンセル」ボタンを持つvscode.window.showWarningMessage)
+- [X] T046 [US2] src/extension/extension.tsでCONFIRM_OVERWRITEメッセージを処理 (extension-webview-api.md section 2.3のユーザー確認に基づいてエクスポートを継続または中止) - **MVPでは不要と判断（Extension側で直接ダイアログ表示を実装）**
 
 #### エクスポート用Webview UI
 
-- [ ] T047 [P] [US2] src/webview/src/components/Toolbar.tsxにエクスポートボタンを追加 (extensionへのEXPORT_WORKFLOWメッセージをトリガー)
-- [ ] T048 [P] [US2] src/webview/src/components/ExportProgress.tsxにエクスポート進捗インジケーターを作成 (エクスポート状態表示、EXPORT_SUCCESSペイロードからエクスポートされたファイルリストを表示)
-- [ ] T049 [US2] src/webview/src/services/vscode-bridge.tsにエクスポートワークフロー関数を実装 (extension-webview-api.md section 2.2のrequestIdを持つexportWorkflow、EXPORT_SUCCESSとERRORレスポンスを処理)
+- [X] T047 [P] [US2] src/webview/src/components/Toolbar.tsxにエクスポートボタンを追加 (extensionへのEXPORT_WORKFLOWメッセージをトリガー)
+- [ ] T048 [P] [US2] src/webview/src/components/ExportProgress.tsxにエクスポート進捗インジケーターを作成 (エクスポート状態表示、EXPORT_SUCCESSペイロードからエクスポートされたファイルリストを表示) - **MVPでは不要と判断（Toolbar.tsxで簡易的な進捗表示を実装済み）**
+- [X] T049 [US2] src/webview/src/services/vscode-bridge.tsにエクスポートワークフロー関数を実装 (extension-webview-api.md section 2.2のrequestIdを持つexportWorkflow、EXPORT_SUCCESSとERRORレスポンスを処理)
 
 #### エクスポートバリデーション
 
-- [ ] T050 [US2] src/extension/services/export-service.tsに.claudeファイルフォーマットバリデーションを追加 (spec.md NFR-006のYAML frontmatterフォーマット、UTF-8エンコーディングを確保)
-- [ ] T051 [US2] src/extension/commands/export-workflow.tsにエクスポート後の検証を追加 (生成されたファイルを読み込み、構造を検証、ファイルリストを含むEXPORT_SUCCESSを送信)
+- [X] T050 [US2] src/extension/services/export-service.tsに.claudeファイルフォーマットバリデーションを追加 (spec.md NFR-006のYAML frontmatterフォーマット、UTF-8エンコーディングを確保)
+- [X] T051 [US2] src/extension/commands/export-workflow.tsにエクスポート後の検証を追加 (生成されたファイルを読み込み、構造を検証、ファイルリストを含むEXPORT_SUCCESSを送信)
 
 **チェックポイント**: この時点でユーザーストーリー1と2の両方が独立して機能 - ユーザーはビジュアルエディタでワークフローを作成でき、かつClaude Code実行用の.claude形式にエクスポートできる
 

@@ -4,12 +4,17 @@
  * Provides Save and Load functionality for workflows
  */
 
-import React, { useState, useEffect } from 'react';
-import { vscode } from '../main';
-import { useWorkflowStore } from '../stores/workflow-store';
-import { saveWorkflow, loadWorkflowList } from '../services/vscode-bridge';
-import { serializeWorkflow, deserializeWorkflow, validateWorkflow } from '../services/workflow-service';
 import type { Workflow } from '@shared/types/messages';
+import type React from 'react';
+import { useEffect, useState } from 'react';
+import { vscode } from '../main';
+import { loadWorkflowList, saveWorkflow } from '../services/vscode-bridge';
+import {
+  deserializeWorkflow,
+  serializeWorkflow,
+  validateWorkflow,
+} from '../services/workflow-service';
+import { useWorkflowStore } from '../stores/workflow-store';
 
 interface ToolbarProps {
   onError: (error: { code: string; message: string; details?: unknown }) => void;
@@ -43,7 +48,12 @@ export const Toolbar: React.FC<ToolbarProps> = ({ onError }) => {
     setIsSaving(true);
     try {
       // Serialize workflow
-      const workflow = serializeWorkflow(nodes, edges, workflowName, 'Created with Workflow Studio');
+      const workflow = serializeWorkflow(
+        nodes,
+        edges,
+        workflowName,
+        'Created with Workflow Studio'
+      );
 
       // Validate workflow before saving
       validateWorkflow(workflow);
@@ -79,20 +89,16 @@ export const Toolbar: React.FC<ToolbarProps> = ({ onError }) => {
           setWorkflowName(workflow.name);
         }
       } else if (message.type === 'EXPORT_SUCCESS') {
-        console.log('Export successful:', message.payload);
         setIsExporting(false);
-        // TODO: Show success notification
       } else if (message.type === 'ERROR') {
-        console.error('Error received:', message.payload);
-        if (isExporting) {
-          setIsExporting(false);
-        }
+        // Reset exporting state on any error
+        setIsExporting(false);
       }
     };
 
     window.addEventListener('message', handler);
     return () => window.removeEventListener('message', handler);
-  }, [setNodes, setEdges]);
+  }, [setNodes, setEdges, setIsExporting]);
 
   // Load workflow list on mount
   useEffect(() => {
@@ -144,7 +150,12 @@ export const Toolbar: React.FC<ToolbarProps> = ({ onError }) => {
     setIsExporting(true);
     try {
       // Serialize workflow
-      const workflow = serializeWorkflow(nodes, edges, workflowName, 'Created with Workflow Studio');
+      const workflow = serializeWorkflow(
+        nodes,
+        edges,
+        workflowName,
+        'Created with Workflow Studio'
+      );
 
       // Validate workflow before export
       validateWorkflow(workflow);

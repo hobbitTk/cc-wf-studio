@@ -7,9 +7,9 @@
 
 import type { Webview } from 'vscode';
 import * as vscode from 'vscode';
-import { FileService } from '../services/file-service';
-import type { Workflow } from '../../shared/types/workflow-definition';
 import type { SaveSuccessPayload } from '../../shared/types/messages';
+import type { Workflow } from '../../shared/types/workflow-definition';
+import type { FileService } from '../services/file-service';
 
 /**
  * Save workflow to file
@@ -54,9 +54,7 @@ export async function saveWorkflow(
     });
 
     // Show success notification
-    vscode.window.showInformationMessage(
-      `Workflow "${workflow.name}" saved successfully!`
-    );
+    vscode.window.showInformationMessage(`Workflow "${workflow.name}" saved successfully!`);
 
     console.log(`Workflow saved: ${workflow.name}`);
   } catch (error) {

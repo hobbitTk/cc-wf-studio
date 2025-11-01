@@ -81,9 +81,9 @@ export type WorkflowNode = SubAgentNode | AskUserQuestionNode;
 export interface Connection {
   id: string;
   from: string; // Node ID
-  to: string;   // Node ID
+  to: string; // Node ID
   fromPort: string; // Handle ID
-  toPort: string;   // Handle ID
+  toPort: string; // Handle ID
   condition?: string; // Option label for AskUserQuestion branches
 }
 

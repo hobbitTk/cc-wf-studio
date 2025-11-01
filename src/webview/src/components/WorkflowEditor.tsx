@@ -5,7 +5,8 @@
  * Based on: /specs/001-cc-wf-studio/research.md section 3.4
  */
 
-import React, { useCallback, useMemo } from 'react';
+import type React from 'react';
+import { useCallback, useMemo } from 'react';
 import ReactFlow, {
   Background,
   Controls,
@@ -16,8 +17,8 @@ import ReactFlow, {
   type DefaultEdgeOptions,
 } from 'reactflow';
 import { useWorkflowStore } from '../stores/workflow-store';
-import { SubAgentNodeComponent } from './nodes/SubAgentNode';
 import { AskUserQuestionNodeComponent } from './nodes/AskUserQuestionNode';
+import { SubAgentNodeComponent } from './nodes/SubAgentNode';
 
 /**
  * Node types registration (memoized outside component for performance)
@@ -46,7 +47,8 @@ const edgeTypes: EdgeTypes = {};
  */
 export const WorkflowEditor: React.FC = () => {
   // Get state and handlers from Zustand store
-  const { nodes, edges, onNodesChange, onEdgesChange, onConnect, setSelectedNodeId } = useWorkflowStore();
+  const { nodes, edges, onNodesChange, onEdgesChange, onConnect, setSelectedNodeId } =
+    useWorkflowStore();
 
   // Memoize callbacks for performance (research.md section 3.1)
   const handleNodesChange = useCallback(onNodesChange, [onNodesChange]);
@@ -88,11 +90,7 @@ export const WorkflowEditor: React.FC = () => {
         attributionPosition="bottom-left"
       >
         {/* Background grid */}
-        <Background
-          color="var(--vscode-panel-border)"
-          gap={15}
-          size={1}
-        />
+        <Background color="var(--vscode-panel-border)" gap={15} size={1} />
 
         {/* Controls (zoom, fit view, etc.) */}
         <Controls />

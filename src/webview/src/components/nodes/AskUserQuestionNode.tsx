@@ -5,9 +5,9 @@
  * Based on: /specs/001-cc-wf-studio/research.md section 3.3
  */
 
-import React, { useEffect } from 'react';
-import { Handle, Position, useUpdateNodeInternals, type NodeProps } from 'reactflow';
 import type { AskUserQuestionData } from '@shared/types/workflow-definition';
+import React, { useEffect } from 'react';
+import { Handle, type NodeProps, Position, useUpdateNodeInternals } from 'reactflow';
 
 /**
  * AskUserQuestionNode Component
@@ -107,7 +107,7 @@ export const AskUserQuestionNodeComponent: React.FC<NodeProps<AskUserQuestionDat
                 height: '12px',
                 backgroundColor: 'var(--vscode-button-background)',
                 border: '2px solid var(--vscode-button-foreground)',
-                left: `${20 + (i * 60)}px`,
+                left: `${20 + i * 60}px`,
               }}
             />
           ))}

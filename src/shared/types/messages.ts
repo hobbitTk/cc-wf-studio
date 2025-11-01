@@ -4,7 +4,7 @@
  * Based on: /specs/001-cc-wf-studio/contracts/extension-webview-api.md
  */
 
-import type { Workflow, WorkflowNode, Connection } from './workflow-definition';
+import type { Connection, Workflow, WorkflowNode } from './workflow-definition';
 
 // Re-export Workflow for convenience
 export type { Workflow, WorkflowNode, Connection };

@@ -5,8 +5,8 @@
  * Based on: /specs/001-cc-wf-studio/data-model.md
  */
 
-import type { Workflow, WorkflowNode, Connection } from '@shared/types/workflow-definition';
-import type { Node, Edge } from 'reactflow';
+import type { Connection, Workflow, WorkflowNode } from '@shared/types/workflow-definition';
+import type { Edge, Node } from 'reactflow';
 
 /**
  * Convert React Flow state to Workflow definition
@@ -216,12 +216,16 @@ function validateConnection(connection: Connection, nodes: WorkflowNode[]): void
   // Check that source and target nodes exist
   const sourceNode = nodes.find((n) => n.id === connection.from);
   if (!sourceNode) {
-    throw new Error(`Connection "${connection.id}" references non-existent source node "${connection.from}"`);
+    throw new Error(
+      `Connection "${connection.id}" references non-existent source node "${connection.from}"`
+    );
   }
 
   const targetNode = nodes.find((n) => n.id === connection.to);
   if (!targetNode) {
-    throw new Error(`Connection "${connection.id}" references non-existent target node "${connection.to}"`);
+    throw new Error(
+      `Connection "${connection.id}" references non-existent target node "${connection.to}"`
+    );
   }
 
   // Validate condition for AskUserQuestion nodes

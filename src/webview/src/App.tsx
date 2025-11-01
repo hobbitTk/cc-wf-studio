@@ -5,13 +5,14 @@
  * Based on: /specs/001-cc-wf-studio/plan.md
  */
 
-import React, { useState } from 'react';
+import type { ErrorPayload } from '@shared/types/messages';
+import type React from 'react';
+import { useState } from 'react';
+import { ErrorNotification } from './components/ErrorNotification';
 import { NodePalette } from './components/NodePalette';
-import { WorkflowEditor } from './components/WorkflowEditor';
 import { PropertyPanel } from './components/PropertyPanel';
 import { Toolbar } from './components/Toolbar';
-import { ErrorNotification } from './components/ErrorNotification';
-import type { ErrorPayload } from '@shared/types/messages';
+import { WorkflowEditor } from './components/WorkflowEditor';
 
 const App: React.FC = () => {
   const [error, setError] = useState<ErrorPayload | null>(null);

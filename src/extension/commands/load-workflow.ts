@@ -5,8 +5,8 @@
  */
 
 import type { Webview } from 'vscode';
-import { FileService } from '../services/file-service';
 import type { LoadWorkflowPayload } from '../../shared/types/messages';
+import type { FileService } from '../services/file-service';
 
 /**
  * Load a specific workflow and send to webview

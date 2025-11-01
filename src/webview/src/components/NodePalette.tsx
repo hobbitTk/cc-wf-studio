@@ -5,7 +5,7 @@
  * Based on: /specs/001-cc-wf-studio/plan.md
  */
 
-import React from 'react';
+import type React from 'react';
 import { useWorkflowStore } from '../stores/workflow-store';
 
 /**

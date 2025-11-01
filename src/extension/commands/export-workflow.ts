@@ -4,11 +4,16 @@
  * Exports workflow to .claude format (agents/*.md and commands/*.md)
  */
 
+import * as path from 'path';
 import * as vscode from 'vscode';
 import type { Webview } from 'vscode';
-import { FileService } from '../services/file-service';
-import { exportWorkflow } from '../services/export-service';
-import type { ExportWorkflowPayload, ExportSuccessPayload } from '../../shared/types/messages';
+import type { ExportSuccessPayload, ExportWorkflowPayload } from '../../shared/types/messages';
+import {
+  checkExistingFiles,
+  exportWorkflow,
+  validateClaudeFileFormat,
+} from '../services/export-service';
+import type { FileService } from '../services/file-service';
 
 /**
  * Export workflow to .claude format
@@ -25,8 +30,55 @@ export async function handleExportWorkflow(
   requestId?: string
 ): Promise<void> {
   try {
+    // Check if files already exist (unless overwrite is confirmed)
+    if (!payload.overwriteExisting) {
+      const existingFiles = await checkExistingFiles(payload.workflow, fileService);
+
+      if (existingFiles.length > 0) {
+        // Show warning dialog for overwrite confirmation
+        const fileList = existingFiles.map((f) => `  - ${f}`).join('\n');
+        const answer = await vscode.window.showWarningMessage(
+          `The following files already exist:\n${fileList}\n\nDo you want to overwrite them?`,
+          { modal: true },
+          'Overwrite'
+        );
+
+        if (answer !== 'Overwrite') {
+          // User cancelled
+          webview.postMessage({
+            type: 'ERROR',
+            requestId,
+            payload: {
+              code: 'EXPORT_CANCELLED',
+              message: 'Export cancelled by user',
+            },
+          });
+          return;
+        }
+      }
+    }
+
     // Export workflow
     const exportedFiles = await exportWorkflow(payload.workflow, fileService);
+
+    // Validate exported files
+    const validationErrors: string[] = [];
+    for (const filePath of exportedFiles) {
+      try {
+        const content = await fileService.readFile(filePath);
+        const fileType = filePath.includes('/agents/') ? 'subAgent' : 'slashCommand';
+        validateClaudeFileFormat(content, fileType);
+      } catch (error) {
+        const fileName = path.basename(filePath);
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+        validationErrors.push(`${fileName}: ${errorMessage}`);
+      }
+    }
+
+    // If validation errors occurred, report them
+    if (validationErrors.length > 0) {
+      throw new Error(`Exported files have validation errors:\n${validationErrors.join('\n')}`);
+    }
 
     // Send success response
     const successPayload: ExportSuccessPayload = {
@@ -42,7 +94,7 @@ export async function handleExportWorkflow(
 
     // Show success notification
     vscode.window.showInformationMessage(
-      `Workflow "${payload.workflow.name}" exported successfully! ${exportedFiles.length} files created.`
+      `Workflow "${payload.workflow.name}" exported successfully! ${exportedFiles.length} files created and validated.`
     );
   } catch (error) {
     // Send error response

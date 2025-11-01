@@ -5,8 +5,8 @@
  * Based on: /specs/001-cc-wf-studio/contracts/vscode-extension-api.md section 2
  */
 
-import * as vscode from 'vscode';
 import * as path from 'path';
+import * as vscode from 'vscode';
 
 /**
  * File Service for managing workflow files

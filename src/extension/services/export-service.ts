@@ -5,9 +5,52 @@
  * Based on: /specs/001-cc-wf-studio/spec.md Export Format Details
  */
 
-import type { Workflow, WorkflowNode, Connection, SubAgentNode, AskUserQuestionNode } from '../../shared/types/workflow-definition';
-import { FileService } from './file-service';
 import * as path from 'path';
+import type {
+  AskUserQuestionNode,
+  Connection,
+  SubAgentNode,
+  Workflow,
+  WorkflowNode,
+} from '../../shared/types/workflow-definition';
+import type { FileService } from './file-service';
+
+/**
+ * Check if any export files already exist
+ *
+ * @param workflow - Workflow to export
+ * @param fileService - File service instance
+ * @returns Array of existing file paths (empty if no conflicts)
+ */
+export async function checkExistingFiles(
+  workflow: Workflow,
+  fileService: FileService
+): Promise<string[]> {
+  const existingFiles: string[] = [];
+  const workspacePath = fileService.getWorkspacePath();
+
+  const agentsDir = path.join(workspacePath, '.claude', 'agents');
+  const commandsDir = path.join(workspacePath, '.claude', 'commands');
+
+  // Check Sub-Agent files
+  const subAgentNodes = workflow.nodes.filter((node) => node.type === 'subAgent') as SubAgentNode[];
+  for (const node of subAgentNodes) {
+    const fileName = nodeNameToFileName(node.name);
+    const filePath = path.join(agentsDir, `${fileName}.md`);
+    if (await fileService.fileExists(filePath)) {
+      existingFiles.push(filePath);
+    }
+  }
+
+  // Check SlashCommand file
+  const commandFileName = nodeNameToFileName(workflow.name);
+  const commandFilePath = path.join(commandsDir, `${commandFileName}.md`);
+  if (await fileService.fileExists(commandFilePath)) {
+    existingFiles.push(commandFilePath);
+  }
+
+  return existingFiles;
+}
 
 /**
  * Export workflow to .claude format
@@ -52,6 +95,64 @@ export async function exportWorkflow(
 }
 
 /**
+ * Validate .claude file format
+ *
+ * @param content - File content to validate
+ * @param fileType - Type of file ('subAgent' or 'slashCommand')
+ * @throws Error if validation fails
+ */
+export function validateClaudeFileFormat(
+  content: string,
+  fileType: 'subAgent' | 'slashCommand'
+): void {
+  // Check if content is non-empty
+  if (!content || content.trim().length === 0) {
+    throw new Error('File content is empty');
+  }
+
+  // Check UTF-8 encoding (string should not contain replacement characters)
+  if (content.includes('\uFFFD')) {
+    throw new Error('File content contains invalid UTF-8 characters');
+  }
+
+  // Check YAML frontmatter format
+  const frontmatterRegex = /^---\n([\s\S]*?)\n---\n/;
+  const match = content.match(frontmatterRegex);
+
+  if (!match) {
+    throw new Error('Missing or invalid YAML frontmatter (must start and end with ---)');
+  }
+
+  const frontmatterContent = match[1];
+
+  // Validate required fields based on file type
+  if (fileType === 'subAgent') {
+    if (!frontmatterContent.includes('name:')) {
+      throw new Error('Sub-Agent file missing required field: name');
+    }
+    if (!frontmatterContent.includes('description:')) {
+      throw new Error('Sub-Agent file missing required field: description');
+    }
+    if (!frontmatterContent.includes('model:')) {
+      throw new Error('Sub-Agent file missing required field: model');
+    }
+  } else if (fileType === 'slashCommand') {
+    if (!frontmatterContent.includes('description:')) {
+      throw new Error('SlashCommand file missing required field: description');
+    }
+    if (!frontmatterContent.includes('allowed-tools:')) {
+      throw new Error('SlashCommand file missing required field: allowed-tools');
+    }
+  }
+
+  // Check that there's content after frontmatter (prompt body)
+  const bodyContent = content.substring(match[0].length).trim();
+  if (bodyContent.length === 0) {
+    throw new Error('File is missing prompt body content after frontmatter');
+  }
+}
+
+/**
  * Convert node name to filename
  *
  * @param name - Node name
@@ -75,11 +176,7 @@ function generateSubAgentFile(node: SubAgentNode): string {
   const agentName = nodeNameToFileName(name);
 
   // YAML frontmatter
-  const frontmatter = [
-    '---',
-    `name: ${agentName}`,
-    `description: ${data.description || name}`,
-  ];
+  const frontmatter = ['---', `name: ${agentName}`, `description: ${data.description || name}`];
 
   // Add optional fields
   if (data.tools && data.tools.length > 0) {

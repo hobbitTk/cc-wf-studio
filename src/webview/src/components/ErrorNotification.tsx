@@ -5,8 +5,9 @@
  * Based on: /specs/001-cc-wf-studio/contracts/extension-webview-api.md section 1.4
  */
 
-import React, { useState, useEffect } from 'react';
 import type { ErrorPayload } from '@shared/types/messages';
+import type React from 'react';
+import { useEffect, useState } from 'react';
 
 interface ErrorNotificationProps {
   error: ErrorPayload | null;

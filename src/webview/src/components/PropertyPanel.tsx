@@ -5,10 +5,10 @@
  * Based on: /specs/001-cc-wf-studio/plan.md
  */
 
-import React from 'react';
-import { useWorkflowStore } from '../stores/workflow-store';
+import type { AskUserQuestionData, SubAgentData } from '@shared/types/workflow-definition';
+import type React from 'react';
 import type { Node } from 'reactflow';
-import type { SubAgentData, AskUserQuestionData } from '@shared/types/workflow-definition';
+import { useWorkflowStore } from '../stores/workflow-store';
 
 /**
  * PropertyPanel Component
@@ -107,9 +107,7 @@ export const PropertyPanel: React.FC = () => {
             const newName = e.target.value;
             setNodes(
               nodes.map((n) =>
-                n.id === selectedNode.id
-                  ? { ...n, data: { ...n.data, name: newName } }
-                  : n
+                n.id === selectedNode.id ? { ...n, data: { ...n.data, name: newName } } : n
               )
             );
           }}
@@ -138,9 +136,15 @@ export const PropertyPanel: React.FC = () => {
 
       {/* Render properties based on node type */}
       {selectedNode.type === 'subAgent' ? (
-        <SubAgentProperties node={selectedNode as Node<SubAgentData>} updateNodeData={updateNodeData} />
+        <SubAgentProperties
+          node={selectedNode as Node<SubAgentData>}
+          updateNodeData={updateNodeData}
+        />
       ) : (
-        <AskUserQuestionProperties node={selectedNode as Node<AskUserQuestionData>} updateNodeData={updateNodeData} />
+        <AskUserQuestionProperties
+          node={selectedNode as Node<AskUserQuestionData>}
+          updateNodeData={updateNodeData}
+        />
       )}
     </div>
   );
@@ -234,7 +238,9 @@ const SubAgentProperties: React.FC<{
         </label>
         <select
           value={data.model || 'sonnet'}
-          onChange={(e) => updateNodeData(node.id, { model: e.target.value as 'sonnet' | 'opus' | 'haiku' })}
+          onChange={(e) =>
+            updateNodeData(node.id, { model: e.target.value as 'sonnet' | 'opus' | 'haiku' })
+          }
           className="nodrag"
           style={{
             width: '100%',

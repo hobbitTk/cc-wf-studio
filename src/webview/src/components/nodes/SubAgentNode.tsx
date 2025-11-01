@@ -5,9 +5,9 @@
  * Based on: /specs/001-cc-wf-studio/research.md section 3.2
  */
 
-import React from 'react';
-import { Handle, Position, type NodeProps } from 'reactflow';
 import type { SubAgentData } from '@shared/types/workflow-definition';
+import React from 'react';
+import { Handle, type NodeProps, Position } from 'reactflow';
 
 /**
  * SubAgentNode Component
