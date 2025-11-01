@@ -111,8 +111,8 @@ interface ExportSuccessPayload {
   "type": "EXPORT_SUCCESS",
   "payload": {
     "exportedFiles": [
-      "/workspace/.claude/skills/data-analysis.md",
-      "/workspace/.claude/skills/report-generation.md",
+      "/workspace/.claude/agents/data-analysis.md",
+      "/workspace/.claude/agents/report-generation.md",
       "/workspace/.claude/commands/sample-workflow.md"
     ],
     "timestamp": "2025-11-01T12:35:00.000Z"
@@ -253,7 +253,7 @@ interface ConfirmOverwritePayload {
   "requestId": "req-002-confirm",
   "payload": {
     "confirmed": true,
-    "filePath": "/workspace/.claude/skills/data-analysis.md"
+    "filePath": "/workspace/.claude/agents/data-analysis.md"
   }
 }
 ```

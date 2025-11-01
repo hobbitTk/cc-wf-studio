@@ -95,37 +95,43 @@ interface Position {
 
 ---
 
-### 1.3 AgentSkillNode（AgentSkillsノード）
+### 1.3 SubAgentNode（Sub-Agentノード）
 
-AgentSkillsノードは、Claude Code の AgentSkills を呼び出すノードです。
+Sub-Agentノードは、Claude Code の Sub-Agent を呼び出すノードです。
 
 #### Fields:
 
 | フィールド | 型 | 必須 | デフォルト | 説明 |
 |----------|------|------|-----------|------|
 | `id` | `string` | ✅ | UUID | ノードID（ベースノードから継承） |
-| `type` | `'agentSkill'` | ✅ | - | 固定値 `'agentSkill'` |
+| `type` | `'subAgent'` | ✅ | - | 固定値 `'subAgent'` |
 | `name` | `string` | ✅ | - | ノード名（エクスポート時に `{name}.md` として保存） |
 | `position` | `Position` | ✅ | - | キャンバス上の位置 |
-| `data` | `AgentSkillData` | ✅ | - | AgentSkills固有のデータ |
+| `data` | `SubAgentData` | ✅ | - | Sub-Agent固有のデータ |
 
-#### AgentSkillData:
+#### SubAgentData:
 
 | フィールド | 型 | 必須 | デフォルト | 説明 |
 |----------|------|------|-----------|------|
-| `prompt` | `string` | ✅ | - | AgentSkillsのプロンプト内容（SKILL.mdのボディに出力） |
+| `description` | `string` | ✅ | - | Sub-Agentの目的説明（YAML frontmatterのdescriptionフィールド） |
+| `prompt` | `string` | ✅ | - | Sub-Agentのシステムプロンプト内容（Markdown bodyに出力） |
+| `tools` | `string` | ❌ | `""` | カンマ区切りのツールリスト（省略時は全ツール利用可） |
+| `model` | `string` | ❌ | `"sonnet"` | 実行モデル（`sonnet`, `opus`, `haiku`） |
 | `outputPorts` | `number` | ✅ | `1` | 出力ポート数（通常は1、MVP版では固定） |
 
 #### TypeScript Definition:
 
 ```typescript
-interface AgentSkillNode extends Node {
-  type: 'agentSkill';
-  data: AgentSkillData;
+interface SubAgentNode extends Node {
+  type: 'subAgent';
+  data: SubAgentData;
 }
 
-interface AgentSkillData {
+interface SubAgentData {
+  description: string;
   prompt: string;
+  tools?: string;
+  model?: 'sonnet' | 'opus' | 'haiku';
   outputPorts: number;
 }
 ```
@@ -133,7 +139,10 @@ interface AgentSkillData {
 #### Validation Rules:
 
 - `name`: 1-50文字、英数字とハイフン・アンダースコアのみ、小文字に変換されてファイル名として使用
+- `description`: 1-200文字、Sub-Agentの目的を説明する自然言語テキスト
 - `prompt`: 1-10000文字、空白のみは不可
+- `tools`: カンマ区切りのツール名リスト（例: "Read,Write,Bash"）。省略時は全ツールにアクセス可能
+- `model`: `sonnet`, `opus`, `haiku` のいずれか。省略時は `sonnet`
 - `outputPorts`: 固定値1（MVP版）
 
 ---
@@ -243,7 +252,7 @@ import { Node as RFNode, Edge as RFEdge } from 'reactflow';
 
 // React Flow Node 型のカスタマイズ
 type WorkflowNode =
-  | RFNode<AgentSkillData, 'agentSkill'>
+  | RFNode<SubAgentData, 'subAgent'>
   | RFNode<AskUserQuestionData, 'askUserQuestion'>;
 
 // React Flow Edge 型のカスタマイズ
@@ -273,11 +282,14 @@ interface ReactFlowState {
   "nodes": [
     {
       "id": "node-1",
-      "type": "agentSkill",
+      "type": "subAgent",
       "name": "data-analysis",
       "position": { "x": 100, "y": 100 },
       "data": {
+        "description": "データ分析を実行するSub-Agent",
         "prompt": "データ分析を実行してください",
+        "tools": "Read,Write,Bash",
+        "model": "sonnet",
         "outputPorts": 1
       }
     },
@@ -297,21 +309,25 @@ interface ReactFlowState {
     },
     {
       "id": "node-3",
-      "type": "agentSkill",
+      "type": "subAgent",
       "name": "report-generation",
       "position": { "x": 500, "y": 50 },
       "data": {
+        "description": "レポートを生成するSub-Agent",
         "prompt": "レポートを生成してください",
+        "model": "sonnet",
         "outputPorts": 1
       }
     },
     {
       "id": "node-4",
-      "type": "agentSkill",
+      "type": "subAgent",
       "name": "data-visualization",
       "position": { "x": 500, "y": 150 },
       "data": {
+        "description": "データを可視化するSub-Agent",
         "prompt": "データを可視化してください",
+        "model": "sonnet",
         "outputPorts": 1
       }
     }
@@ -350,13 +366,14 @@ interface ReactFlowState {
 
 ### 3.2 Claude Config Export Format
 
-#### SKILL.md (`.claude/skills/{node-name}.md`)
+#### Sub-Agent Configuration File (`.claude/agents/{node-name}.md`)
 
 ```markdown
 ---
 name: data-analysis
-description: data-analysis
-allowed-tools: []
+description: データ分析を実行するSub-Agent
+tools: Read,Write,Bash
+model: sonnet
 ---
 
 データ分析を実行してください
@@ -367,18 +384,18 @@ allowed-tools: []
 ```markdown
 ---
 description: サンプルワークフロー
-allowed-tools: Skill,AskUserQuestion
+allowed-tools: Task,AskUserQuestion
 ---
 
-まず、Skillツールを使用して「data-analysis」スキルを実行してください。
+まず、Taskツールを使用して「data-analysis」Sub-Agentを実行してください。
 
 次に、AskUserQuestionツールを使用して以下の質問をユーザーに行ってください:
 - 質問: "次のステップを選択してください"
 - 選択肢:
-  - "レポート作成" → Skillツールで「report-generation」スキルを実行
-  - "データ可視化" → Skillツールで「data-visualization」スキルを実行
+  - "レポート作成" → Taskツールで「report-generation」Sub-Agentを実行
+  - "データ可視化" → Taskツールで「data-visualization」Sub-Agentを実行
 
-ユーザーの選択に応じて、対応するスキルを実行してください。
+ユーザーの選択に応じて、対応するSub-Agentを実行してください。
 ```
 
 ---

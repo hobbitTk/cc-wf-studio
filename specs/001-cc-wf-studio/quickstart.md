@@ -260,7 +260,7 @@ cc-wf-studio/
    }
 
    type CustomNode = Node<CustomNodeData, 'customNode'>;
-   type WorkflowNode = AgentSkillNode | AskUserQuestionNode | CustomNode;
+   type WorkflowNode = SubAgentNode | AskUserQuestionNode | CustomNode;
    ```
 
 2. **React コンポーネントを作成** (`src/webview/src/components/nodes/CustomNode.tsx`):
@@ -273,7 +273,7 @@ cc-wf-studio/
 3. **ノードタイプを登録** (`src/webview/src/components/WorkflowEditor.tsx`):
    ```typescript
    const nodeTypes: NodeTypes = {
-     agentSkill: AgentSkillNode,
+     subAgent: SubAgentNode,
      askUserQuestion: AskUserQuestionNode,
      customNode: CustomNode, // 追加
    };

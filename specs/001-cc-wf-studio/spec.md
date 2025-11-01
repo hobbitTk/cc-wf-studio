@@ -3,22 +3,22 @@
 **Feature Branch**: `001-cc-wf-studio`
 **Created**: 2025-11-01
 **Status**: Draft
-**Input**: User description: "ClaudeCodeのSlashCommands,Sub-Agent,AgentSkillsを用いたワークフローをユーザー端末にてClaudeCodeのワンショットモードによるコマンド実行で構築できる、VSCode拡張機能を作成したい。ワークフローはVSCode拡張機能で作成した専用画面にてAWS StepFunctionsのUI画面のような形で作成できるようにしたい。"
+**Input**: User description: "ClaudeCodeのSlashCommands,Sub-Agentを用いたワークフローをユーザー端末にてClaudeCodeのワンショットモードによるコマンド実行で構築できる、VSCode拡張機能を作成したい。ワークフローはVSCode拡張機能で作成した専用画面にてAWS StepFunctionsのUI画面のような形で作成できるようにしたい。"
 
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - ワークフロービジュアルエディタでの作成 (Priority: P1)
 
-開発者がVSCode上でビジュアルエディタを開き、Claude Codeのワークフローをドラッグ&ドロップで設計できる。ワークフローはAgentSkillsをノードとして配置、分岐をAskUserQuestionで配置し、AWS Step Functionsのような視覚的なフローチャート形式で構成する。出来上がったフローはSlashCommandsから実行できる。
+開発者がVSCode上でビジュアルエディタを開き、Claude Codeのワークフローをドラッグ&ドロップで設計できる。ワークフローはSub-Agentをノードとして配置、分岐をAskUserQuestionで配置し、AWS Step Functionsのような視覚的なフローチャート形式で構成する。出来上がったフローはSlashCommandsから実行できる。
 
 **Why this priority**: ワークフローの視覚的な設計機能は本機能の中核であり、これがなければ他の機能も価値を持たない。ユーザーが最初に体験する主要機能として最も重要。
 
-**Independent Test**: VSCode拡張機能をインストール後、コマンドパレットから「Claude Code Workflow Studio」を開き、新規ワークフローを作成。AgentSkillsノードを1つ配置して保存できることを確認すれば、基本的なエディタ機能が動作していると検証できる。
+**Independent Test**: VSCode拡張機能をインストール後、コマンドパレットから「Claude Code Workflow Studio」を開き、新規ワークフローを作成。Sub-Agentノードを1つ配置して保存できることを確認すれば、基本的なエディタ機能が動作していると検証できる。
 
 **Acceptance Scenarios**:
 
 1. **Given** VSCodeが起動している状態で、**When** コマンドパレットから「Open Claude Code Workflow Studio」を実行する、**Then** ビジュアルエディタが新しいタブで開く
-2. **Given** ビジュアルエディタが開いている状態で、**When** 左側のツールパレットから「AgentSkills」ノードをキャンバスにドラッグ&ドロップする、**Then** キャンバス上にAgentSkillsノードが配置される
+2. **Given** ビジュアルエディタが開いている状態で、**When** 左側のツールパレットから「Sub-Agent」ノードをキャンバスにドラッグ&ドロップする、**Then** キャンバス上にSub-Agentノードが配置される
 3. **Given** ビジュアルエディタが開いている状態で、**When** 左側のツールパレットから「AskUserQuestion」ノードをキャンバスにドラッグ&ドロップする、**Then** キャンバス上にAskUserQuestionノードが配置され、分岐ポートが表示される
 4. **Given** キャンバス上にノードが配置されている状態で、**When** ノードをクリックする、**Then** 右側のプロパティパネルにノードの設定項目（名前、プロンプト）が表示される
 5. **Given** 2つのノードがキャンバス上にある状態で、**When** ノードの出力ポートから別のノードの入力ポートへドラッグする、**Then** 2つのノードが矢印で接続される
@@ -29,18 +29,18 @@
 
 ### User Story 2 - ワークフローを.claude設定ファイルで保存 (Priority: P2)
 
-作成したワークフローを、Claude Codeの設定ファイル形式（`.claude`ディレクトリ配下）で保存できる。各AgentSkillsノードは個別のAgentSkills設定ファイル（`SKILL.md`）として生成され、ワークフロー全体の流れはSlashCommandsとAskUserQuestionの組み合わせで表現される。これにより、ビジュアルエディタで設計したワークフローが実際のClaude Code環境で実行可能な形式として出力される。
+作成したワークフローを、Claude Codeの設定ファイル形式（`.claude`ディレクトリ配下）で保存できる。各Sub-AgentノードはクライアントのSub-Agent設定ファイルとして`.claude/agents/`配下に生成され、ワークフロー全体の流れはSlashCommandsとAskUserQuestionの組み合わせで表現される。これにより、ビジュアルエディタで設計したワークフローが実際のClaude Code環境で実行可能な形式として出力される。
 
 **Why this priority**: ビジュアルエディタで設計したワークフローを実際に使用可能な形で保存できなければ、ツールとしての価値がない。P1のエディタ機能の次に重要な機能として、MVPに含める必要がある。
 
-**Independent Test**: シンプルなワークフロー（AgentSkillsノード1つとAskUserQuestionノード1つ）を作成し、「エクスポート」ボタンをクリック。`.claude/skills/`配下に`SKILL.md`が生成され、`.claude/commands/`配下にSlashCommand用のマークダウンファイルが生成されることを確認。生成されたファイルの内容が正しいフォーマットであることを検証すれば完了。
+**Independent Test**: シンプルなワークフロー（Sub-Agentノード1つとAskUserQuestionノード1つ）を作成し、「エクスポート」ボタンをクリック。`.claude/agents/`配下にSub-Agent設定ファイルが生成され、`.claude/commands/`配下にSlashCommand用のマークダウンファイルが生成されることを確認。生成されたファイルの内容が正しいフォーマットであることを検証すれば完了。
 
 **Acceptance Scenarios**:
 
-1. **Given** ワークフローにAgentSkillsノードが配置されている状態で、**When** 「エクスポート」ボタンをクリックする、**Then** `.claude/skills/`ディレクトリ配下に各AgentSkillsノードに対応する`SKILL.md`ファイルが生成される
+1. **Given** ワークフローにSub-Agentノードが配置されている状態で、**When** 「エクスポート」ボタンをクリックする、**Then** `.claude/agents/`ディレクトリ配下に各Sub-Agentノードに対応する設定ファイルが生成される
 2. **Given** ワークフローにAskUserQuestionノードが含まれている状態で、**When** エクスポートを実行する、**Then** SlashCommandファイル内にAskUserQuestionツールの呼び出しコードが適切に記述される
 3. **Given** 複数のノードが接続されたワークフローがある状態で、**When** エクスポートを実行する、**Then** `.claude/commands/`ディレクトリ配下にワークフロー全体を実行するSlashCommandファイルが生成され、ノードの実行順序が正しく反映される
-4. **Given** エクスポートが完了した状態で、**When** 生成されたSlashCommandをClaude Codeで実行する、**Then** ビジュアルエディタで設計した通りの順序でAgentSkillsが呼び出され、AskUserQuestionによる分岐が機能する
+4. **Given** エクスポートが完了した状態で、**When** 生成されたSlashCommandをClaude Codeで実行する、**Then** ビジュアルエディタで設計した通りの順序でSub-Agentが呼び出され、AskUserQuestionによる分岐が機能する
 
 ---
 
@@ -87,14 +87,14 @@
 
 - **FR-001**: システムはVSCode拡張機能として動作し、VSCode Marketplaceからインストール可能でなければならない
 - **FR-002**: システムは専用のビジュアルエディタ画面を提供し、ワークフローをグラフィカルに作成・編集できなければならない
-- **FR-003**: ユーザーはAgentSkillsノードをワークフローに配置できなければならない
+- **FR-003**: ユーザーはSub-Agentノードをワークフローに配置できなければならない
 - **FR-004**: ユーザーはAskUserQuestionノードをワークフローに配置し、条件分岐を定義できなければならない
 - **FR-005**: ユーザーはノード間の接続（実行順序）をドラッグ&ドロップで定義できなければならない
 - **FR-006**: 各ノードのプロパティ（名前、プロンプト）をGUIで編集できなければならない
 - **FR-007**: ワークフロー定義は構造化形式（JSONまたはYAML）でファイルとして保存できなければならない
 - **FR-008**: 保存されたワークフロー定義ファイルを読み込み、ビジュアルエディタで再編集できなければならない
 - **FR-009**: ユーザーはワークフローをClaude Code設定ファイル形式（`.claude`ディレクトリ配下）にエクスポートできなければならない
-- **FR-010**: エクスポート時、各AgentSkillsノードは`.claude/skills/`配下に`SKILL.md`ファイルとして生成されなければならない
+- **FR-010**: エクスポート時、各Sub-Agentノードは`.claude/agents/`配下にSub-Agent設定ファイルとして生成されなければならない
 - **FR-011**: エクスポート時、ワークフロー全体は`.claude/commands/`配下にSlashCommandファイルとして生成されなければならない
 - **FR-012**: 生成されたSlashCommandファイルには、AskUserQuestionによる分岐ロジックが適切に記述されなければならない
 - **FR-013**: ~~ワークフローに循環参照が含まれる場合、保存時またはエクスポート前に警告を表示しなければならない~~（MVP版では実装しない - Edge Cases参照）
@@ -119,7 +119,7 @@
 ### Key Entities
 
 - **Workflow（ワークフロー）**: 複数のノードとその接続関係で構成される実行可能な定義。名前、説明、作成日時、最終更新日時、バージョンを持つ。
-- **Node（ノード）**: ワークフロー内の1つの処理単位。種類（AgentSkillsのみ、あとで追加するかも）、名前、設定（プロンプト）、入出力ポートを持つ。
+- **Node（ノード）**: ワークフロー内の1つの処理単位。種類（Sub-Agent、AskUserQuestion）、名前、設定（プロンプト）、入出力ポートを持つ。
 - **Connection（接続）**: 2つのノード間の実行順序を表す。開始ノード、終了ノード、条件（オプション）を持つ。
 
 ## Success Criteria *(mandatory)*
@@ -136,25 +136,27 @@
 
 ### Export Format Details
 
-#### SKILL.md Format
+#### Sub-Agent Configuration File Format
 
-各AgentSkillsノードは以下のフォーマットで`.claude/skills/<node-name>.md`として生成される:
+各Sub-Agentノードは以下のフォーマットで`.claude/agents/<node-name>.md`として生成される:
 
 ```markdown
 ---
 name: <ノードの名前>
-description: <ノードの名前（nameと同じ値）>
-allowed-tools: []
+description: <Sub-Agentの目的の説明>
+tools: <ツールリスト（カンマ区切り、オプション）>
+model: sonnet
 ---
 
-<ノードのプロンプト内容>
+<Sub-Agentのシステムプロンプト内容>
 ```
 
 **命名規則**:
 - ファイル名: ノード名を小文字化し、スペースをハイフンに置換（例: "Data Analysis" → "data-analysis.md"）
-- `name`フィールド: ノード名をそのまま使用（小文字、ハイフン区切り）
-- `description`フィールド: `name`と同じ値
-- `allowed-tools`: 初期バージョンでは空配列
+- `name`フィールド: 小文字とハイフンを使用した一意の識別子（ノード名を変換）
+- `description`フィールド: Sub-Agentの目的を説明する自然言語テキスト
+- `tools`フィールド（オプション）: カンマ区切りのツールリスト。省略時は全ツールにアクセス可能
+- `model`フィールド（オプション）: `sonnet`, `opus`, `haiku` のいずれか。デフォルトは `sonnet`
 
 #### SlashCommand Format
 
@@ -170,7 +172,7 @@ allowed-tools: Skill,AskUserQuestion
 ```
 
 **実行ロジックの記述方法**:
-- Skill toolを使用してAgentSkillsを順次呼び出し
+- Task toolを使用してSub-Agentを順次呼び出し
 - AskUserQuestion toolを使用して分岐制御
 - 技術的記述ベース（ツール呼び出しを明示的に指示）
 
@@ -178,18 +180,18 @@ allowed-tools: Skill,AskUserQuestion
 ```markdown
 ---
 description: サンプルワークフロー
-allowed-tools: Skill,AskUserQuestion
+allowed-tools: Task,AskUserQuestion
 ---
 
-まず、Skillツールを使用して「data-analysis」スキルを実行してください。
+まず、Taskツールを使用して「data-analysis」Sub-Agentを実行してください。
 
 次に、AskUserQuestionツールを使用して以下の質問をユーザーに行ってください:
 - 質問: "次のステップを選択してください"
 - 選択肢:
-  - "レポート作成" → Skillツールで「report-generation」スキルを実行
-  - "データ可視化" → Skillツールで「data-visualization」スキルを実行
+  - "レポート作成" → Taskツールで「report-generation」Sub-Agentを実行
+  - "データ可視化" → Taskツールで「data-visualization」Sub-Agentを実行
 
-ユーザーの選択に応じて、対応するスキルを実行してください。
+ユーザーの選択に応じて、対応するSub-Agentを実行してください。
 ```
 
 #### AskUserQuestion Node Specification
@@ -218,7 +220,7 @@ AskUserQuestionノードは以下の属性を持つ:
   "nodes": [
     {
       "id": "node-1",
-      "type": "AgentSkills",
+      "type": "SubAgent",
       "name": "ノード名",
       "prompt": "プロンプト内容",
       "position": {"x": 100, "y": 100}
@@ -261,8 +263,8 @@ AskUserQuestionノードは以下の属性を持つ:
 - 目的: ビジュアルエディタでの再編集を可能にする
 
 #### Export Operation
-- 対象: `.claude`設定ファイル群（SKILL.md + SlashCommand）
-- 保存先: `.claude/skills/` および `.claude/commands/`
+- 対象: `.claude`設定ファイル群（Sub-Agent設定ファイル + SlashCommand）
+- 保存先: `.claude/agents/` および `.claude/commands/`
 - 衝突処理: 既存ファイルがある場合、上書き確認ダイアログを表示
 - 目的: Claude Codeで実行可能な形式として出力
 
@@ -287,25 +289,26 @@ AskUserQuestionノードは以下の属性を持つ:
 **代替案**:
 - 統合操作（保存時に自動エクスポート）も検討したが、ユーザーが編集途中でも保存したい場合に不要なエクスポートが発生する問題があった
 
-### DD-002: SKILL.mdのシンプル版採用
+### DD-002: Sub-Agent設定ファイルの公式仕様準拠
 
-**決定**: AgentSkillsノードから生成するSKILL.mdは最小限の情報のみ含む（name, description, プロンプト）
+**決定**: Sub-Agentノードから生成する設定ファイルはClaude Code公式仕様に準拠（name, description, tools, model, プロンプト）
 
 **理由**:
-- MVP版の範囲を絞り、実装を簡素化
-- `allowed-tools`の設定はClaude Codeの高度な機能であり、初期バージョンでは不要
-- UIの複雑化を回避（ツール選択インターフェースが不要）
+- Claude Codeの公式Sub-Agent仕様に完全準拠することで互換性を保証
+- `tools`フィールドは省略可能で、省略時は全ツールにアクセス可能
+- `model`フィールドで実行モデルを指定可能（sonnet/opus/haiku）
 
 **影響**:
-- 生成されるSKILLは全てのツールにアクセス可能（制限なし）
-- 将来的にツール制限が必要になった場合、ノードプロパティの拡張が必要
+- 生成されるSub-Agentは公式仕様通りに動作
+- ツール制限が必要な場合はUIで`tools`フィールドを設定可能
+- 将来的なClaude Codeアップデートに追従しやすい
 
 **代替案**:
-- 詳細版（allowed-tools設定可能）も検討したが、MVP版としての複雑性が高すぎると判断
+- 独自形式も検討したが、公式仕様準拠が最適と判断
 
 ### DD-003: SlashCommandの技術的記述ベース採用
 
-**決定**: SlashCommandファイルは技術的記述ベース（Skill tool、AskUserQuestion toolの呼び出しを明示）
+**決定**: SlashCommandファイルは技術的記述ベース（Task tool、AskUserQuestion toolの呼び出しを明示）
 
 **理由**:
 - 実行の厳密性と予測可能性を重視
@@ -314,7 +317,7 @@ AskUserQuestionノードは以下の属性を持つ:
 
 **影響**:
 - 生成されるSlashCommandの記述がやや技術的になる
-- Claude Codeの内部実装（Skill toolの仕様）に依存する
+- Claude Codeの内部実装（Task toolの仕様）に依存する
 - 自然言語ベースよりも厳格な実行フローが期待できる
 
 **代替案**:
@@ -377,4 +380,4 @@ AskUserQuestionノードは以下の属性を持つ:
 - ワークフロー定義ファイルはプロジェクトのルートディレクトリまたは `.vscode/workflows/` ディレクトリに保存される
 - Claude Codeのワンショットモード実行はコマンドラインから `claude <prompt>` または `claude -p "<prompt>"` のような形式で実行可能である（実際のCLI仕様に依存）
 - 初期バージョンでは、AskUserQuestionによる条件分岐をサポートするが、並列実行はサポートしない（順次実行のみ）
-- エクスポートされた`.claude`設定ファイルは、プロジェクトの`.claude`ディレクトリに配置され、Claude Codeによって自動的に認識される
+- エクスポートされた`.claude`設定ファイル（Sub-Agent設定ファイルとSlashCommand）は、プロジェクトの`.claude/agents/`および`.claude/commands/`ディレクトリに配置され、Claude Codeによって自動的に認識される

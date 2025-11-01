@@ -7,9 +7,9 @@
 
 ## Summary
 
-VSCode拡張機能として、Claude CodeのSlashCommands、Sub-Agent、AgentSkillsを組み合わせたワークフローをビジュアルエディタで設計・管理するツールを開発する。ユーザーはAWS Step FunctionsのようなUIでノードをドラッグ&ドロップし、実行可能な`.claude`設定ファイル（SKILL.md、SlashCommand）としてエクスポートできる。
+VSCode拡張機能として、Claude CodeのSlashCommandsとSub-Agentを組み合わせたワークフローをビジュアルエディタで設計・管理するツールを開発する。ユーザーはAWS Step FunctionsのようなUIでノードをドラッグ&ドロップし、実行可能な`.claude`設定ファイル（Sub-Agent設定ファイル、SlashCommand）としてエクスポートできる。
 
-**技術的アプローチ**: VSCode拡張機能のWebviewをReact + TypeScript + Viteで実装し、ビジュアルエディタの描画にはReact Flowを採用。ワークフロー定義はJSON形式で`.vscode/workflows/`に保存し、エクスポート時に`.claude/skills/`と`.claude/commands/`へMarkdown形式で出力する。
+**技術的アプローチ**: VSCode拡張機能のWebviewをReact + TypeScript + Viteで実装し、ビジュアルエディタの描画にはReact Flowを採用。ワークフロー定義はJSON形式で`.vscode/workflows/`に保存し、エクスポート時に`.claude/agents/`と`.claude/commands/`へMarkdown形式で出力する。
 
 ## Technical Context
 
@@ -17,7 +17,7 @@ VSCode拡張機能として、Claude CodeのSlashCommands、Sub-Agent、AgentSki
 **Primary Dependencies**:
 - Extension: VSCode Extension API 1.80+, Node.js 18+
 - Webview: React 18, Vite 5, React Flow (ビジュアルエディタ), **Zustand** (状態管理、React Flow内部でも使用)
-**Storage**: ローカルファイルシステム (`.vscode/workflows/*.json`, `.claude/skills/*.md`, `.claude/commands/*.md`)
+**Storage**: ローカルファイルシステム (`.vscode/workflows/*.json`, `.claude/agents/*.md`, `.claude/commands/*.md`)
 **Code Quality**:
 - Formatter & Linter: **Biome** (ESLint + Prettier代替、Rust製高速ツール)
 **Testing**:
@@ -37,7 +37,7 @@ VSCode拡張機能として、Claude CodeのSlashCommands、Sub-Agent、AgentSki
 **Scale/Scope**:
 - 1ワークフローあたり最大50ノード
 - 複数ワークフローの同時管理
-- 2種類のノードタイプ（AgentSkills、AskUserQuestion）
+- 2種類のノードタイプ（Sub-Agent、AskUserQuestion）
 
 ## Constitution Check
 
@@ -139,7 +139,7 @@ src/
 │   │   └── file-service.ts      # ファイルI/O
 │   └── models/                  # 型定義
 │       ├── workflow.ts          # Workflow, Node, Connection型
-│       └── claude-config.ts     # SKILL.md, SlashCommand型
+│       └── claude-config.ts     # Sub-Agent設定、SlashCommand型
 │
 ├── webview/                     # Webview UI側コード (React + Vite)
 │   ├── src/
@@ -149,7 +149,7 @@ src/
 │   │   │   ├── NodePalette.tsx
 │   │   │   ├── PropertyPanel.tsx
 │   │   │   ├── nodes/
-│   │   │   │   ├── AgentSkillsNode.tsx
+│   │   │   │   ├── SubAgentNode.tsx
 │   │   │   │   └── AskUserQuestionNode.tsx
 │   │   │   └── canvas/
 │   │   │       └── ReactFlowCanvas.tsx

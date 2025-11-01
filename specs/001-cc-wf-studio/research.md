@@ -192,11 +192,11 @@ exports.config = {
 
 ```typescript
 // ❌ Bad: nodeTypes を毎レンダリングで再作成
-<ReactFlow nodeTypes={{ agentSkill: AgentSkillNode }} />
+<ReactFlow nodeTypes={{ subAgent: SubAgentNode }} />
 
 // ✅ Good: コンポーネント外で定義
 const nodeTypes: NodeTypes = {
-  agentSkill: AgentSkillNode,
+  subAgent: SubAgentNode,
   askUserQuestion: AskUserQuestionNode
 };
 
@@ -221,11 +221,12 @@ const onConnect = useCallback((connection) => addEdge(connection), []);
 ```typescript
 import { Node, NodeProps } from 'reactflow';
 
-type AgentSkillData = {
-  skillName: string;
-  skillType: string;
-  outputPorts: number; // 2-4 branches
-  config?: Record<string, unknown>;
+type SubAgentData = {
+  description: string;  // Sub-Agentの目的説明
+  prompt: string;       // システムプロンプト
+  tools?: string;       // カンマ区切りツールリスト
+  model?: 'sonnet' | 'opus' | 'haiku';  // 実行モデル
+  outputPorts: number;  // 1 (通常は単一出力)
 };
 
 type AskUserQuestionData = {
@@ -234,22 +235,23 @@ type AskUserQuestionData = {
   outputPorts: number; // 2-4 branches
 };
 
-type AgentSkillNode = Node<AgentSkillData, 'agentSkill'>;
+type SubAgentNode = Node<SubAgentData, 'subAgent'>;
 type AskUserQuestionNode = Node<AskUserQuestionData, 'askUserQuestion'>;
-type WorkflowNode = AgentSkillNode | AskUserQuestionNode;
+type WorkflowNode = SubAgentNode | AskUserQuestionNode;
 ```
 
 #### Component 実装:
 
 ```typescript
-export const AgentSkillNode: React.FC<NodeProps<AgentSkillNode>> = ({
+export const SubAgentNode: React.FC<NodeProps<SubAgentNode>> = ({
   data,
   id,
   selected
 }) => {
   return (
     <div className={`node ${selected ? 'selected' : ''}`}>
-      <div className="node-header">{data.skillName}</div>
+      <div className="node-header">Sub-Agent</div>
+      <div className="node-description">{data.description}</div>
       <Handle type="target" position={Position.Top} id="input" />
       <Handle type="source" position={Position.Bottom} id="output" />
     </div>
@@ -273,7 +275,7 @@ export const AgentSkillNode: React.FC<NodeProps<AgentSkillNode>> = ({
 3. **ノードタイプ登録**:
    ```typescript
    const nodeTypes: NodeTypes = {
-     agentSkill: AgentSkillNode,
+     subAgent: SubAgentNode,
      askUserQuestion: AskUserQuestionNode
    };
    ```
@@ -446,11 +448,11 @@ export const WorkflowEditor = () => {
 };
 
 // カスタムノード内
-export const AgentSkillNode: React.FC<NodeProps<AgentSkillNode>> = (props) => {
+export const SubAgentNode: React.FC<NodeProps<SubAgentNode>> = (props) => {
   const updateNodeData = useWorkflowStore(s => s.updateNodeData);
 
-  const handleSkillChange = (newSkill: string) => {
-    updateNodeData(props.id, { skillName: newSkill });
+  const handleDescriptionChange = (newDescription: string) => {
+    updateNodeData(props.id, { description: newDescription });
   };
 
   return <div>{/* Node content */}</div>;

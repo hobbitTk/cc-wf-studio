@@ -104,7 +104,7 @@ vscode.commands.registerCommand('cc-wf-studio.openEditor', () => {
 - Webview からの `EXPORT_WORKFLOW` メッセージ
 
 **Behavior**:
-1. ワークフローを `.claude/skills/*.md` と `.claude/commands/*.md` に変換
+1. ワークフローを `.claude/agents/*.md` と `.claude/commands/*.md` に変換
 2. 既存ファイルがある場合、上書き確認ダイアログを表示
 3. エクスポート完了後、`EXPORT_SUCCESS` メッセージを Webview に送信
 
