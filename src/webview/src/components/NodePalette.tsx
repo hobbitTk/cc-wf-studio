@@ -86,6 +86,44 @@ export const NodePalette: React.FC = () => {
         Node Palette
       </div>
 
+      {/* Prompt Node Button */}
+      <button
+        type="button"
+        onClick={handleAddPromptNode}
+        style={{
+          width: '100%',
+          padding: '12px',
+          marginBottom: '12px',
+          backgroundColor: 'var(--vscode-button-background)',
+          color: 'var(--vscode-button-foreground)',
+          border: '1px solid var(--vscode-button-border)',
+          borderRadius: '4px',
+          cursor: 'pointer',
+          fontSize: '13px',
+          fontWeight: 500,
+          textAlign: 'left',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '4px',
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.backgroundColor = 'var(--vscode-button-hoverBackground)';
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.backgroundColor = 'var(--vscode-button-background)';
+        }}
+      >
+        <div style={{ fontWeight: 600 }}>Prompt</div>
+        <div
+          style={{
+            fontSize: '11px',
+            color: 'var(--vscode-descriptionForeground)',
+          }}
+        >
+          Template with variables
+        </div>
+      </button>
+
       {/* Sub-Agent Node Button */}
       <button
         type="button"
@@ -131,7 +169,6 @@ export const NodePalette: React.FC = () => {
         style={{
           width: '100%',
           padding: '12px',
-          marginBottom: '12px',
           backgroundColor: 'var(--vscode-button-background)',
           color: 'var(--vscode-button-foreground)',
           border: '1px solid var(--vscode-button-border)',
@@ -159,43 +196,6 @@ export const NodePalette: React.FC = () => {
           }}
         >
           Branch based on user choice
-        </div>
-      </button>
-
-      {/* Prompt Node Button */}
-      <button
-        type="button"
-        onClick={handleAddPromptNode}
-        style={{
-          width: '100%',
-          padding: '12px',
-          backgroundColor: 'var(--vscode-button-background)',
-          color: 'var(--vscode-button-foreground)',
-          border: '1px solid var(--vscode-button-border)',
-          borderRadius: '4px',
-          cursor: 'pointer',
-          fontSize: '13px',
-          fontWeight: 500,
-          textAlign: 'left',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '4px',
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.backgroundColor = 'var(--vscode-button-hoverBackground)';
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.backgroundColor = 'var(--vscode-button-background)';
-        }}
-      >
-        <div style={{ fontWeight: 600 }}>Prompt</div>
-        <div
-          style={{
-            fontSize: '11px',
-            color: 'var(--vscode-descriptionForeground)',
-          }}
-        >
-          Template with variables
         </div>
       </button>
 

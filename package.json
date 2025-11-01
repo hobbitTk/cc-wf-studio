@@ -27,9 +27,18 @@
     "commands": [
       {
         "command": "cc-wf-studio.openEditor",
-        "title": "Claude Code Workflow Studio: Open Editor"
+        "title": "Claude Code Workflow Studio: Open Editor",
+        "icon": "$(symbol-event)"
       }
-    ]
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "cc-wf-studio.openEditor",
+          "group": "navigation"
+        }
+      ]
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run build",

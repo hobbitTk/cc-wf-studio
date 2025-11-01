@@ -8,11 +8,9 @@
 import * as path from 'node:path';
 import type {
   AskUserQuestionNode,
-  Connection,
   PromptNode,
   SubAgentNode,
   Workflow,
-  WorkflowNode,
 } from '../../shared/types/workflow-definition';
 import type { FileService } from './file-service';
 
@@ -200,6 +198,99 @@ function generateSubAgentFile(node: SubAgentNode): string {
 }
 
 /**
+ * Generate Mermaid flowchart from workflow
+ *
+ * @param workflow - Workflow definition
+ * @returns Mermaid flowchart markdown
+ */
+function generateMermaidFlowchart(workflow: Workflow): string {
+  const { nodes, connections } = workflow;
+  const lines: string[] = [];
+
+  // Start Mermaid code block
+  lines.push('```mermaid');
+  lines.push('flowchart TD');
+
+  // Generate node definitions
+  for (const node of nodes) {
+    const nodeId = sanitizeNodeId(node.id);
+    const nodeType = node.type as string;
+
+    if (nodeType === 'start') {
+      lines.push(`    ${nodeId}([開始])`);
+    } else if (nodeType === 'end') {
+      lines.push(`    ${nodeId}([終了])`);
+    } else if (nodeType === 'subAgent') {
+      const agentName = node.name || 'Sub-Agent';
+      lines.push(`    ${nodeId}[${escapeLabel(agentName)}]`);
+    } else if (nodeType === 'askUserQuestion') {
+      const askNode = node as AskUserQuestionNode;
+      const questionText = askNode.data.questionText || '質問';
+      lines.push(`    ${nodeId}{${escapeLabel(`AskUserQuestion:<br/>${questionText}`)}}`);
+    } else if (nodeType === 'prompt') {
+      const promptNode = node as PromptNode;
+      // Use first line of prompt or default label
+      const promptText = promptNode.data.prompt?.split('\n')[0] || 'Prompt';
+      const label = promptText.length > 30 ? `${promptText.substring(0, 27)}...` : promptText;
+      lines.push(`    ${nodeId}[${escapeLabel(label)}]`);
+    }
+  }
+
+  // Add empty line between nodes and connections
+  lines.push('');
+
+  // Generate connections
+  for (const conn of connections) {
+    const fromId = sanitizeNodeId(conn.from);
+    const toId = sanitizeNodeId(conn.to);
+
+    // Find source node to determine if it's an AskUserQuestion with labeled branches
+    const sourceNode = nodes.find((n) => n.id === conn.from);
+
+    if (sourceNode?.type === 'askUserQuestion' && conn.fromPort) {
+      // Extract branch index from fromPort (e.g., "branch-0" -> 0)
+      const branchIndex = Number.parseInt(conn.fromPort.replace('branch-', ''), 10);
+      const askNode = sourceNode as AskUserQuestionNode;
+      const option = askNode.data.options[branchIndex];
+
+      if (option) {
+        const label = escapeLabel(option.label);
+        lines.push(`    ${fromId} -->|${label}| ${toId}`);
+      } else {
+        lines.push(`    ${fromId} --> ${toId}`);
+      }
+    } else {
+      lines.push(`    ${fromId} --> ${toId}`);
+    }
+  }
+
+  // End Mermaid code block
+  lines.push('```');
+
+  return lines.join('\n');
+}
+
+/**
+ * Sanitize node ID for Mermaid (remove special characters)
+ *
+ * @param id - Node ID
+ * @returns Sanitized ID
+ */
+function sanitizeNodeId(id: string): string {
+  return id.replace(/[^a-zA-Z0-9_]/g, '_');
+}
+
+/**
+ * Escape special characters in Mermaid labels
+ *
+ * @param label - Label text
+ * @returns Escaped label
+ */
+function escapeLabel(label: string): string {
+  return label.replace(/"/g, '#quot;').replace(/\[/g, '#91;').replace(/\]/g, '#93;');
+}
+
+/**
  * Generate SlashCommand file content
  *
  * @param workflow - Workflow definition
@@ -215,10 +306,13 @@ function generateSlashCommandFile(workflow: Workflow): string {
     '',
   ].join('\n');
 
+  // Mermaid flowchart
+  const mermaidFlowchart = generateMermaidFlowchart(workflow);
+
   // Workflow execution logic
   const executionLogic = generateWorkflowExecutionLogic(workflow);
 
-  return frontmatter + executionLogic;
+  return `${frontmatter}${mermaidFlowchart}\n\n${executionLogic}`;
 }
 
 /**
@@ -228,158 +322,76 @@ function generateSlashCommandFile(workflow: Workflow): string {
  * @returns Markdown text with execution instructions
  */
 function generateWorkflowExecutionLogic(workflow: Workflow): string {
-  const { nodes, connections } = workflow;
-  const instructions: string[] = [];
+  const { nodes } = workflow;
+  const sections: string[] = [];
 
-  // Filter out Start/End nodes only (Prompt is executable)
-  // Note: Use type assertion to handle new node types (start, end, prompt)
-  const executableNodes = nodes.filter(
-    (node) => (node.type as string) !== 'start' && (node.type as string) !== 'end'
+  // Introduction
+  sections.push('## ワークフロー実行ガイド');
+  sections.push('');
+  sections.push(
+    '上記のMermaidフローチャートに従ってワークフローを実行してください。各ノードタイプの実行方法は以下の通りです。'
   );
+  sections.push('');
 
-  // Find start node (executable node with no incoming connections or connected from Start node)
-  const targetNodeIds = new Set(connections.map((conn) => conn.to));
-  const startNodeConnections = connections.filter((conn) =>
-    nodes.find((n) => n.id === conn.from && (n.type as string) === 'start')
+  // Node type explanations
+  sections.push('### ノードタイプ別実行方法');
+  sections.push('');
+  sections.push('- **四角形のノード**: Taskツールを使用してSub-Agentを実行します');
+  sections.push(
+    '- **ひし形のノード（AskUserQuestion:...）**: AskUserQuestionツールを使用してユーザーに質問し、回答に応じて分岐します'
   );
+  sections.push(
+    '- **四角形のノード（Promptノード）**: 以下の詳細セクションに記載されたプロンプトを実行します'
+  );
+  sections.push('');
 
-  let startNodes = executableNodes.filter((node) => !targetNodeIds.has(node.id));
+  // Collect node details by type
+  const promptNodes = nodes.filter((n) => (n.type as string) === 'prompt') as PromptNode[];
+  const askUserQuestionNodes = nodes.filter(
+    (n) => (n.type as string) === 'askUserQuestion'
+  ) as AskUserQuestionNode[];
 
-  // If no start nodes found, try to find nodes connected from Start node
-  if (startNodes.length === 0 && startNodeConnections.length > 0) {
-    startNodes = startNodeConnections
-      .map((conn) => executableNodes.find((n) => n.id === conn.to))
-      .filter((n) => n !== undefined) as WorkflowNode[];
-  }
+  // Prompt node details
+  if (promptNodes.length > 0) {
+    sections.push('### Promptノード詳細');
+    sections.push('');
+    for (const node of promptNodes) {
+      const nodeId = sanitizeNodeId(node.id);
+      const label = node.data.prompt?.split('\n')[0] || node.name;
+      const displayLabel = label.length > 30 ? `${label.substring(0, 27)}...` : label;
+      sections.push(`#### ${nodeId}(${displayLabel})`);
+      sections.push('');
+      sections.push('```');
+      sections.push(node.data.prompt || '');
+      sections.push('```');
+      sections.push('');
 
-  if (startNodes.length === 0) {
-    return 'エラー: 実行可能な開始ノードが見つかりません。';
-  }
-
-  // Build execution flow from start node
-  const visited = new Set<string>();
-  const queue = [...startNodes];
-
-  while (queue.length > 0) {
-    const currentNode = queue.shift();
-    if (!currentNode || visited.has(currentNode.id)) {
-      continue;
-    }
-    visited.add(currentNode.id);
-
-    // Generate instruction for current node
-    const nodeType = currentNode.type as string;
-
-    if (nodeType === 'subAgent') {
-      const agentName = nodeNameToFileName(currentNode.name);
-      instructions.push(`Taskツールを使用して「${agentName}」Sub-Agentを実行してください。`);
-      instructions.push('');
-
-      // Find next nodes (skip End nodes)
-      const outgoingConnections = connections.filter((conn) => conn.from === currentNode.id);
-      const nextNodes = outgoingConnections
-        .map((conn) => executableNodes.find((n) => n.id === conn.to))
-        .filter((n) => n !== undefined);
-
-      queue.push(...nextNodes);
-    } else if (nodeType === 'askUserQuestion') {
-      const askNode = currentNode as AskUserQuestionNode;
-      const branchingLogic = generateBranchingLogic(askNode, executableNodes, connections, visited);
-      instructions.push(branchingLogic);
-      instructions.push('');
-
-      // Find next nodes after branches (skip End nodes and already visited nodes)
-      const outgoingConnections = connections.filter((conn) => conn.from === currentNode.id);
-      const branchTargets = new Set(outgoingConnections.map((conn) => conn.to));
-
-      // For each branch target, find nodes after it
-      const nextNodes: WorkflowNode[] = [];
-      for (const targetId of branchTargets) {
-        const afterBranchConnections = connections.filter((conn) => conn.from === targetId);
-        const afterBranchNodes = afterBranchConnections
-          .map((conn) => executableNodes.find((n) => n.id === conn.to))
-          .filter((n) => n !== undefined && !visited.has(n.id)) as WorkflowNode[];
-        nextNodes.push(...afterBranchNodes);
-      }
-
-      queue.push(...nextNodes);
-    } else if (nodeType === 'prompt') {
-      // Prompt node: just output the prompt text
-      const promptData = (currentNode as PromptNode).data;
-      const promptText = promptData?.prompt || '';
-      if (promptText) {
-        instructions.push(promptText);
-        instructions.push('');
-      }
-
-      // Find next nodes (skip End nodes)
-      const outgoingConnections = connections.filter((conn) => conn.from === currentNode.id);
-      const nextNodes = outgoingConnections
-        .map((conn) => executableNodes.find((n) => n.id === conn.to))
-        .filter((n) => n !== undefined);
-
-      queue.push(...nextNodes);
-    }
-  }
-
-  return instructions.join('\n');
-}
-
-/**
- * Generate AskUserQuestion branching logic
- *
- * @param node - AskUserQuestion node
- * @param allNodes - All workflow nodes
- * @param connections - All connections
- * @param visited - Set of visited node IDs
- * @returns Markdown text with branching instructions
- */
-function generateBranchingLogic(
-  node: AskUserQuestionNode,
-  allNodes: WorkflowNode[],
-  connections: Connection[],
-  visited: Set<string>
-): string {
-  const { data } = node;
-  const instructions: string[] = [];
-
-  instructions.push('AskUserQuestionツールを使用して以下の質問をユーザーに行ってください:');
-  instructions.push(`- 質問: "${data.questionText}"`);
-  instructions.push('- 選択肢:');
-
-  // Find outgoing connections for each option
-  const outgoingConnections = connections.filter((conn) => conn.from === node.id);
-
-  for (let i = 0; i < data.options.length; i++) {
-    const option = data.options[i];
-    // Find connection using fromPort (e.g., "branch-0", "branch-1")
-    const connection = outgoingConnections.find((conn) => conn.fromPort === `branch-${i}`);
-
-    if (connection) {
-      const targetNode = allNodes.find((n) => n.id === connection.to);
-      if (targetNode) {
-        if (targetNode.type === 'subAgent') {
-          const agentName = nodeNameToFileName(targetNode.name);
-          instructions.push(`  - "${option.label}" → Taskツールで「${agentName}」Sub-Agentを実行`);
-        } else if (targetNode.type === 'prompt') {
-          const promptNode = targetNode as PromptNode;
-          const promptText = promptNode.data.prompt || '';
-          instructions.push(`  - "${option.label}" → ${promptText}`);
-          // Mark prompt node as visited to prevent duplicate processing
-          visited.add(targetNode.id);
-        } else {
-          instructions.push(`  - "${option.label}" → ${targetNode.type}ノードへ接続`);
+      // Show variables if any
+      if (node.data.variables && Object.keys(node.data.variables).length > 0) {
+        sections.push('**使用可能な変数:**');
+        for (const [key, value] of Object.entries(node.data.variables)) {
+          sections.push(`- \`{{${key}}}\`: ${value || '(未設定)'}`);
         }
-      } else {
-        instructions.push(`  - "${option.label}" → (未接続)`);
+        sections.push('');
       }
-    } else {
-      instructions.push(`  - "${option.label}" → (未接続)`);
     }
   }
 
-  instructions.push('');
-  instructions.push('ユーザーの選択に応じて、対応するアクションを実行してください。');
+  // AskUserQuestion node details
+  if (askUserQuestionNodes.length > 0) {
+    sections.push('### AskUserQuestionノード詳細');
+    sections.push('');
+    for (const node of askUserQuestionNodes) {
+      const nodeId = sanitizeNodeId(node.id);
+      sections.push(`#### ${nodeId}(${node.data.questionText})`);
+      sections.push('');
+      sections.push('**選択肢:**');
+      for (const option of node.data.options) {
+        sections.push(`- **${option.label}**: ${option.description || '(説明なし)'}`);
+      }
+      sections.push('');
+    }
+  }
 
-  return instructions.join('\n');
+  return sections.join('\n');
 }
