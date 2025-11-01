@@ -5,6 +5,10 @@
 
 **構成**: タスクはユーザーストーリーごとにグループ化され、各ストーリーを独立して実装・テストできるようにしています。
 
+**⚠️ 重要: タスク完了時の対応**
+- タスクを完了したら、必ずこのファイル上でチェックボックスを `- [X]` にマークすること
+- 各タスク完了後、進捗を記録し、次のタスクに進む前に確認すること
+
 ## フォーマット: `[ID] [P?] [Story] 説明`
 
 - **[P]**: 並列実行可能（異なるファイル、依存関係なし）
@@ -17,15 +21,15 @@
 
 **目的**: プロジェクトの初期化と基本構造
 
-- [ ] T001 プロジェクト構造を作成 (src/extension/, src/webview/, src/shared/, tests/ ディレクトリ)
-- [ ] T002 Extension Host用のTypeScriptプロジェクトを初期化 (tsconfig.json)
-- [ ] T003 [P] src/webview/にReact + TypeScript + Viteプロジェクトを初期化
-- [ ] T004 [P] Extension依存関係をインストール: package.jsonに@types/vscode, @types/nodeを追加
-- [ ] T005 [P] Webview依存関係をインストール: src/webview/package.jsonにreact, react-dom, reactflow, zustand, @types/reactを追加
-- [ ] T006 [P] biome.jsonでBiomeを設定（コードフォーマット・リンター）
-- [ ] T007 package.jsonに拡張機能メタデータを作成 (name: cc-wf-studio, displayName, publisher, activationEvents)
-- [ ] T008 Extension Development Hostデバッグ用に.vscode/launch.jsonを作成
-- [ ] T009 コンパイルとウォッチタスク用に.vscode/tasks.jsonを作成
+- [X] T001 プロジェクト構造を作成 (src/extension/, src/webview/, src/shared/, tests/ ディレクトリ)
+- [X] T002 Extension Host用のTypeScriptプロジェクトを初期化 (tsconfig.json)
+- [X] T003 [P] src/webview/にReact + TypeScript + Viteプロジェクトを初期化
+- [X] T004 [P] Extension依存関係をインストール: package.jsonに@types/vscode, @types/nodeを追加
+- [X] T005 [P] Webview依存関係をインストール: src/webview/package.jsonにreact, react-dom, reactflow, zustand, @types/reactを追加
+- [X] T006 [P] biome.jsonでBiomeを設定（コードフォーマット・リンター）
+- [X] T007 package.jsonに拡張機能メタデータを作成 (name: cc-wf-studio, displayName, publisher, activationEvents)
+- [X] T008 Extension Development Hostデバッグ用に.vscode/launch.jsonを作成
+- [X] T009 コンパイルとウォッチタスク用に.vscode/tasks.jsonを作成
 
 ---
 
@@ -35,13 +39,13 @@
 
 **⚠️ 重要**: このフェーズが完了するまで、ユーザーストーリーの作業は開始できません
 
-- [ ] T010 src/shared/types/workflow-definition.tsに共通型定義を作成 (data-model.mdのWorkflow, WorkflowNode, Connection, Sub-AgentNode, AskUserQuestionNode型)
-- [ ] T011 [P] src/shared/types/messages.tsに共通メッセージ型を作成 (extension-webview-api.mdのMessage, ExtensionMessage, WebviewMessage, すべてのpayload型)
-- [ ] T012 [P] src/extension/extension.tsに拡張機能のアクティベーションを実装 (activate, deactivate関数)
-- [ ] T013 [P] src/webview/src/stores/workflow-store.tsにZustandストアを作成 (research.md section 3.4のnodes, edges, onNodesChange, onEdgesChange, onConnect)
-- [ ] T014 src/extension/webview-content.tsにWebview HTMLジェネレーターを実装 (vscode-extension-api.md section 4.2のgetWebviewContent: CSP, nonce, resource URIs)
-- [ ] T015 src/webview/vite.config.tsでViteビルド設定をセットアップ (dist/webview/への出力、ライブラリモード無効、Reactプラグイン)
-- [ ] T016 src/webview/src/main.tsxに基本Reactコンポーネント構造を作成 (React 18ルート、VSCode API取得)
+- [X] T010 src/shared/types/workflow-definition.tsに共通型定義を作成 (data-model.mdのWorkflow, WorkflowNode, Connection, Sub-AgentNode, AskUserQuestionNode型)
+- [X] T011 [P] src/shared/types/messages.tsに共通メッセージ型を作成 (extension-webview-api.mdのMessage, ExtensionMessage, WebviewMessage, すべてのpayload型)
+- [X] T012 [P] src/extension/extension.tsに拡張機能のアクティベーションを実装 (activate, deactivate関数)
+- [X] T013 [P] src/webview/src/stores/workflow-store.tsにZustandストアを作成 (research.md section 3.4のnodes, edges, onNodesChange, onEdgesChange, onConnect)
+- [X] T014 src/extension/webview-content.tsにWebview HTMLジェネレーターを実装 (vscode-extension-api.md section 4.2のgetWebviewContent: CSP, nonce, resource URIs)
+- [X] T015 src/webview/vite.config.tsでViteビルド設定をセットアップ (dist/webview/への出力、ライブラリモード無効、Reactプラグイン)
+- [X] T016 src/webview/src/main.tsxに基本Reactコンポーネント構造を作成 (React 18ルート、VSCode API取得)
 
 **チェックポイント**: 基盤完成 - ユーザーストーリーの実装を並列で開始可能
 
@@ -57,44 +61,44 @@
 
 #### コマンド & Extension Hostコア
 
-- [ ] T017 [P] [US1] src/extension/commands/open-editor.tsにopenEditorコマンドを登録 (vscode-extension-api.md section 1.1のvscode.commands.registerCommandとcreateWebviewPanel)
-- [ ] T018 [P] [US1] src/extension/commands/save-workflow.tsにsaveWorkflowコマンドを登録 (SAVE_WORKFLOWメッセージ処理、.vscode/workflows/への書き込み)
-- [ ] T019 [P] [US1] src/extension/services/file-service.tsにファイルサービスを実装 (vscode-extension-api.md section 2のvscode.workspace.fs APIを使用したreadFile, writeFile, createDirectory, ensureWorkflowsDirectory)
+- [X] T017 [P] [US1] src/extension/commands/open-editor.tsにopenEditorコマンドを登録 (vscode-extension-api.md section 1.1のvscode.commands.registerCommandとcreateWebviewPanel)
+- [X] T018 [P] [US1] src/extension/commands/save-workflow.tsにsaveWorkflowコマンドを登録 (SAVE_WORKFLOWメッセージ処理、.vscode/workflows/への書き込み)
+- [X] T019 [P] [US1] src/extension/services/file-service.tsにファイルサービスを実装 (vscode-extension-api.md section 2のvscode.workspace.fs APIを使用したreadFile, writeFile, createDirectory, ensureWorkflowsDirectory)
 
 #### Webview UI - React Flow キャンバス
 
-- [ ] T020 [US1] src/webview/src/components/WorkflowEditor.tsxにWorkflowEditorコンポーネントを作成 (research.md section 3.4のnodeTypes, edgeTypes, ストア統合を持つReactFlowコンポーネント)
-- [ ] T021 [P] [US1] src/webview/src/components/nodes/Sub-AgentNode.tsxにSub-AgentNodeコンポーネントを作成 (NodeProps<Sub-AgentNode>, 入出力用Handle, research.md section 3.2)
-- [ ] T022 [P] [US1] src/webview/src/components/nodes/AskUserQuestionNode.tsxにAskUserQuestionNodeコンポーネントを作成 (動的2-4分岐ポート、research.md section 3.3のuseUpdateNodeInternals)
-- [ ] T023 [US1] src/webview/src/components/WorkflowEditor.tsxでノードタイプを登録 (research.md section 3.1のagentSkillとaskUserQuestionを持つnodeTypesオブジェクト、コンポーネント外でメモ化)
+- [X] T020 [US1] src/webview/src/components/WorkflowEditor.tsxにWorkflowEditorコンポーネントを作成 (research.md section 3.4のnodeTypes, edgeTypes, ストア統合を持つReactFlowコンポーネント)
+- [X] T021 [P] [US1] src/webview/src/components/nodes/Sub-AgentNode.tsxにSub-AgentNodeコンポーネントを作成 (NodeProps<Sub-AgentNode>, 入出力用Handle, research.md section 3.2)
+- [X] T022 [P] [US1] src/webview/src/components/nodes/AskUserQuestionNode.tsxにAskUserQuestionNodeコンポーネントを作成 (動的2-4分岐ポート、research.md section 3.3のuseUpdateNodeInternals)
+- [X] T023 [US1] src/webview/src/components/WorkflowEditor.tsxでノードタイプを登録 (research.md section 3.1のagentSkillとaskUserQuestionを持つnodeTypesオブジェクト、コンポーネント外でメモ化)
 
 #### Webview UI - サイドパネル
 
-- [ ] T024 [P] [US1] src/webview/src/components/NodePalette.tsxにNodePaletteコンポーネントを作成 (Sub-AgentとAskUserQuestionのドラッグ可能なノードテンプレート)
-- [ ] T025 [P] [US1] src/webview/src/components/PropertyPanel.tsxにPropertyPanelコンポーネントを作成 (選択されたノードのプロパティ表示、nameとprompt/questionTextの編集、変更時にストア更新)
-- [ ] T026 [US1] src/webview/src/App.tsxにレイアウトを実装 (3カラムレイアウト: NodePalette, WorkflowEditor, PropertyPanel)
+- [X] T024 [P] [US1] src/webview/src/components/NodePalette.tsxにNodePaletteコンポーネントを作成 (Sub-AgentとAskUserQuestionのドラッグ可能なノードテンプレート)
+- [X] T025 [P] [US1] src/webview/src/components/PropertyPanel.tsxにPropertyPanelコンポーネントを作成 (選択されたノードのプロパティ表示、nameとprompt/questionTextの編集、変更時にストア更新)
+- [X] T026 [US1] src/webview/src/App.tsxにレイアウトを実装 (3カラムレイアウト: NodePalette, WorkflowEditor, PropertyPanel)
 
 #### Extension-Webview間通信
 
-- [ ] T027 [US1] src/extension/extension.tsにメッセージハンドラを実装 (extension-webview-api.md section 2のSAVE_WORKFLOW, STATE_UPDATE用panel.webview.onDidReceiveMessage)
-- [ ] T028 [P] [US1] src/webview/src/services/vscode-bridge.tsにVSCodeブリッジサービスを作成 (extension-webview-api.md section 3のpostMessageラッパー、requestIdパターンを持つsaveWorkflow関数)
+- [X] T027 [US1] src/extension/extension.tsにメッセージハンドラを実装 (extension-webview-api.md section 2のSAVE_WORKFLOW, STATE_UPDATE用panel.webview.onDidReceiveMessage)
+- [X] T028 [P] [US1] src/webview/src/services/vscode-bridge.tsにVSCodeブリッジサービスを作成 (extension-webview-api.md section 3のpostMessageラッパー、requestIdパターンを持つsaveWorkflow関数)
 
 #### ワークフローの永続化
 
-- [ ] T029 [US1] src/extension/services/workflow-service.tsにワークフローシリアライゼーションを実装 (React Flow状態をWorkflow定義に変換、data-model.md section 1に対するバリデーション)
-- [ ] T030 [US1] src/extension/services/workflow-service.tsにワークフローデシリアライゼーションを実装 (JSONからWorkflowを読み込み、React Flow状態に変換)
-- [ ] T031 [US1] src/extension/commands/save-workflow.tsに保存ロジックを追加 (ワークフロー名のバリデーション、ディレクトリの存在確認、data-model.md section 3.1の2スペースインデントでJSON書き込み)
+- [X] T029 [US1] src/webview/src/services/workflow-service.tsにワークフローシリアライゼーションを実装 (React Flow状態をWorkflow定義に変換、data-model.md section 1に対するバリデーション)
+- [X] T030 [US1] src/webview/src/services/workflow-service.tsにワークフローデシリアライゼーションを実装 (JSONからWorkflowを読み込み、React Flow状態に変換)
+- [X] T031 [US1] src/extension/commands/save-workflow.tsに保存ロジックを追加 (ワークフロー名のバリデーション、ディレクトリの存在確認、data-model.md section 3.1の2スペースインデントでJSON書き込み)
 
 #### UI洗練 & パフォーマンス
 
-- [ ] T032 [P] [US1] src/webview/src/components/WorkflowEditor.tsxにReact Flowパフォーマンス最適化を適用 (research.md section 3.1のカスタムノード用React.memo、ハンドラ用useCallback、nodeTypes/edgeTypes用useMemo)
-- [ ] T033 [P] [US1] src/webview/src/styles/main.cssにCSSスタイリングを追加 (plan.md Constitution Check IIIのVSCode Webview UI Toolkitスタイル、ノードビジュアルデザイン)
-- [ ] T034 [US1] src/webview/src/components/WorkflowEditor.tsxにキーボードショートカットを実装 (plan.md UX一貫性のノード選択用Tab/Enter/Arrowキー)
+- [X] T032 [P] [US1] src/webview/src/components/WorkflowEditor.tsxにReact Flowパフォーマンス最適化を適用 (research.md section 3.1のカスタムノード用React.memo、ハンドラ用useCallback、nodeTypes/edgeTypes用useMemo)
+- [X] T033 [P] [US1] src/webview/src/styles/main.cssにCSSスタイリングを追加 (plan.md Constitution Check IIIのVSCode Webview UI Toolkitスタイル、ノードビジュアルデザイン)
+- [ ] T034 [US1] src/webview/src/components/WorkflowEditor.tsxにキーボードショートカットを実装 (plan.md UX一貫性のノード選択用Tab/Enter/Arrowキー) - **MVPでは不要と判断**
 
 #### エラーハンドリング & バリデーション
 
-- [ ] T035 [US1] src/extension/services/workflow-service.tsにワークフローバリデーションを追加 (data-model.md section 5の名前フォーマット、最大50ノード、接続の妥当性)
-- [ ] T036 [US1] src/webview/src/components/ErrorNotification.tsxにエラーメッセージ表示を実装 (extension-webview-api.md section 1.4のextensionからのERRORメッセージ表示、コード固有のスタイリング)
+- [ ] T035 [US1] src/extension/services/workflow-service.tsにワークフローバリデーションを追加 (data-model.md section 5の名前フォーマット、最大50ノード、接続の妥当性) - **ロジックはsrc/webview/src/services/workflow-service.tsに実装済み、UIからの呼び出しは未実装**
+- [X] T036 [US1] src/webview/src/components/ErrorNotification.tsxにエラーメッセージ表示を実装 (extension-webview-api.md section 1.4のextensionからのERRORメッセージ表示、コード固有のスタイリング)
 
 **チェックポイント**: この時点でユーザーストーリー1は完全に機能し、独立してテスト可能 - ユーザーはノードを持つワークフローを作成し、接続し、.vscode/workflows/*.jsonに保存できる
 

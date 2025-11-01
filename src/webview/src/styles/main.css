@@ -1,0 +1,88 @@
+/**
+ * Claude Code Workflow Studio - Main Styles
+ *
+ * Styling for Webview UI with VSCode theme integration
+ */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--vscode-font-family, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+    'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--vscode-editor-background);
+  color: var(--vscode-editor-foreground);
+}
+
+#root {
+  width: 100%;
+  height: 100vh;
+}
+
+.app {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+}
+
+/* Custom node styles */
+.sub-agent-node,
+.ask-user-question-node {
+  transition: border-color 0.2s ease;
+}
+
+.sub-agent-node.selected,
+.ask-user-question-node.selected {
+  box-shadow: 0 0 0 2px var(--vscode-focusBorder);
+}
+
+/* Input and textarea styles */
+input,
+textarea,
+select {
+  font-family: inherit;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: 1px solid var(--vscode-focusBorder);
+  outline-offset: -1px;
+}
+
+/* Button hover effects */
+button {
+  transition: background-color 0.2s ease;
+}
+
+/* nodrag class for preventing React Flow drag on interactive elements */
+.nodrag {
+  user-select: auto;
+}
+
+/* Scrollbar styling for VSCode theme */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--vscode-scrollbarSlider-background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--vscode-scrollbarSlider-background);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--vscode-scrollbarSlider-hoverBackground);
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: var(--vscode-scrollbarSlider-activeBackground);
+}

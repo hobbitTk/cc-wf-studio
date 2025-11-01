@@ -1,0 +1,420 @@
+/**
+ * Claude Code Workflow Studio - Property Panel Component
+ *
+ * Property editor for selected nodes
+ * Based on: /specs/001-cc-wf-studio/plan.md
+ */
+
+import React from 'react';
+import { useWorkflowStore } from '../stores/workflow-store';
+import type { Node } from 'reactflow';
+import type { SubAgentData, AskUserQuestionData } from '@shared/types/workflow-definition';
+
+/**
+ * PropertyPanel Component
+ */
+export const PropertyPanel: React.FC = () => {
+  const { nodes, selectedNodeId, updateNodeData } = useWorkflowStore();
+
+  // Find the selected node
+  const selectedNode = nodes.find((node) => node.id === selectedNodeId);
+
+  if (!selectedNode) {
+    return (
+      <div
+        className="property-panel"
+        style={{
+          width: '300px',
+          height: '100%',
+          backgroundColor: 'var(--vscode-sideBar-background)',
+          borderLeft: '1px solid var(--vscode-panel-border)',
+          padding: '16px',
+          overflowY: 'auto',
+        }}
+      >
+        <div
+          style={{
+            fontSize: '13px',
+            color: 'var(--vscode-descriptionForeground)',
+            textAlign: 'center',
+            marginTop: '24px',
+          }}
+        >
+          Select a node to edit its properties
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div
+      className="property-panel"
+      style={{
+        width: '300px',
+        height: '100%',
+        backgroundColor: 'var(--vscode-sideBar-background)',
+        borderLeft: '1px solid var(--vscode-panel-border)',
+        padding: '16px',
+        overflowY: 'auto',
+      }}
+    >
+      {/* Header */}
+      <div
+        style={{
+          fontSize: '13px',
+          fontWeight: 600,
+          color: 'var(--vscode-foreground)',
+          marginBottom: '16px',
+          textTransform: 'uppercase',
+          letterSpacing: '0.5px',
+        }}
+      >
+        Properties
+      </div>
+
+      {/* Node Type Badge */}
+      <div
+        style={{
+          fontSize: '11px',
+          color: 'var(--vscode-descriptionForeground)',
+          backgroundColor: 'var(--vscode-badge-background)',
+          padding: '4px 8px',
+          borderRadius: '3px',
+          display: 'inline-block',
+          marginBottom: '16px',
+        }}
+      >
+        {selectedNode.type === 'subAgent' ? 'Sub-Agent' : 'Ask User Question'}
+      </div>
+
+      {/* Render properties based on node type */}
+      {selectedNode.type === 'subAgent' ? (
+        <SubAgentProperties node={selectedNode as Node<SubAgentData>} updateNodeData={updateNodeData} />
+      ) : (
+        <AskUserQuestionProperties node={selectedNode as Node<AskUserQuestionData>} updateNodeData={updateNodeData} />
+      )}
+    </div>
+  );
+};
+
+/**
+ * Sub-Agent Properties Editor
+ */
+const SubAgentProperties: React.FC<{
+  node: Node<SubAgentData>;
+  updateNodeData: (nodeId: string, data: Partial<unknown>) => void;
+}> = ({ node, updateNodeData }) => {
+  const data = node.data;
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      {/* Description */}
+      <div>
+        <label
+          style={{
+            display: 'block',
+            fontSize: '12px',
+            fontWeight: 600,
+            color: 'var(--vscode-foreground)',
+            marginBottom: '6px',
+          }}
+        >
+          Description
+        </label>
+        <input
+          type="text"
+          value={data.description}
+          onChange={(e) => updateNodeData(node.id, { description: e.target.value })}
+          className="nodrag"
+          style={{
+            width: '100%',
+            padding: '6px 8px',
+            backgroundColor: 'var(--vscode-input-background)',
+            color: 'var(--vscode-input-foreground)',
+            border: '1px solid var(--vscode-input-border)',
+            borderRadius: '2px',
+            fontSize: '13px',
+          }}
+        />
+      </div>
+
+      {/* Prompt */}
+      <div>
+        <label
+          style={{
+            display: 'block',
+            fontSize: '12px',
+            fontWeight: 600,
+            color: 'var(--vscode-foreground)',
+            marginBottom: '6px',
+          }}
+        >
+          Prompt
+        </label>
+        <textarea
+          value={data.prompt}
+          onChange={(e) => updateNodeData(node.id, { prompt: e.target.value })}
+          className="nodrag"
+          rows={6}
+          style={{
+            width: '100%',
+            padding: '6px 8px',
+            backgroundColor: 'var(--vscode-input-background)',
+            color: 'var(--vscode-input-foreground)',
+            border: '1px solid var(--vscode-input-border)',
+            borderRadius: '2px',
+            fontSize: '13px',
+            fontFamily: 'var(--vscode-editor-font-family)',
+            resize: 'vertical',
+          }}
+        />
+      </div>
+
+      {/* Model */}
+      <div>
+        <label
+          style={{
+            display: 'block',
+            fontSize: '12px',
+            fontWeight: 600,
+            color: 'var(--vscode-foreground)',
+            marginBottom: '6px',
+          }}
+        >
+          Model
+        </label>
+        <select
+          value={data.model || 'sonnet'}
+          onChange={(e) => updateNodeData(node.id, { model: e.target.value as 'sonnet' | 'opus' | 'haiku' })}
+          className="nodrag"
+          style={{
+            width: '100%',
+            padding: '6px 8px',
+            backgroundColor: 'var(--vscode-input-background)',
+            color: 'var(--vscode-input-foreground)',
+            border: '1px solid var(--vscode-input-border)',
+            borderRadius: '2px',
+            fontSize: '13px',
+          }}
+        >
+          <option value="sonnet">Sonnet</option>
+          <option value="opus">Opus</option>
+          <option value="haiku">Haiku</option>
+        </select>
+      </div>
+
+      {/* Tools */}
+      <div>
+        <label
+          style={{
+            display: 'block',
+            fontSize: '12px',
+            fontWeight: 600,
+            color: 'var(--vscode-foreground)',
+            marginBottom: '6px',
+          }}
+        >
+          Tools (comma-separated)
+        </label>
+        <input
+          type="text"
+          value={data.tools || ''}
+          onChange={(e) => updateNodeData(node.id, { tools: e.target.value })}
+          placeholder="e.g., Read,Write,Bash"
+          className="nodrag"
+          style={{
+            width: '100%',
+            padding: '6px 8px',
+            backgroundColor: 'var(--vscode-input-background)',
+            color: 'var(--vscode-input-foreground)',
+            border: '1px solid var(--vscode-input-border)',
+            borderRadius: '2px',
+            fontSize: '13px',
+          }}
+        />
+        <div
+          style={{
+            fontSize: '11px',
+            color: 'var(--vscode-descriptionForeground)',
+            marginTop: '4px',
+          }}
+        >
+          Leave empty for all tools
+        </div>
+      </div>
+    </div>
+  );
+};
+
+/**
+ * AskUserQuestion Properties Editor
+ */
+const AskUserQuestionProperties: React.FC<{
+  node: Node<AskUserQuestionData>;
+  updateNodeData: (nodeId: string, data: Partial<unknown>) => void;
+}> = ({ node, updateNodeData }) => {
+  const data = node.data;
+
+  const handleAddOption = () => {
+    const newOptions = [
+      ...data.options,
+      { label: `Option ${data.options.length + 1}`, description: 'New option' },
+    ];
+    updateNodeData(node.id, {
+      options: newOptions,
+      outputPorts: newOptions.length,
+    });
+  };
+
+  const handleRemoveOption = (index: number) => {
+    if (data.options.length <= 2) return; // Minimum 2 options
+    const newOptions = data.options.filter((_, i) => i !== index);
+    updateNodeData(node.id, {
+      options: newOptions,
+      outputPorts: newOptions.length,
+    });
+  };
+
+  const handleUpdateOption = (index: number, field: 'label' | 'description', value: string) => {
+    const newOptions = data.options.map((opt, i) =>
+      i === index ? { ...opt, [field]: value } : opt
+    );
+    updateNodeData(node.id, { options: newOptions });
+  };
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      {/* Question Text */}
+      <div>
+        <label
+          style={{
+            display: 'block',
+            fontSize: '12px',
+            fontWeight: 600,
+            color: 'var(--vscode-foreground)',
+            marginBottom: '6px',
+          }}
+        >
+          Question
+        </label>
+        <textarea
+          value={data.questionText}
+          onChange={(e) => updateNodeData(node.id, { questionText: e.target.value })}
+          className="nodrag"
+          rows={3}
+          style={{
+            width: '100%',
+            padding: '6px 8px',
+            backgroundColor: 'var(--vscode-input-background)',
+            color: 'var(--vscode-input-foreground)',
+            border: '1px solid var(--vscode-input-border)',
+            borderRadius: '2px',
+            fontSize: '13px',
+            resize: 'vertical',
+          }}
+        />
+      </div>
+
+      {/* Options */}
+      <div>
+        <label
+          style={{
+            display: 'block',
+            fontSize: '12px',
+            fontWeight: 600,
+            color: 'var(--vscode-foreground)',
+            marginBottom: '6px',
+          }}
+        >
+          Options ({data.options.length}/4)
+        </label>
+
+        {data.options.map((option, index) => (
+          <div
+            key={index}
+            style={{
+              marginBottom: '12px',
+              padding: '12px',
+              backgroundColor: 'var(--vscode-editor-background)',
+              border: '1px solid var(--vscode-panel-border)',
+              borderRadius: '4px',
+            }}
+          >
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
+              <span style={{ fontSize: '11px', fontWeight: 600 }}>Option {index + 1}</span>
+              {data.options.length > 2 && (
+                <button
+                  onClick={() => handleRemoveOption(index)}
+                  className="nodrag"
+                  style={{
+                    padding: '2px 6px',
+                    fontSize: '10px',
+                    backgroundColor: 'var(--vscode-button-secondaryBackground)',
+                    color: 'var(--vscode-button-secondaryForeground)',
+                    border: 'none',
+                    borderRadius: '2px',
+                    cursor: 'pointer',
+                  }}
+                >
+                  Remove
+                </button>
+              )}
+            </div>
+            <input
+              type="text"
+              value={option.label}
+              onChange={(e) => handleUpdateOption(index, 'label', e.target.value)}
+              placeholder="Label"
+              className="nodrag"
+              style={{
+                width: '100%',
+                padding: '4px 6px',
+                marginBottom: '6px',
+                backgroundColor: 'var(--vscode-input-background)',
+                color: 'var(--vscode-input-foreground)',
+                border: '1px solid var(--vscode-input-border)',
+                borderRadius: '2px',
+                fontSize: '12px',
+              }}
+            />
+            <input
+              type="text"
+              value={option.description}
+              onChange={(e) => handleUpdateOption(index, 'description', e.target.value)}
+              placeholder="Description"
+              className="nodrag"
+              style={{
+                width: '100%',
+                padding: '4px 6px',
+                backgroundColor: 'var(--vscode-input-background)',
+                color: 'var(--vscode-input-foreground)',
+                border: '1px solid var(--vscode-input-border)',
+                borderRadius: '2px',
+                fontSize: '12px',
+              }}
+            />
+          </div>
+        ))}
+
+        {data.options.length < 4 && (
+          <button
+            onClick={handleAddOption}
+            className="nodrag"
+            style={{
+              width: '100%',
+              padding: '8px',
+              backgroundColor: 'var(--vscode-button-secondaryBackground)',
+              color: 'var(--vscode-button-secondaryForeground)',
+              border: '1px solid var(--vscode-button-border)',
+              borderRadius: '4px',
+              cursor: 'pointer',
+              fontSize: '12px',
+            }}
+          >
+            + Add Option
+          </button>
+        )}
+      </div>
+    </div>
+  );
+};

@@ -1,0 +1,47 @@
+{
+  "name": "cc-wf-studio",
+  "displayName": "Claude Code Workflow Studio",
+  "description": "Visual workflow editor for Claude Code SlashCommands and Sub-Agents",
+  "version": "1.0.0",
+  "publisher": "anthropic",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "main": "./out/extension/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "cc-wf-studio.openEditor",
+        "title": "Claude Code Workflow Studio: Open Editor"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run build",
+    "build": "npm run build:webview && npm run build:extension",
+    "build:webview": "cd src/webview && npm run build",
+    "build:extension": "tsc -p ./",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "watch:webview": "cd src/webview && npm run dev",
+    "lint": "biome lint .",
+    "format": "biome format --write .",
+    "check": "biome check --apply .",
+    "test": "npm run test:unit && npm run test:integration",
+    "test:unit": "cd src/webview && npm run test",
+    "test:integration": "vscode-test",
+    "test:e2e": "wdio run wdio.conf.ts"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.4.1",
+    "@types/node": "^18.0.0",
+    "@types/vscode": "^1.80.0",
+    "@vscode/test-cli": "^0.0.4",
+    "@vscode/test-electron": "^2.3.8",
+    "typescript": "^5.3.0"
+  },
+  "dependencies": {}
+}
