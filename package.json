@@ -41,7 +41,7 @@
     "watch:webview": "cd src/webview && npm run dev",
     "lint": "biome lint .",
     "format": "biome format --write .",
-    "check": "biome check --apply .",
+    "check": "biome check --write .",
     "test": "npm run test:unit && npm run test:integration",
     "test:unit": "cd src/webview && npm run test",
     "test:integration": "vscode-test",

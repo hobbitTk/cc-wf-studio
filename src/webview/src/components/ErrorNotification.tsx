@@ -39,9 +39,10 @@ export const ErrorNotification: React.FC<ErrorNotificationProps> = ({ error, onD
 
   // Type narrowing: at this point, error is definitely ErrorPayload
   const errorData: ErrorPayload = error;
-  const code = errorData.code;
-  const message = errorData.message;
-  const details = errorData.details;
+  const code: string = errorData.code;
+  const message: string = errorData.message;
+  // biome-ignore lint/suspicious/noExplicitAny: Error details can be of any type for display purposes
+  const details: any = errorData.details;
 
   return (
     <div
@@ -86,6 +87,7 @@ export const ErrorNotification: React.FC<ErrorNotificationProps> = ({ error, onD
         </button>
       </div>
 
+      {/* Message */}
       <div style={{ fontSize: '12px', lineHeight: '1.5' }}>{message}</div>
 
       {/* Details (if available) */}
