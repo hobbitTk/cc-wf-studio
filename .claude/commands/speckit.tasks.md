@@ -2,6 +2,19 @@
 description: Generate an actionable, dependency-ordered tasks.md for the feature based on available design artifacts.
 ---
 
+## Output Language
+
+**IMPORTANT**: Generate the entire tasks.md file in Japanese, including:
+- All section headings and descriptions
+- Task descriptions
+- Goal statements
+- Test descriptions
+- Checkpoint messages
+- Implementation strategy
+- Dependencies explanations
+
+Keep technical terms (file paths, IDs, markers like [P], [US1], etc.) in their original form.
+
 ## User Input
 
 ```text
@@ -32,6 +45,10 @@ You **MUST** consider the user input before proceeding (if not empty).
 
 4. **Generate tasks.md**: Use `.specify.specify/templates/tasks-template.md` as structure, fill with:
    - Correct feature name from plan.md
+   - **Progress Management Section** (進捗管理): MUST include at document beginning after metadata:
+     - Explanation that completed tasks should be marked by changing `- [ ]` to `- [x]`
+     - Example showing the difference between incomplete and complete tasks
+     - Note about visualizing implementation progress
    - Phase 1: Setup tasks (project initialization)
    - Phase 2: Foundational tasks (blocking prerequisites for all user stories)
    - Phase 3+: One phase per user story (in priority order from spec.md)
@@ -92,6 +109,28 @@ Every task MUST strictly follow this format:
 - ❌ WRONG: `T001 [US1] Create model` (missing checkbox)
 - ❌ WRONG: `- [ ] [US1] Create User model` (missing Task ID)
 - ❌ WRONG: `- [ ] T001 [US1] Create model` (missing file path)
+
+### Progress Tracking (進捗管理)
+
+**CRITICAL**: MUST include a "Progress Management" (進捗管理) section at the beginning of tasks.md explaining how to mark completed tasks.
+
+Include this section immediately after the document header and before Phase 1:
+
+```markdown
+## 進捗管理
+
+**重要**: タスク完了時は、`- [ ]` を `- [x]` に変更してマークしてください。
+
+例:
+\```markdown
+- [ ] T001 未完了のタスク
+- [x] T002 完了したタスク
+\```
+
+これにより、実装の進捗を可視化できます。
+```
+
+This allows users to track their implementation progress by marking completed tasks with `[x]`.
 
 ### Task Organization
 
