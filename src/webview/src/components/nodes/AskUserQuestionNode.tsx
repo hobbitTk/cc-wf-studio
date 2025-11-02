@@ -36,15 +36,37 @@ export const AskUserQuestionNodeComponent: React.FC<NodeProps<AskUserQuestionDat
         {/* Node Header */}
         <div
           style={{
-            fontSize: '11px',
-            fontWeight: 600,
-            color: 'var(--vscode-descriptionForeground)',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
             marginBottom: '8px',
-            textTransform: 'uppercase',
-            letterSpacing: '0.5px',
           }}
         >
-          Ask User Question
+          <div
+            style={{
+              fontSize: '11px',
+              fontWeight: 600,
+              color: 'var(--vscode-descriptionForeground)',
+              textTransform: 'uppercase',
+              letterSpacing: '0.5px',
+            }}
+          >
+            Ask User Question
+          </div>
+          {data.multiSelect && (
+            <div
+              style={{
+                fontSize: '9px',
+                padding: '2px 6px',
+                backgroundColor: 'var(--vscode-badge-background)',
+                color: 'var(--vscode-badge-foreground)',
+                borderRadius: '3px',
+                fontWeight: 600,
+              }}
+            >
+              MULTI
+            </div>
+          )}
         </div>
 
         {/* Question Text */}
@@ -93,22 +115,38 @@ export const AskUserQuestionNodeComponent: React.FC<NodeProps<AskUserQuestionDat
           }}
         />
 
-        {/* Dynamic Output Handles (2-4 branches) */}
-        {data.options.map((option, i) => (
+        {/* Dynamic Output Handles */}
+        {data.multiSelect ? (
+          /* Multi-select: single output handle */
           <Handle
-            key={`branch-${option.label}`}
             type="source"
             position={Position.Right}
-            id={`branch-${i}`}
+            id="output"
             style={{
               width: '12px',
               height: '12px',
               backgroundColor: 'var(--vscode-button-background)',
               border: '2px solid var(--vscode-button-foreground)',
-              top: `${((i + 1) / (data.options.length + 1)) * 100}%`,
             }}
           />
-        ))}
+        ) : (
+          /* Single select: multiple output handles (2-4 branches) */
+          data.options.map((option, i) => (
+            <Handle
+              key={`branch-${option.label}`}
+              type="source"
+              position={Position.Right}
+              id={`branch-${i}`}
+              style={{
+                width: '12px',
+                height: '12px',
+                backgroundColor: 'var(--vscode-button-background)',
+                border: '2px solid var(--vscode-button-foreground)',
+                top: `${((i + 1) / (data.options.length + 1)) * 100}%`,
+              }}
+            />
+          ))
+        )}
       </div>
     );
   }

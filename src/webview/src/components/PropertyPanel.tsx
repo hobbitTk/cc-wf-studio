@@ -465,6 +465,52 @@ const AskUserQuestionProperties: React.FC<{
         />
       </div>
 
+      {/* Multi-Select Toggle */}
+      <div>
+        <label
+          htmlFor="multi-select-checkbox"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            fontSize: '12px',
+            fontWeight: 600,
+            color: 'var(--vscode-foreground)',
+            cursor: 'pointer',
+            gap: '8px',
+          }}
+        >
+          <input
+            id="multi-select-checkbox"
+            type="checkbox"
+            checked={data.multiSelect || false}
+            onChange={(e) => {
+              const isMultiSelect = e.target.checked;
+              updateNodeData(node.id, {
+                multiSelect: isMultiSelect,
+                outputPorts: isMultiSelect ? 1 : normalizedOptions.length,
+              });
+            }}
+            className="nodrag"
+            style={{
+              cursor: 'pointer',
+            }}
+          />
+          <span>Multiple Selection</span>
+        </label>
+        <div
+          style={{
+            fontSize: '11px',
+            color: 'var(--vscode-descriptionForeground)',
+            marginTop: '4px',
+            marginLeft: '24px',
+          }}
+        >
+          {data.multiSelect
+            ? 'User can select multiple options (outputs selected list)'
+            : 'User selects one option (branches to corresponding node)'}
+        </div>
+      </div>
+
       {/* Options */}
       <div>
         <div

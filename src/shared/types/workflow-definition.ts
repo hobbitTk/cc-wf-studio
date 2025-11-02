@@ -53,7 +53,8 @@ export interface QuestionOption {
 export interface AskUserQuestionData {
   questionText: string;
   options: QuestionOption[];
-  outputPorts: number; // 2-4
+  multiSelect?: boolean; // If true, user can select multiple options (default: false)
+  outputPorts: number; // 2-4 for single select, 1 for multi-select
 }
 
 export interface StartNodeData {
