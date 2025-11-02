@@ -57,6 +57,9 @@ export function registerOpenEditorCommand(
       }
     );
 
+    // Set custom icon for the tab
+    currentPanel.iconPath = vscode.Uri.joinPath(context.extensionUri, 'resources', 'icon.png');
+
     // Set webview HTML content
     currentPanel.webview.html = getWebviewContent(currentPanel.webview, context.extensionUri);
 

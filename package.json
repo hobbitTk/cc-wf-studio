@@ -28,7 +28,10 @@
       {
         "command": "cc-wf-studio.openEditor",
         "title": "Claude Code Workflow Studio: Open Editor",
-        "icon": "$(symbol-event)"
+        "icon": {
+          "light": "resources/icon.png",
+          "dark": "resources/icon.png"
+        }
       }
     ],
     "menus": {
