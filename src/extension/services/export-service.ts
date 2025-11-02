@@ -8,6 +8,7 @@
 import * as path from 'node:path';
 import type {
   AskUserQuestionNode,
+  BranchNode,
   PromptNode,
   SubAgentNode,
   Workflow,
@@ -227,6 +228,10 @@ function generateMermaidFlowchart(workflow: Workflow): string {
       const askNode = node as AskUserQuestionNode;
       const questionText = askNode.data.questionText || '質問';
       lines.push(`    ${nodeId}{${escapeLabel(`AskUserQuestion:<br/>${questionText}`)}}`);
+    } else if (nodeType === 'branch') {
+      const branchNode = node as BranchNode;
+      const branchType = branchNode.data.branchType === 'conditional' ? 'Branch' : 'Switch';
+      lines.push(`    ${nodeId}{${escapeLabel(`${branchType}:<br/>条件分岐`)}}`);
     } else if (nodeType === 'prompt') {
       const promptNode = node as PromptNode;
       // Use first line of prompt or default label
@@ -244,7 +249,7 @@ function generateMermaidFlowchart(workflow: Workflow): string {
     const fromId = sanitizeNodeId(conn.from);
     const toId = sanitizeNodeId(conn.to);
 
-    // Find source node to determine if it's an AskUserQuestion with labeled branches
+    // Find source node to determine if it's an AskUserQuestion or Branch with labeled branches
     const sourceNode = nodes.find((n) => n.id === conn.from);
 
     if (sourceNode?.type === 'askUserQuestion' && conn.fromPort) {
@@ -255,6 +260,18 @@ function generateMermaidFlowchart(workflow: Workflow): string {
 
       if (option) {
         const label = escapeLabel(option.label);
+        lines.push(`    ${fromId} -->|${label}| ${toId}`);
+      } else {
+        lines.push(`    ${fromId} --> ${toId}`);
+      }
+    } else if (sourceNode?.type === 'branch' && conn.fromPort) {
+      // Extract branch index from fromPort (e.g., "branch-0" -> 0)
+      const branchIndex = Number.parseInt(conn.fromPort.replace('branch-', ''), 10);
+      const branchNode = sourceNode as BranchNode;
+      const branch = branchNode.data.branches[branchIndex];
+
+      if (branch) {
+        const label = escapeLabel(branch.label);
         lines.push(`    ${fromId} -->|${label}| ${toId}`);
       } else {
         lines.push(`    ${fromId} --> ${toId}`);
@@ -341,6 +358,9 @@ function generateWorkflowExecutionLogic(workflow: Workflow): string {
     '- **ひし形のノード（AskUserQuestion:...）**: AskUserQuestionツールを使用してユーザーに質問し、回答に応じて分岐します'
   );
   sections.push(
+    '- **ひし形のノード（Branch/Switch:...）**: 前処理の結果に応じて自動的に分岐します（詳細セクション参照）'
+  );
+  sections.push(
     '- **四角形のノード（Promptノード）**: 以下の詳細セクションに記載されたプロンプトを実行します'
   );
   sections.push('');
@@ -350,6 +370,7 @@ function generateWorkflowExecutionLogic(workflow: Workflow): string {
   const askUserQuestionNodes = nodes.filter(
     (n) => (n.type as string) === 'askUserQuestion'
   ) as AskUserQuestionNode[];
+  const branchNodes = nodes.filter((n) => (n.type as string) === 'branch') as BranchNode[];
 
   // Prompt node details
   if (promptNodes.length > 0) {
@@ -389,6 +410,27 @@ function generateWorkflowExecutionLogic(workflow: Workflow): string {
       for (const option of node.data.options) {
         sections.push(`- **${option.label}**: ${option.description || '(説明なし)'}`);
       }
+      sections.push('');
+    }
+  }
+
+  // Branch node details
+  if (branchNodes.length > 0) {
+    sections.push('### Branchノード詳細');
+    sections.push('');
+    for (const node of branchNodes) {
+      const nodeId = sanitizeNodeId(node.id);
+      const branchTypeName = node.data.branchType === 'conditional' ? '2分岐' : '複数分岐';
+      sections.push(`#### ${nodeId}(${branchTypeName})`);
+      sections.push('');
+      sections.push('**分岐条件:**');
+      for (const branch of node.data.branches) {
+        sections.push(`- **${branch.label}**: ${branch.condition}`);
+      }
+      sections.push('');
+      sections.push(
+        '**実行方法**: 前段の処理結果を評価し、上記の条件に基づいて自動的に適切な分岐を選択してください。'
+      );
       sections.push('');
     }
   }

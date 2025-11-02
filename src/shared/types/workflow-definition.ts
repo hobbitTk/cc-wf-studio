@@ -11,6 +11,7 @@
 export enum NodeType {
   SubAgent = 'subAgent',
   AskUserQuestion = 'askUserQuestion',
+  Branch = 'branch',
   Start = 'start',
   End = 'end',
   Prompt = 'prompt',
@@ -69,6 +70,18 @@ export interface PromptNodeData {
   variables?: Record<string, string>;
 }
 
+export interface BranchCondition {
+  id?: string; // Unique identifier for the branch
+  label: string; // Branch label (e.g., "Success", "Error")
+  condition: string; // Natural language condition (e.g., "前の処理が成功した場合")
+}
+
+export interface BranchNodeData {
+  branchType: 'conditional' | 'switch'; // 2-way (true/false) or multi-way (switch)
+  branches: BranchCondition[]; // 2 for conditional, 2-N for switch
+  outputPorts: number; // Number of output ports (2 for conditional, 2-N for switch)
+}
+
 // ============================================================================
 // Node Types
 // ============================================================================
@@ -105,7 +118,18 @@ export interface PromptNode extends BaseNode {
   data: PromptNodeData;
 }
 
-export type WorkflowNode = SubAgentNode | AskUserQuestionNode | StartNode | EndNode | PromptNode;
+export interface BranchNode extends BaseNode {
+  type: NodeType.Branch;
+  data: BranchNodeData;
+}
+
+export type WorkflowNode =
+  | SubAgentNode
+  | AskUserQuestionNode
+  | BranchNode
+  | StartNode
+  | EndNode
+  | PromptNode;
 
 // ============================================================================
 // Connection Type
@@ -178,5 +202,13 @@ export const VALIDATION_RULES = {
     OPTION_LABEL_MAX_LENGTH: 50,
     OPTION_DESCRIPTION_MIN_LENGTH: 1,
     OPTION_DESCRIPTION_MAX_LENGTH: 200,
+  },
+  BRANCH: {
+    CONDITION_MIN_LENGTH: 1,
+    CONDITION_MAX_LENGTH: 500,
+    LABEL_MIN_LENGTH: 1,
+    LABEL_MAX_LENGTH: 50,
+    MIN_BRANCHES: 2,
+    MAX_BRANCHES: 10,
   },
 } as const;

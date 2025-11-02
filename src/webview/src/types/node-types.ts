@@ -101,6 +101,67 @@ export interface PromptNodeData {
 export type PromptNode = Node<PromptNodeData, 'prompt'>;
 
 // ============================================================================
+// Branch Node
+// ============================================================================
+
+/**
+ * Branchノードの分岐条件
+ */
+export interface BranchCondition {
+  /**
+   * 分岐の一意識別子 (省略可能)
+   */
+  id?: string;
+
+  /**
+   * 分岐のラベル (必須)
+   *
+   * @example "Success", "Error", "Empty"
+   */
+  label: string;
+
+  /**
+   * 自然言語で記述された条件 (必須)
+   *
+   * @example "前の処理が成功した場合", "エラーが発生した場合"
+   */
+  condition: string;
+}
+
+/**
+ * Branchノードのデータ構造
+ *
+ * 前処理の結果に応じて分岐を行うノードです。
+ */
+export interface BranchNodeData {
+  /**
+   * 分岐タイプ
+   * - conditional: 2分岐 (true/false)
+   * - switch: 複数分岐 (2-N分岐)
+   */
+  branchType: 'conditional' | 'switch';
+
+  /**
+   * 分岐条件のリスト
+   * - conditional: 2つの分岐
+   * - switch: 2-N個の分岐
+   */
+  branches: BranchCondition[];
+
+  /**
+   * 出力ポート数
+   */
+  outputPorts: number;
+}
+
+/**
+ * Branchノード型
+ *
+ * 条件分岐を表すノード。入力と複数の出力接続を持ちます。
+ */
+export type BranchNode = Node<BranchNodeData, 'branch'>;
+
+// ============================================================================
 // Union Type
 // ============================================================================
 
@@ -110,4 +171,4 @@ export type PromptNode = Node<PromptNodeData, 'prompt'>;
  * すべてのカスタムノードタイプを含むユニオン型です。
  * 既存のノードタイプと組み合わせて使用します。
  */
-export type WorkflowNode = StartNode | EndNode | PromptNode;
+export type WorkflowNode = StartNode | EndNode | PromptNode | BranchNode;
