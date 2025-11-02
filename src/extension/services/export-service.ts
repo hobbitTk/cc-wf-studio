@@ -253,16 +253,22 @@ function generateMermaidFlowchart(workflow: Workflow): string {
     const sourceNode = nodes.find((n) => n.id === conn.from);
 
     if (sourceNode?.type === 'askUserQuestion' && conn.fromPort) {
-      // Extract branch index from fromPort (e.g., "branch-0" -> 0)
-      const branchIndex = Number.parseInt(conn.fromPort.replace('branch-', ''), 10);
       const askNode = sourceNode as AskUserQuestionNode;
-      const option = askNode.data.options[branchIndex];
 
-      if (option) {
-        const label = escapeLabel(option.label);
-        lines.push(`    ${fromId} -->|${label}| ${toId}`);
-      } else {
+      // Multi-select: single output without labels
+      if (askNode.data.multiSelect) {
         lines.push(`    ${fromId} --> ${toId}`);
+      } else {
+        // Single select: labeled branches by option
+        const branchIndex = Number.parseInt(conn.fromPort.replace('branch-', ''), 10);
+        const option = askNode.data.options[branchIndex];
+
+        if (option) {
+          const label = escapeLabel(option.label);
+          lines.push(`    ${fromId} -->|${label}| ${toId}`);
+        } else {
+          lines.push(`    ${fromId} --> ${toId}`);
+        }
       }
     } else if (sourceNode?.type === 'branch' && conn.fromPort) {
       // Extract branch index from fromPort (e.g., "branch-0" -> 0)
@@ -406,6 +412,16 @@ function generateWorkflowExecutionLogic(workflow: Workflow): string {
       const nodeId = sanitizeNodeId(node.id);
       sections.push(`#### ${nodeId}(${node.data.questionText})`);
       sections.push('');
+
+      // Show selection mode
+      if (node.data.multiSelect) {
+        sections.push('**選択モード:** 複数選択可能（選択された選択肢のリストが次のノードに渡されます）');
+        sections.push('');
+      } else {
+        sections.push('**選択モード:** 単一選択（選択された選択肢に応じて分岐します）');
+        sections.push('');
+      }
+
       sections.push('**選択肢:**');
       for (const option of node.data.options) {
         sections.push(`- **${option.label}**: ${option.description || '(説明なし)'}`);
