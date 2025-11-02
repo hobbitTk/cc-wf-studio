@@ -60,6 +60,23 @@ export const NodePalette: React.FC = () => {
     addNode(newNode);
   };
 
+  const handleAddBranch = () => {
+    const newNode = {
+      id: `branch-${Date.now()}`,
+      type: 'branch' as const,
+      position: { x: 250, y: 250 },
+      data: {
+        branchType: 'conditional' as const,
+        branches: [
+          { label: 'True', condition: '条件が真の場合' },
+          { label: 'False', condition: '条件が偽の場合' },
+        ],
+        outputPorts: 2,
+      },
+    };
+    addNode(newNode);
+  };
+
   return (
     <div
       className="node-palette"
@@ -84,6 +101,21 @@ export const NodePalette: React.FC = () => {
         }}
       >
         Node Palette
+      </div>
+
+      {/* Section: Basic Nodes */}
+      <div
+        style={{
+          fontSize: '11px',
+          fontWeight: 600,
+          color: 'var(--vscode-descriptionForeground)',
+          marginBottom: '8px',
+          marginTop: '8px',
+          textTransform: 'uppercase',
+          letterSpacing: '0.5px',
+        }}
+      >
+        Basic Nodes
       </div>
 
       {/* Prompt Node Button */}
@@ -162,6 +194,59 @@ export const NodePalette: React.FC = () => {
         </div>
       </button>
 
+      {/* Section: Control Flow */}
+      <div
+        style={{
+          fontSize: '11px',
+          fontWeight: 600,
+          color: 'var(--vscode-descriptionForeground)',
+          marginBottom: '8px',
+          marginTop: '16px',
+          textTransform: 'uppercase',
+          letterSpacing: '0.5px',
+        }}
+      >
+        Control Flow
+      </div>
+
+      {/* Branch Node Button */}
+      <button
+        type="button"
+        onClick={handleAddBranch}
+        style={{
+          width: '100%',
+          padding: '12px',
+          marginBottom: '12px',
+          backgroundColor: 'var(--vscode-button-background)',
+          color: 'var(--vscode-button-foreground)',
+          border: '1px solid var(--vscode-button-border)',
+          borderRadius: '4px',
+          cursor: 'pointer',
+          fontSize: '13px',
+          fontWeight: 500,
+          textAlign: 'left',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '4px',
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.backgroundColor = 'var(--vscode-button-hoverBackground)';
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.backgroundColor = 'var(--vscode-button-background)';
+        }}
+      >
+        <div style={{ fontWeight: 600 }}>Branch</div>
+        <div
+          style={{
+            fontSize: '11px',
+            color: 'var(--vscode-descriptionForeground)',
+          }}
+        >
+          Conditional branching logic
+        </div>
+      </button>
+
       {/* AskUserQuestion Node Button */}
       <button
         type="button"
@@ -169,6 +254,7 @@ export const NodePalette: React.FC = () => {
         style={{
           width: '100%',
           padding: '12px',
+          marginBottom: '12px',
           backgroundColor: 'var(--vscode-button-background)',
           color: 'var(--vscode-button-foreground)',
           border: '1px solid var(--vscode-button-border)',

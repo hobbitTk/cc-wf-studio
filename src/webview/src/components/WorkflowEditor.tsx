@@ -19,6 +19,7 @@ import ReactFlow, {
 } from 'reactflow';
 import { useWorkflowStore } from '../stores/workflow-store';
 import { AskUserQuestionNodeComponent } from './nodes/AskUserQuestionNode';
+import { BranchNodeComponent } from './nodes/BranchNode';
 import { EndNode } from './nodes/EndNode';
 import { PromptNode } from './nodes/PromptNode';
 // 新規ノードタイプのインポート
@@ -29,11 +30,12 @@ import { SubAgentNodeComponent } from './nodes/SubAgentNode';
  * Node types registration (memoized outside component for performance)
  * Based on: /specs/001-cc-wf-studio/research.md section 3.1
  *
- * 新規ノードタイプ (Start, End, Prompt) は実装後にコメント解除
+ * 新規ノードタイプ (Start, End, Prompt, Branch) は実装後にコメント解除
  */
 const nodeTypes: NodeTypes = {
   subAgent: SubAgentNodeComponent,
   askUserQuestion: AskUserQuestionNodeComponent,
+  branch: BranchNodeComponent,
   // 新規ノードタイプ
   start: StartNode,
   end: EndNode,
