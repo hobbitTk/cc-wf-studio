@@ -1,3 +1,9 @@
+## [2.12.0](https://github.com/breaking-brake/cc-wf-studio/compare/v2.11.2...v2.12.0) (2025-11-23)
+
+### Features
+
+* add Slack Workflow Sharing (β) ([#138](https://github.com/breaking-brake/cc-wf-studio/issues/138)) ([a0d34de](https://github.com/breaking-brake/cc-wf-studio/commit/a0d34de6234578db63efb0aeee28c039286d08ce))
+
 ## [2.11.2](https://github.com/breaking-brake/cc-wf-studio/compare/v2.11.1...v2.11.2) (2025-11-22)
 
 ### Bug Fixes
