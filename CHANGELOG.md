@@ -1,3 +1,17 @@
+## [2.13.0](https://github.com/breaking-brake/cc-wf-studio/compare/v2.12.2...v2.13.0) (2025-11-24)
+
+### Features
+
+* add Terms of Use dialog with onboarding tour integration ([#148](https://github.com/breaking-brake/cc-wf-studio/issues/148)) ([fae4334](https://github.com/breaking-brake/cc-wf-studio/commit/fae43340776314f0dfc67008971ea4362ba0197a))
+
+### Bug Fixes
+
+* correct ConnectSlackManualPayload type definition to match implementation ([#147](https://github.com/breaking-brake/cc-wf-studio/issues/147)) ([735033b](https://github.com/breaking-brake/cc-wf-studio/commit/735033b6c9593f50f0d6b72bb7e5235019087d00))
+
+### Code Refactoring
+
+* migrate onboarding tour from react-joyride to driver.js ([#146](https://github.com/breaking-brake/cc-wf-studio/issues/146)) ([62641b8](https://github.com/breaking-brake/cc-wf-studio/commit/62641b85c3d97399c2fefa34586ab9977db3fc4e))
+
 ## [2.12.2](https://github.com/breaking-brake/cc-wf-studio/compare/v2.12.1...v2.12.2) (2025-11-24)
 
 ### Bug Fixes
