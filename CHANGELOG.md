@@ -1,3 +1,9 @@
+## [2.12.1](https://github.com/breaking-brake/cc-wf-studio/compare/v2.12.0...v2.12.1) (2025-11-24)
+
+### Bug Fixes
+
+* resolve Slack import issues and improve setup instructions ([#140](https://github.com/breaking-brake/cc-wf-studio/issues/140)) ([bd264b9](https://github.com/breaking-brake/cc-wf-studio/commit/bd264b938dc8f2934ae4e18e6da4c5ed45031caa))
+
 ## [2.12.0](https://github.com/breaking-brake/cc-wf-studio/compare/v2.11.2...v2.12.0) (2025-11-23)
 
 ### Features
