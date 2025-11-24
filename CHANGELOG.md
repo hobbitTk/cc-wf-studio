@@ -1,3 +1,13 @@
+## [2.12.2](https://github.com/breaking-brake/cc-wf-studio/compare/v2.12.1...v2.12.2) (2025-11-24)
+
+### Bug Fixes
+
+* clear all Slack client cache on token update and disconnect ([#143](https://github.com/breaking-brake/cc-wf-studio/issues/143)) ([4ab26dd](https://github.com/breaking-brake/cc-wf-studio/commit/4ab26dd0fe1f38bb31491ebb56844602747c84a2))
+
+### Documentation
+
+* add Slack sharing demo GIFs and reorganize Key Features ([#142](https://github.com/breaking-brake/cc-wf-studio/issues/142)) ([9ef4d05](https://github.com/breaking-brake/cc-wf-studio/commit/9ef4d059483f75038568e983edb1fc9342e62364))
+
 ## [2.12.1](https://github.com/breaking-brake/cc-wf-studio/compare/v2.12.0...v2.12.1) (2025-11-24)
 
 ### Bug Fixes
