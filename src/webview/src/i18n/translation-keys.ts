@@ -202,6 +202,7 @@ export interface WebviewTranslationKeys {
   'tour.loadWorkflow': string;
   'tour.exportWorkflow': string;
   'tour.refineWithAI': string;
+  'tour.slackShare': string;
   'tour.helpButton': string;
 
   // Tour buttons
@@ -210,6 +211,21 @@ export interface WebviewTranslationKeys {
   'tour.button.finish': string;
   'tour.button.next': string;
   'tour.button.skip': string;
+
+  // Terms of Use
+  'terms.title': string;
+  'terms.introduction': string;
+  'terms.prohibitedUse': string;
+  'terms.cyberAttack': string;
+  'terms.malware': string;
+  'terms.personalDataTheft': string;
+  'terms.otherIllegalActs': string;
+  'terms.liability': string;
+  'terms.agree': string;
+  'terms.agreeButton': string;
+  'terms.cancelButton': string;
+  'terms.warning.aiGeneration': string;
+  'terms.warning.workflow': string;
 
   // Delete Confirmation Dialog
   'dialog.deleteNode.title': string;

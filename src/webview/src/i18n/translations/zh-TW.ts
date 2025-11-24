@@ -212,14 +212,31 @@ export const zhTWWebviewTranslations: WebviewTranslationKeys = {
     '點擊「匯出」按鈕以Claude Code可執行的格式匯出。\n\nSub-Agent匯出到`.claude/agents/`，SlashCommand匯出到`.claude/commands/`。',
   'tour.refineWithAI':
     '使用「AI編輯」按鈕透過與AI對話建立或改善工作流程。\n\n可以從空白畫布開始或以對話方式編輯現有工作流程。',
+  'tour.slackShare':
+    '點擊「分享到Slack」按鈕與團隊分享您的工作流程。\n\n可以將工作流程發布到Slack頻道以便於協作。',
   'tour.helpButton': '要再次檢視此導覽，請點擊說明按鈕(?)。\n\n享受建立工作流程的樂趣！',
 
   // Tour buttons
   'tour.button.back': '返回',
   'tour.button.close': '關閉',
   'tour.button.finish': '完成',
-  'tour.button.next': '下一步 ({step}/{steps})',
+  'tour.button.next': '下一步',
   'tour.button.skip': '略過',
+
+  // Terms of Use
+  'terms.title': 'Claude Code Workflow Studio - 使用條款',
+  'terms.introduction': '本工具支援合法目的的工作流創建。',
+  'terms.prohibitedUse': '禁止以下用途：',
+  'terms.cyberAttack': '網路攻擊（DDoS攻擊、未經授權的訪問等）',
+  'terms.malware': '惡意軟體和勒索軟體的創建',
+  'terms.personalDataTheft': '未經授權收集或濫用個人資訊',
+  'terms.otherIllegalActs': '其他非法活動或對他人造成傷害的行為',
+  'terms.liability': '違規時用戶將承擔全部責任。',
+  'terms.agree': '我同意以上內容',
+  'terms.agreeButton': '同意並開始',
+  'terms.cancelButton': '取消',
+  'terms.warning.aiGeneration': '⚠️ 禁止濫用此功能',
+  'terms.warning.workflow': '⚠️ 此工作流僅應用於合法目的',
 
   // Delete Confirmation Dialog
   'dialog.deleteNode.title': '刪除節點',

@@ -53,7 +53,7 @@ export interface WorkflowListPayload {
 }
 
 export interface InitialStatePayload {
-  isFirstLaunch: boolean;
+  hasAcceptedTerms: boolean;
 }
 
 // ============================================================================
@@ -614,16 +614,8 @@ export interface GetOAuthRedirectUriSuccessPayload {
  * Manual Slack connection request payload
  */
 export interface ConnectSlackManualPayload {
-  /** Workspace name (e.g., "My Team") */
-  workspaceName: string;
-  /** Workspace ID / Team ID (e.g., "T1234567890") */
-  workspaceId: string;
-  /** Team ID (same as workspaceId) */
-  teamId: string;
   /** Slack Bot User OAuth Token (xoxb-...) */
-  accessToken: string;
-  /** User ID who authorized this connection (e.g., "U1234567890") */
-  userId: string;
+  botToken: string;
 }
 
 /**
@@ -835,6 +827,8 @@ export type WebviewMessage =
   | Message<void, 'LOAD_WORKFLOW_LIST'>
   | Message<LoadWorkflowRequestPayload, 'LOAD_WORKFLOW'>
   | Message<StateUpdatePayload, 'STATE_UPDATE'>
+  | Message<void, 'ACCEPT_TERMS'>
+  | Message<void, 'CANCEL_TERMS'>
   | Message<GenerateWorkflowPayload, 'GENERATE_WORKFLOW'>
   | Message<CancelGenerationPayload, 'CANCEL_GENERATION'>
   | Message<void, 'BROWSE_SKILLS'>

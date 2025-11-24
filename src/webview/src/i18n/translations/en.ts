@@ -218,6 +218,8 @@ export const enWebviewTranslations: WebviewTranslationKeys = {
     'Click the "Export" button to export in a format executable by Claude Code.\n\nSub-Agents go to `.claude/agents/` and SlashCommands to `.claude/commands/`.',
   'tour.refineWithAI':
     'Use the "Edit with AI" button to create or improve workflows through an interactive chat with AI.\n\nYou can start from an empty canvas or edit existing workflows conversationally.',
+  'tour.slackShare':
+    'Click the "Share to Slack" button to share your workflow with your team.\n\nYou can post workflows to Slack channels for easy collaboration.',
   'tour.helpButton':
     'To see this tour again, click the help button (?).\n\nEnjoy creating workflows!',
 
@@ -225,8 +227,23 @@ export const enWebviewTranslations: WebviewTranslationKeys = {
   'tour.button.back': 'Back',
   'tour.button.close': 'Close',
   'tour.button.finish': 'Finish',
-  'tour.button.next': 'Next ({step}/{steps})',
+  'tour.button.next': 'Next',
   'tour.button.skip': 'Skip',
+
+  // Terms of Use
+  'terms.title': 'Claude Code Workflow Studio - Terms of Use',
+  'terms.introduction': 'This tool supports workflow creation for legitimate purposes.',
+  'terms.prohibitedUse': 'The following uses are prohibited:',
+  'terms.cyberAttack': 'Cyber attacks (DDoS attacks, unauthorized access, etc.)',
+  'terms.malware': 'Malware and ransomware creation',
+  'terms.personalDataTheft': 'Unauthorized collection or misuse of personal information',
+  'terms.otherIllegalActs': 'Other illegal activities or actions causing harm to others',
+  'terms.liability': 'Users are solely responsible for any violations.',
+  'terms.agree': 'I agree to the above',
+  'terms.agreeButton': 'Agree and Start',
+  'terms.cancelButton': 'Cancel',
+  'terms.warning.aiGeneration': '⚠️ Misuse of this feature is prohibited',
+  'terms.warning.workflow': '⚠️ This workflow should only be used for legitimate purposes',
 
   // Delete Confirmation Dialog
   'dialog.deleteNode.title': 'Delete Node',

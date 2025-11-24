@@ -219,6 +219,8 @@ export const jaWebviewTranslations: WebviewTranslationKeys = {
     '「エクスポート」ボタンをクリックすると、Claude Codeで実行可能な形式にエクスポートされます。\n\nSub-Agentは`.claude/agents/`に、SlashCommandは`.claude/commands/`に出力されます。',
   'tour.refineWithAI':
     '「AI編集」ボタンで、AIとチャットしながらワークフローを生成・改善できます。\n\n空のキャンバスから新規作成も、既存のワークフローの修正も対話的に行えます。',
+  'tour.slackShare':
+    '「Slackに共有」ボタンをクリックすると、チームとワークフローを共有できます。\n\nSlackチャンネルにワークフローを投稿して、簡単にコラボレーションできます。',
   'tour.helpButton':
     'このツアーをもう一度見たい場合は、ヘルプボタン(?)をクリックしてください。\n\nそれでは、ワークフロー作成を楽しんでください！',
 
@@ -226,8 +228,23 @@ export const jaWebviewTranslations: WebviewTranslationKeys = {
   'tour.button.back': '戻る',
   'tour.button.close': '閉じる',
   'tour.button.finish': '完了',
-  'tour.button.next': '次へ ({step}/{steps})',
+  'tour.button.next': '次へ',
   'tour.button.skip': 'スキップ',
+
+  // Terms of Use
+  'terms.title': 'Claude Code Workflow Studio - 利用規約',
+  'terms.introduction': '本ツールは正当な目的でのワークフロー作成を支援します。',
+  'terms.prohibitedUse': '以下の用途での使用を禁止します：',
+  'terms.cyberAttack': 'サイバー攻撃（DDoS攻撃、不正アクセス等）',
+  'terms.malware': 'マルウェア・ランサムウェアの作成',
+  'terms.personalDataTheft': '個人情報の不正取得・悪用',
+  'terms.otherIllegalActs': 'その他の違法行為や他者への損害行為',
+  'terms.liability': '違反した場合、利用者が全責任を負います。',
+  'terms.agree': '上記に同意します',
+  'terms.agreeButton': '同意して開始',
+  'terms.cancelButton': 'キャンセル',
+  'terms.warning.aiGeneration': '⚠️ 本機能の悪用は禁止されています',
+  'terms.warning.workflow': '⚠️ このワークフローは正当な目的でのみ使用してください',
 
   // Delete Confirmation Dialog
   'dialog.deleteNode.title': 'ノードを削除',

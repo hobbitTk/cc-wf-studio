@@ -221,6 +221,8 @@ export const koWebviewTranslations: WebviewTranslationKeys = {
     '"내보내기" 버튼을 클릭하면 Claude Code에서 실행 가능한 형식으로 내보내집니다.\n\nSub-Agent는 `.claude/agents/`로, SlashCommand는 `.claude/commands/`로 이동합니다.',
   'tour.refineWithAI':
     '"AI로 편집" 버튼을 사용하여 AI와 대화하며 워크플로우를 생성하거나 개선할 수 있습니다.\n\n빈 캔버스에서 시작하거나 기존 워크플로우를 대화형으로 수정할 수 있습니다.',
+  'tour.slackShare':
+    '"Slack에 공유" 버튼을 클릭하여 팀과 워크플로우를 공유하세요.\n\nSlack 채널에 워크플로우를 게시하여 쉽게 협업할 수 있습니다.',
   'tour.helpButton':
     '이 투어를 다시 보려면 도움말 버튼(?)을 클릭하세요.\n\n워크플로우 생성을 즐기세요!',
 
@@ -228,8 +230,23 @@ export const koWebviewTranslations: WebviewTranslationKeys = {
   'tour.button.back': '뒤로',
   'tour.button.close': '닫기',
   'tour.button.finish': '완료',
-  'tour.button.next': '다음 ({step}/{steps})',
+  'tour.button.next': '다음',
   'tour.button.skip': '건너뛰기',
+
+  // Terms of Use
+  'terms.title': 'Claude Code Workflow Studio - 이용 약관',
+  'terms.introduction': '이 도구는 정당한 목적의 워크플로우 생성을 지원합니다.',
+  'terms.prohibitedUse': '다음 용도로 사용을 금지합니다:',
+  'terms.cyberAttack': '사이버 공격 (DDoS 공격, 무단 접근 등)',
+  'terms.malware': '악성 코드 및 랜섬웨어 제작',
+  'terms.personalDataTheft': '개인 정보의 무단 수집 또는 오용',
+  'terms.otherIllegalActs': '기타 불법 행위 또는 타인에게 해를 끼치는 행위',
+  'terms.liability': '위반 시 사용자가 전적으로 책임을 집니다.',
+  'terms.agree': '위 내용에 동의합니다',
+  'terms.agreeButton': '동의하고 시작',
+  'terms.cancelButton': '취소',
+  'terms.warning.aiGeneration': '⚠️ 이 기능의 악용은 금지됩니다',
+  'terms.warning.workflow': '⚠️ 이 워크플로우는 정당한 목적으로만 사용해야 합니다',
 
   // Delete Confirmation Dialog
   'dialog.deleteNode.title': '노드 삭제',
