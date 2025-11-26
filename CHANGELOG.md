@@ -1,3 +1,9 @@
+## [2.13.3](https://github.com/breaking-brake/cc-wf-studio/compare/v2.13.2...v2.13.3) (2025-11-26)
+
+### Bug Fixes
+
+* improve badge and description text visibility across UI ([#156](https://github.com/breaking-brake/cc-wf-studio/issues/156)) ([325c6bb](https://github.com/breaking-brake/cc-wf-studio/commit/325c6bbb7073e2b1f881e9d51393bc782d393e07))
+
 ## [2.13.2](https://github.com/breaking-brake/cc-wf-studio/compare/v2.13.1...v2.13.2) (2025-11-25)
 
 ### Bug Fixes
