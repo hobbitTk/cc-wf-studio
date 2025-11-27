@@ -1,3 +1,9 @@
+## [2.14.1](https://github.com/breaking-brake/cc-wf-studio/compare/v2.14.0...v2.14.1) (2025-11-27)
+
+### Bug Fixes
+
+* add refresh button to Skill Browser dialog ([#163](https://github.com/breaking-brake/cc-wf-studio/issues/163)) ([41ac722](https://github.com/breaking-brake/cc-wf-studio/commit/41ac722d3fc5071fe62822554c1f829bee968505))
+
 ## [2.14.0](https://github.com/breaking-brake/cc-wf-studio/compare/v2.13.3...v2.14.0) (2025-11-26)
 
 ### Features
