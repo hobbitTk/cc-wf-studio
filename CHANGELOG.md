@@ -1,3 +1,10 @@
+## [2.15.0](https://github.com/breaking-brake/cc-wf-studio/compare/v2.14.1...v2.15.0) (2025-11-28)
+
+### Features
+
+* add default branch to Switch node ([#166](https://github.com/breaking-brake/cc-wf-studio/issues/166)) ([82b164b](https://github.com/breaking-brake/cc-wf-studio/commit/82b164b970cf9fdc9cfe03226867d53a6cdd3141))
+* add Slack OAuth authentication flow ([#167](https://github.com/breaking-brake/cc-wf-studio/issues/167)) ([7b49a5e](https://github.com/breaking-brake/cc-wf-studio/commit/7b49a5e9369e24598b4e5918d26ddef6d3f61249))
+
 ## [2.14.1](https://github.com/breaking-brake/cc-wf-studio/compare/v2.14.0...v2.14.1) (2025-11-27)
 
 ### Bug Fixes
