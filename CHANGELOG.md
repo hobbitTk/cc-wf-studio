@@ -1,3 +1,9 @@
+## [2.16.0](https://github.com/breaking-brake/cc-wf-studio/compare/v2.15.1...v2.16.0) (2025-11-29)
+
+### Features
+
+* improve Slack sharing with User Token and bot membership check ([#173](https://github.com/breaking-brake/cc-wf-studio/issues/173)) ([48d61b2](https://github.com/breaking-brake/cc-wf-studio/commit/48d61b2bb4c479ffaf9383fa67e3e54763d1e63a))
+
 ## [2.15.1](https://github.com/breaking-brake/cc-wf-studio/compare/v2.15.0...v2.15.1) (2025-11-29)
 
 ### Bug Fixes
