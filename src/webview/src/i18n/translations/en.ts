@@ -597,7 +597,7 @@ export const enWebviewTranslations: WebviewTranslationKeys = {
 
   // Slack Share
   'slack.share.button': 'Share',
-  'slack.share.title': 'Share to Slack β',
+  'slack.share.title': 'Share to Slack',
   'slack.share.selectWorkspace': 'Select workspace',
   'slack.share.selectWorkspacePlaceholder': 'Choose a workspace...',
   'slack.share.selectChannel': 'Select channel',
@@ -628,7 +628,7 @@ export const enWebviewTranslations: WebviewTranslationKeys = {
     'Complete the authentication in your browser, then return here.',
   'slack.oauth.cancelled': 'Authentication was cancelled',
   'slack.oauth.reviewNotice.message':
-    'The Slack App used for sharing is pending Slack review. A warning will be displayed on the permission screen until the review is approved.',
+    'The Slack App used for sharing is pending Slack review.\nA warning will be displayed on the permission screen until the review is approved.',
 
   // Slack Reconnect
   'slack.reconnect.button': 'Reconnect to Slack',
@@ -669,4 +669,11 @@ export const enWebviewTranslations: WebviewTranslationKeys = {
     'The following sensitive data was detected in your workflow:',
   'slack.sensitiveData.warning.continue': 'Share Anyway',
   'slack.sensitiveData.warning.cancel': 'Cancel',
+
+  // Slack Import Connection Required Dialog
+  'slack.import.connectionRequired.title': 'Slack Connection Required',
+  'slack.import.connectionRequired.message':
+    'Please connect to the source Slack workspace to import this workflow. The workflow file is hosted in a workspace that you are not currently connected to.',
+  'slack.import.connectionRequired.workspaceInfo': 'Source Workspace:',
+  'slack.import.connectionRequired.connectButton': 'Connect to Slack',
 };

@@ -592,7 +592,7 @@ export const koWebviewTranslations: WebviewTranslationKeys = {
 
   // Slack Share
   'slack.share.button': '공유',
-  'slack.share.title': 'Slack에 공유 β 버전',
+  'slack.share.title': 'Slack에 공유',
   'slack.share.selectWorkspace': '워크스페이스 선택',
   'slack.share.selectWorkspacePlaceholder': '워크스페이스를 선택하세요...',
   'slack.share.selectChannel': '채널 선택',
@@ -622,7 +622,7 @@ export const koWebviewTranslations: WebviewTranslationKeys = {
   'slack.oauth.status.waitingHint': '브라우저에서 인증을 완료한 후 여기로 돌아오세요.',
   'slack.oauth.cancelled': '인증이 취소되었습니다',
   'slack.oauth.reviewNotice.message':
-    '공유에 사용되는 Slack 앱은 Slack 심사 예정입니다. 심사 승인이 완료될 때까지 권한 화면에 경고가 표시됩니다.',
+    '공유에 사용되는 Slack 앱은 Slack 심사 예정입니다.\n심사 승인이 완료될 때까지 권한 화면에 경고가 표시됩니다.',
 
   // Slack Reconnect
   'slack.reconnect.button': 'Reconnect to Slack',
@@ -662,4 +662,11 @@ export const koWebviewTranslations: WebviewTranslationKeys = {
     '워크플로우에서 다음과 같은 민감한 데이터가 감지되었습니다:',
   'slack.sensitiveData.warning.continue': '그래도 공유',
   'slack.sensitiveData.warning.cancel': '취소',
+
+  // Slack Import Connection Required Dialog
+  'slack.import.connectionRequired.title': 'Slack 연결이 필요합니다',
+  'slack.import.connectionRequired.message':
+    '이 워크플로우를 가져오려면 원본 Slack 워크스페이스에 연결해야 합니다. 워크플로우 파일이 현재 연결되지 않은 워크스페이스에 있습니다.',
+  'slack.import.connectionRequired.workspaceInfo': '원본 워크스페이스:',
+  'slack.import.connectionRequired.connectButton': 'Slack에 연결',
 };

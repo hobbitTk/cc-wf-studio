@@ -568,7 +568,7 @@ export const zhCNWebviewTranslations: WebviewTranslationKeys = {
 
   // Slack Share
   'slack.share.button': '分享',
-  'slack.share.title': '分享到 Slack β版',
+  'slack.share.title': '分享到 Slack',
   'slack.share.selectWorkspace': '选择工作区',
   'slack.share.selectWorkspacePlaceholder': '选择一个工作区...',
   'slack.share.selectChannel': '选择频道',
@@ -598,7 +598,7 @@ export const zhCNWebviewTranslations: WebviewTranslationKeys = {
   'slack.oauth.status.waitingHint': '在浏览器中完成身份验证后返回此处。',
   'slack.oauth.cancelled': '身份验证已取消',
   'slack.oauth.reviewNotice.message':
-    '用于共享的 Slack 应用计划进行 Slack 审核。在审核通过之前，权限画面会显示警告。',
+    '用于共享的 Slack 应用计划进行 Slack 审核。\n在审核通过之前，权限画面会显示警告。',
 
   // Slack Reconnect
   'slack.reconnect.button': 'Reconnect to Slack',
@@ -637,4 +637,11 @@ export const zhCNWebviewTranslations: WebviewTranslationKeys = {
   'slack.sensitiveData.warning.message': '在您的工作流中检测到以下敏感数据:',
   'slack.sensitiveData.warning.continue': '仍然分享',
   'slack.sensitiveData.warning.cancel': '取消',
+
+  // Slack Import Connection Required Dialog
+  'slack.import.connectionRequired.title': '需要连接 Slack',
+  'slack.import.connectionRequired.message':
+    '要导入此工作流，请连接到源 Slack 工作区。工作流文件位于当前未连接的工作区中。',
+  'slack.import.connectionRequired.workspaceInfo': '源工作区:',
+  'slack.import.connectionRequired.connectButton': '连接到 Slack',
 };
