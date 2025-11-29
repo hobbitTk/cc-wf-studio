@@ -1,3 +1,9 @@
+## [2.15.1](https://github.com/breaking-brake/cc-wf-studio/compare/v2.15.0...v2.15.1) (2025-11-29)
+
+### Bug Fixes
+
+* improve Slack import error handling and add files:read scope ([#169](https://github.com/breaking-brake/cc-wf-studio/issues/169)) ([740eef3](https://github.com/breaking-brake/cc-wf-studio/commit/740eef32741db225c839159b873926319c70d1d8))
+
 ## [2.15.0](https://github.com/breaking-brake/cc-wf-studio/compare/v2.14.1...v2.15.0) (2025-11-28)
 
 ### Features
