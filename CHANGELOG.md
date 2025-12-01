@@ -1,3 +1,9 @@
+## [2.17.2](https://github.com/breaking-brake/cc-wf-studio/compare/v2.17.1...v2.17.2) (2025-12-01)
+
+### Bug Fixes
+
+* migrate Slack integration from Bot Token to User Token ([#185](https://github.com/breaking-brake/cc-wf-studio/issues/185)) ([a6d2ce9](https://github.com/breaking-brake/cc-wf-studio/commit/a6d2ce90e14820a8aaa890c303a7ab74a7bf5544))
+
 ## [2.17.1](https://github.com/breaking-brake/cc-wf-studio/compare/v2.17.0...v2.17.1) (2025-11-30)
 
 ### Bug Fixes
