@@ -1,3 +1,11 @@
+## [2.17.3](https://github.com/breaking-brake/cc-wf-studio/compare/v2.17.2...v2.17.3) (2025-12-01)
+
+### Bug Fixes
+
+* remove Author display and users:read scope from Slack sharing ([#187](https://github.com/breaking-brake/cc-wf-studio/issues/187)) ([17aaa83](https://github.com/breaking-brake/cc-wf-studio/commit/17aaa835467800c7cd755bf1146678ad191d8d61))
+* remove Bot Token required check from manual connection ([#189](https://github.com/breaking-brake/cc-wf-studio/issues/189)) ([18c00d7](https://github.com/breaking-brake/cc-wf-studio/commit/18c00d705e0b9a38f6505253882723b00d752e6e))
+* update Slack App setup instructions for User Token only ([#188](https://github.com/breaking-brake/cc-wf-studio/issues/188)) ([a8e4463](https://github.com/breaking-brake/cc-wf-studio/commit/a8e44636736a8c0adeb9a6a868da2c090cfce11d))
+
 ## [2.17.2](https://github.com/breaking-brake/cc-wf-studio/compare/v2.17.1...v2.17.2) (2025-12-01)
 
 ### Bug Fixes
