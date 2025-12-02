@@ -1,3 +1,17 @@
+## [3.0.0](https://github.com/breaking-brake/cc-wf-studio/compare/v2.17.4...v3.0.0) (2025-12-02)
+
+### ⚠ BREAKING CHANGES
+
+* License changed from MIT to AGPL-3.0-or-later
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+Co-authored-by: Claude <noreply@anthropic.com>
+
+### Miscellaneous Chores
+
+* change license from MIT to AGPL-3.0 ([#208](https://github.com/breaking-brake/cc-wf-studio/issues/208)) ([6553eb8](https://github.com/breaking-brake/cc-wf-studio/commit/6553eb8880fa751d74fa3f878c54ad92509c5915))
+
 ## [2.17.4](https://github.com/breaking-brake/cc-wf-studio/compare/v2.17.3...v2.17.4) (2025-12-02)
 
 ### Bug Fixes
