@@ -1,3 +1,13 @@
+## [3.1.0](https://github.com/breaking-brake/cc-wf-studio/compare/v3.0.0...v3.1.0) (2025-12-03)
+
+### Features
+
+* add AI-assisted description generation for Slack sharing ([#212](https://github.com/breaking-brake/cc-wf-studio/issues/212)) ([f41908d](https://github.com/breaking-brake/cc-wf-studio/commit/f41908dbfaad504648731dad9160d1155b647119))
+
+### Code Refactoring
+
+* clean up unused scope validation methods in SlackTokenManager ([#210](https://github.com/breaking-brake/cc-wf-studio/issues/210)) ([5c4c188](https://github.com/breaking-brake/cc-wf-studio/commit/5c4c1887d96b2f29e38c3ea7b8b8c6c747d4fe04)), closes [#172](https://github.com/breaking-brake/cc-wf-studio/issues/172)
+
 ## [3.0.0](https://github.com/breaking-brake/cc-wf-studio/compare/v2.17.4...v3.0.0) (2025-12-02)
 
 ### ⚠ BREAKING CHANGES
