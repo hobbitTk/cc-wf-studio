@@ -4,10 +4,6 @@
 
 * License changed from MIT to AGPL-3.0-or-later
 
-🤖 Generated with [Claude Code](https://claude.com/claude-code)
-
-Co-authored-by: Claude <noreply@anthropic.com>
-
 ### Miscellaneous Chores
 
 * change license from MIT to AGPL-3.0 ([#208](https://github.com/breaking-brake/cc-wf-studio/issues/208)) ([6553eb8](https://github.com/breaking-brake/cc-wf-studio/commit/6553eb8880fa751d74fa3f878c54ad92509c5915))
