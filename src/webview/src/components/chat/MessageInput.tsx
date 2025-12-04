@@ -9,6 +9,7 @@
 
 import type React from 'react';
 import { useId } from 'react';
+import { useResponsiveFonts } from '../../contexts/ResponsiveFontContext';
 import { useTranslation } from '../../i18n/i18n-context';
 import { cancelWorkflowRefinement } from '../../services/refinement-service';
 import { useRefinementStore } from '../../stores/refinement-store';
@@ -24,6 +25,7 @@ interface MessageInputProps {
 export function MessageInput({ onSend }: MessageInputProps) {
   const { t } = useTranslation();
   const textareaId = useId();
+  const { isCompact, ...fontSizes } = useResponsiveFonts();
   const { currentInput, setInput, canSend, isProcessing, currentRequestId } = useRefinementStore();
 
   const handleSend = () => {
@@ -48,7 +50,6 @@ export function MessageInput({ onSend }: MessageInputProps) {
     }
   };
 
-  const remainingChars = MAX_MESSAGE_LENGTH - currentInput.length;
   const isTooLong = currentInput.length > MAX_MESSAGE_LENGTH;
   const isTooShort = currentInput.trim().length < MIN_MESSAGE_LENGTH;
 
@@ -74,7 +75,7 @@ export function MessageInput({ onSend }: MessageInputProps) {
           color: 'var(--vscode-input-foreground)',
           border: `1px solid var(--vscode-input-border)`,
           borderRadius: '4px',
-          fontSize: '13px',
+          fontSize: `${fontSizes.base}px`,
           fontFamily: 'var(--vscode-font-family)',
           resize: 'vertical',
         }}
@@ -84,32 +85,37 @@ export function MessageInput({ onSend }: MessageInputProps) {
       <div
         style={{
           display: 'flex',
+          flexDirection: isCompact ? 'column' : 'row',
           justifyContent: 'space-between',
-          alignItems: 'center',
+          alignItems: isCompact ? 'stretch' : 'center',
+          gap: isCompact ? '8px' : '0',
           marginTop: '8px',
         }}
       >
+        {/* Row 1: Character count + Timeout selector */}
         <div
           style={{
             display: 'flex',
+            justifyContent: 'space-between',
             alignItems: 'center',
             gap: '12px',
           }}
         >
           <div
             style={{
-              fontSize: '12px',
+              fontSize: `${fontSizes.button}px`,
               color: isTooLong
                 ? 'var(--vscode-errorForeground)'
                 : 'var(--vscode-descriptionForeground)',
             }}
           >
-            {t('refinement.charactersRemaining', { count: remainingChars })}
+            {currentInput.length}/{MAX_MESSAGE_LENGTH}
           </div>
 
           <TimeoutSelector />
         </div>
 
+        {/* Row 2 (compact) / Same row (normal): Send/Cancel button */}
         {isProcessing ? (
           <button
             type="button"
@@ -121,6 +127,7 @@ export function MessageInput({ onSend }: MessageInputProps) {
               border: 'none',
               borderRadius: '4px',
               cursor: 'pointer',
+              width: isCompact ? '100%' : 'auto',
             }}
           >
             {t('refinement.cancelButton')}
@@ -138,6 +145,7 @@ export function MessageInput({ onSend }: MessageInputProps) {
               borderRadius: '4px',
               cursor: canSend() && !isTooLong && !isTooShort ? 'pointer' : 'not-allowed',
               opacity: canSend() && !isTooLong && !isTooShort ? 1 : 0.5,
+              width: isCompact ? '100%' : 'auto',
             }}
           >
             {t('refinement.sendButton')}
