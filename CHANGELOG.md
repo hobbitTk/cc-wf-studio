@@ -1,3 +1,9 @@
+## [3.2.2](https://github.com/breaking-brake/cc-wf-studio/compare/v3.2.1...v3.2.2) (2025-12-04)
+
+### Bug Fixes
+
+* add responsive design to RefinementChatPanel ([#219](https://github.com/breaking-brake/cc-wf-studio/issues/219)) ([82f1949](https://github.com/breaking-brake/cc-wf-studio/commit/82f194950484da8722a9640e5f80cec9d53ada6c))
+
 ## [3.2.1](https://github.com/breaking-brake/cc-wf-studio/compare/v3.2.0...v3.2.1) (2025-12-04)
 
 ### Bug Fixes
