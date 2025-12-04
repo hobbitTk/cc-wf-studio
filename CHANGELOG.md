@@ -1,3 +1,9 @@
+## [3.2.1](https://github.com/breaking-brake/cc-wf-studio/compare/v3.2.0...v3.2.1) (2025-12-04)
+
+### Bug Fixes
+
+* remove redundant 'Node' suffix from property panel node type labels ([#217](https://github.com/breaking-brake/cc-wf-studio/issues/217)) ([4e23854](https://github.com/breaking-brake/cc-wf-studio/commit/4e23854ebd140f86c02266bb37f8c6c6c5a41d0e))
+
 ## [3.2.0](https://github.com/breaking-brake/cc-wf-studio/compare/v3.1.0...v3.2.0) (2025-12-03)
 
 ### Features
