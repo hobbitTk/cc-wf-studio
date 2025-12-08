@@ -22,7 +22,9 @@ import ReactFlow, {
 } from 'reactflow';
 import { useIsCompactMode } from '../../hooks/useWindowWidth';
 import { useTranslation } from '../../i18n/i18n-context';
+import { generateWorkflowName } from '../../services/ai-generation-service';
 import { useWorkflowStore } from '../../stores/workflow-store';
+import { AiGenerateButton } from '../common/AiGenerateButton';
 import { InteractionModeToggle } from '../InteractionModeToggle';
 import { NodePalette } from '../NodePalette';
 import { AskUserQuestionNodeComponent } from '../nodes/AskUserQuestionNode';
@@ -77,7 +79,7 @@ interface SubAgentFlowDialogProps {
  * Inner component that uses ReactFlow hooks
  */
 const SubAgentFlowDialogContent: React.FC<SubAgentFlowDialogProps> = ({ isOpen, onClose }) => {
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
   const isCompact = useIsCompactMode();
   const dialogRef = useRef<HTMLDivElement>(null);
 
@@ -106,12 +108,31 @@ const SubAgentFlowDialogContent: React.FC<SubAgentFlowDialogProps> = ({ isOpen, 
   // Sub-Agent Flow name validation state
   const [nameError, setNameError] = useState<string | null>(null);
 
+  // Local name state (not saved to store until submit)
+  const [localName, setLocalName] = useState<string>('');
+
+  // Initialize local name when dialog opens (activeSubAgentFlowId changes)
+  useEffect(() => {
+    if (activeSubAgentFlowId) {
+      const flow = subAgentFlows.find((sf) => sf.id === activeSubAgentFlowId);
+      if (flow) {
+        setLocalName(flow.name);
+        setNameError(null);
+      }
+    }
+  }, [activeSubAgentFlowId, subAgentFlows]);
+
+  // AI name generation state
+  const [isGeneratingName, setIsGeneratingName] = useState(false);
+  const generationNameRequestIdRef = useRef<string | null>(null);
+
   // Sub-Agent Flow name pattern validation
   const SUBAGENTFLOW_NAME_PATTERN = /^[a-zA-Z0-9_-]+$/;
 
-  // Handle name change with validation and immediate save
+  // Handle name change with validation (local state only, saved on submit)
   const handleNameChange = useCallback(
     (value: string) => {
+      setLocalName(value);
       if (value.length === 0) {
         setNameError(t('error.subAgentFlow.nameRequired'));
       } else if (value.length > 50) {
@@ -120,20 +141,89 @@ const SubAgentFlowDialogContent: React.FC<SubAgentFlowDialogProps> = ({ isOpen, 
         setNameError(t('error.subAgentFlow.invalidName'));
       } else {
         setNameError(null);
-        // Save immediately when valid
-        if (activeSubAgentFlowId) {
-          updateSubAgentFlow(activeSubAgentFlowId, { name: value });
-        }
       }
     },
-    [t, activeSubAgentFlowId, updateSubAgentFlow]
+    [t]
   );
 
-  // Handle Submit: Save sub-agent flow and close dialog
+  // Handle AI name generation for Sub-Agent Flow
+  const handleGenerateSubAgentFlowName = useCallback(async () => {
+    if (!activeSubAgentFlow) return;
+
+    const currentRequestId = `gen-subagentflow-name-${Date.now()}`;
+    generationNameRequestIdRef.current = currentRequestId;
+    setIsGeneratingName(true);
+
+    try {
+      // Serialize the sub-agent flow structure for AI analysis
+      const subAgentFlowJson = JSON.stringify(
+        {
+          name: activeSubAgentFlow.name,
+          description: activeSubAgentFlow.description,
+          nodes: nodes.map((node) => ({
+            id: node.id,
+            type: node.type,
+            data: node.data,
+          })),
+          connections: edges.map((edge) => ({
+            from: edge.source,
+            to: edge.target,
+          })),
+        },
+        null,
+        2
+      );
+
+      // Determine target language from locale
+      let targetLanguage = locale;
+      if (locale.startsWith('zh-')) {
+        targetLanguage = locale === 'zh-TW' || locale === 'zh-HK' ? 'zh-TW' : 'zh-CN';
+      } else {
+        targetLanguage = locale.split('-')[0];
+      }
+
+      // Generate name with AI
+      const generatedName = await generateWorkflowName(subAgentFlowJson, targetLanguage);
+
+      // Only update if not cancelled
+      if (generationNameRequestIdRef.current === currentRequestId) {
+        // Validate and apply the generated name (remove invalid characters)
+        const validatedName = generatedName.replace(/[^a-zA-Z0-9_-]/g, '-');
+        const truncatedName = validatedName.slice(0, 50);
+
+        if (truncatedName.length > 0) {
+          setLocalName(truncatedName);
+          setNameError(null);
+        }
+      }
+    } catch (error) {
+      // Only log error if not cancelled
+      if (generationNameRequestIdRef.current === currentRequestId) {
+        console.error('Failed to generate Sub-Agent Flow name:', error);
+      }
+    } finally {
+      if (generationNameRequestIdRef.current === currentRequestId) {
+        setIsGeneratingName(false);
+        generationNameRequestIdRef.current = null;
+      }
+    }
+  }, [activeSubAgentFlow, nodes, edges, locale]);
+
+  // Handle cancel name generation
+  const handleCancelNameGeneration = useCallback(() => {
+    generationNameRequestIdRef.current = null;
+    setIsGeneratingName(false);
+  }, []);
+
+  // Handle Submit: Save sub-agent flow name and close dialog
   const handleSubmit = useCallback(() => {
-    // onClose will save the sub-agent flow via setActiveSubAgentFlowId(null)
+    // Save name to store only on submit (if valid)
+    if (activeSubAgentFlowId && localName && !nameError) {
+      updateSubAgentFlow(activeSubAgentFlowId, { name: localName });
+    }
+    // onClose will save the sub-agent flow canvas via setActiveSubAgentFlowId(null)
     onClose();
-  }, [onClose]);
+  }, [activeSubAgentFlowId, localName, nameError, updateSubAgentFlow, onClose]);
 
   // Handle Cancel: Discard sub-agent flow and close dialog
   const handleCancel = useCallback(() => {
@@ -290,27 +380,48 @@ const SubAgentFlowDialogContent: React.FC<SubAgentFlowDialogProps> = ({ isOpen, 
             >
               Sub-Agent Flow
             </span>
-            {/* Always-visible input field (Toolbar style) */}
+            {/* Always-visible input field (Toolbar style) with AI Generate button inside */}
             <div style={{ display: 'flex', flexDirection: 'column', flex: 1, maxWidth: '300px' }}>
-              <input
-                type="text"
-                value={activeSubAgentFlow.name}
-                onChange={(e) => handleNameChange(e.target.value)}
-                onKeyDown={(e) => e.stopPropagation()}
-                style={{
-                  width: '100%',
-                  padding: '4px 8px',
-                  backgroundColor: 'var(--vscode-input-background)',
-                  color: 'var(--vscode-input-foreground)',
-                  border: nameError
-                    ? '1px solid var(--vscode-inputValidation-errorBorder)'
-                    : '1px solid var(--vscode-input-border)',
-                  borderRadius: '2px',
-                  fontSize: '13px',
-                  boxSizing: 'border-box',
-                }}
-                placeholder={t('subAgentFlow.namePlaceholder')}
-              />
+              <div style={{ position: 'relative' }}>
+                <input
+                  type="text"
+                  value={localName}
+                  onChange={(e) => handleNameChange(e.target.value)}
+                  onKeyDown={(e) => e.stopPropagation()}
+                  disabled={isGeneratingName}
+                  style={{
+                    width: '100%',
+                    padding: '4px 44px 4px 8px',
+                    backgroundColor: 'var(--vscode-input-background)',
+                    color: 'var(--vscode-input-foreground)',
+                    border: nameError
+                      ? '1px solid var(--vscode-inputValidation-errorBorder)'
+                      : '1px solid var(--vscode-input-border)',
+                    borderRadius: '2px',
+                    fontSize: '13px',
+                    boxSizing: 'border-box',
+                    opacity: isGeneratingName ? 0.7 : 1,
+                  }}
+                  placeholder={t('subAgentFlow.namePlaceholder')}
+                />
+                {/* AI Generate / Cancel Button (positioned inside input) */}
+                <div
+                  style={{
+                    position: 'absolute',
+                    right: '4px',
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                  }}
+                >
+                  <AiGenerateButton
+                    isGenerating={isGeneratingName}
+                    onGenerate={handleGenerateSubAgentFlowName}
+                    onCancel={handleCancelNameGeneration}
+                    generateTooltip={t('subAgentFlow.generateNameWithAI')}
+                    cancelTooltip={t('cancel')}
+                  />
+                </div>
+              </div>
               {nameError && (
                 <span
                   style={{
