@@ -1,3 +1,10 @@
+## [3.5.3](https://github.com/breaking-brake/cc-wf-studio/compare/v3.5.2...v3.5.3) (2025-12-10)
+
+### Bug Fixes
+
+* preserve SubAgentFlow references when opening AI edit dialog ([#248](https://github.com/breaking-brake/cc-wf-studio/issues/248)) ([443aa1a](https://github.com/breaking-brake/cc-wf-studio/commit/443aa1a08746a0a942cf9218e441afb4f1272eda))
+* prevent SubAgentFlow canvas overwrite when opening AI edit dialog ([#249](https://github.com/breaking-brake/cc-wf-studio/issues/249)) ([f6835a8](https://github.com/breaking-brake/cc-wf-studio/commit/f6835a8c102affd9e63d570084cc2126f1b6f869))
+
 ## [3.5.2](https://github.com/breaking-brake/cc-wf-studio/compare/v3.5.1...v3.5.2) (2025-12-10)
 
 ### Improvements
