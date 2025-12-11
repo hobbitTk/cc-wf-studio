@@ -1,3 +1,9 @@
+## [3.5.5](https://github.com/breaking-brake/cc-wf-studio/compare/v3.5.4...v3.5.5) (2025-12-11)
+
+### Bug Fixes
+
+* enable keyboard copy-paste in flow name editing fields ([#253](https://github.com/breaking-brake/cc-wf-studio/issues/253)) ([0173783](https://github.com/breaking-brake/cc-wf-studio/commit/01737836bfbc729bf21f1dd30699317277f21a17))
+
 ## [3.5.4](https://github.com/breaking-brake/cc-wf-studio/compare/v3.5.3...v3.5.4) (2025-12-11)
 
 ### Bug Fixes
