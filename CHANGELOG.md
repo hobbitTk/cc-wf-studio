@@ -1,3 +1,13 @@
+## [3.5.6](https://github.com/breaking-brake/cc-wf-studio/compare/v3.5.5...v3.5.6) (2025-12-12)
+
+### Bug Fixes
+
+* include SubAgentFlows in Slack workflow export ([#255](https://github.com/breaking-brake/cc-wf-studio/issues/255)) ([38e11e0](https://github.com/breaking-brake/cc-wf-studio/commit/38e11e0b30400370ead4621aea9f920a5bd596dd))
+
+### Improvements
+
+* add minimap visibility toggle with container UI ([#257](https://github.com/breaking-brake/cc-wf-studio/issues/257)) ([6eaf579](https://github.com/breaking-brake/cc-wf-studio/commit/6eaf5791e97ff013e7b811139e3b199212ccbe31))
+
 ## [3.5.5](https://github.com/breaking-brake/cc-wf-studio/compare/v3.5.4...v3.5.5) (2025-12-11)
 
 ### Bug Fixes
