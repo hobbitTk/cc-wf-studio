@@ -1,3 +1,9 @@
+## [3.6.0](https://github.com/breaking-brake/cc-wf-studio/compare/v3.5.6...v3.6.0) (2025-12-12)
+
+### Features
+
+* add TOON schema format for AI prompt optimization ([#260](https://github.com/breaking-brake/cc-wf-studio/issues/260)) ([5c99416](https://github.com/breaking-brake/cc-wf-studio/commit/5c99416a6e4c98b76ce8930f47badb6228e526d4))
+
 ## [3.5.6](https://github.com/breaking-brake/cc-wf-studio/compare/v3.5.5...v3.5.6) (2025-12-12)
 
 ### Bug Fixes
