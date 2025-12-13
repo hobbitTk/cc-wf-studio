@@ -1,3 +1,10 @@
+## [3.6.1](https://github.com/breaking-brake/cc-wf-studio/compare/v3.6.0...v3.6.1) (2025-12-13)
+
+### Improvements
+
+* add model, tools, and color settings to SubAgentFlow nodes ([#262](https://github.com/breaking-brake/cc-wf-studio/issues/262)) ([0010dca](https://github.com/breaking-brake/cc-wf-studio/commit/0010dca14eb307ebc9f7350c516ec7f187f851c9))
+* reduce MiniMap vertical margin ([#263](https://github.com/breaking-brake/cc-wf-studio/issues/263)) ([6ce42f5](https://github.com/breaking-brake/cc-wf-studio/commit/6ce42f5f7772b2f0129efa1ae60f52192c8d1c62))
+
 ## [3.6.0](https://github.com/breaking-brake/cc-wf-studio/compare/v3.5.6...v3.6.0) (2025-12-12)
 
 ### Features
