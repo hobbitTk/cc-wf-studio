@@ -1,3 +1,9 @@
+## [3.7.0](https://github.com/breaking-brake/cc-wf-studio/compare/v3.6.1...v3.7.0) (2025-12-13)
+
+### Features
+
+* add local codebase indexing with BM25 full-text search ([#265](https://github.com/breaking-brake/cc-wf-studio/issues/265)) ([#266](https://github.com/breaking-brake/cc-wf-studio/issues/266)) ([a0fa749](https://github.com/breaking-brake/cc-wf-studio/commit/a0fa7496a86a4b6c031d353afe2f9a67a95d2a7b))
+
 ## [3.6.1](https://github.com/breaking-brake/cc-wf-studio/compare/v3.6.0...v3.6.1) (2025-12-13)
 
 ### Improvements
