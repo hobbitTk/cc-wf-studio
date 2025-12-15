@@ -1,3 +1,9 @@
+## [3.7.2](https://github.com/breaking-brake/cc-wf-studio/compare/v3.7.1...v3.7.2) (2025-12-15)
+
+### Improvements
+
+* consolidate AI refinement settings into dropdown menu ([#272](https://github.com/breaking-brake/cc-wf-studio/issues/272)) ([faee579](https://github.com/breaking-brake/cc-wf-studio/commit/faee579b43b4c29df318849b96cd8cf27e15f2aa))
+
 ## [3.7.1](https://github.com/breaking-brake/cc-wf-studio/compare/v3.7.0...v3.7.1) (2025-12-14)
 
 ### Improvements
