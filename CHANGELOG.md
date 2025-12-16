@@ -1,3 +1,9 @@
+## [3.7.3](https://github.com/breaking-brake/cc-wf-studio/compare/v3.7.2...v3.7.3) (2025-12-16)
+
+### Improvements
+
+* consolidate toolbar actions into More dropdown menu ([#283](https://github.com/breaking-brake/cc-wf-studio/issues/283)) ([3b54082](https://github.com/breaking-brake/cc-wf-studio/commit/3b54082c740219865daaa3d3def85897a3fbb567))
+
 ## [3.7.2](https://github.com/breaking-brake/cc-wf-studio/compare/v3.7.1...v3.7.2) (2025-12-15)
 
 ### Improvements
