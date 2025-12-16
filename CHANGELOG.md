@@ -1,3 +1,9 @@
+## [3.7.4](https://github.com/breaking-brake/cc-wf-studio/compare/v3.7.3...v3.7.4) (2025-12-16)
+
+### Improvements
+
+* add collapsible NodePalette and persist minimap state ([#285](https://github.com/breaking-brake/cc-wf-studio/issues/285)) ([476760a](https://github.com/breaking-brake/cc-wf-studio/commit/476760acd24b4cffd6e5cc2b5e5b8b983a123ff9))
+
 ## [3.7.3](https://github.com/breaking-brake/cc-wf-studio/compare/v3.7.2...v3.7.3) (2025-12-16)
 
 ### Improvements
