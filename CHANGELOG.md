@@ -1,3 +1,10 @@
+## [3.8.1](https://github.com/breaking-brake/cc-wf-studio/compare/v3.8.0...v3.8.1) (2025-12-17)
+
+### Bug Fixes
+
+* dialog positioning broken by NodePalette transform ([#290](https://github.com/breaking-brake/cc-wf-studio/issues/290)) ([b1adb8f](https://github.com/breaking-brake/cc-wf-studio/commit/b1adb8fdda690aa9288def8088d29da7325c289f))
+* improve JSON parsing to handle nested markdown code blocks ([#289](https://github.com/breaking-brake/cc-wf-studio/issues/289)) ([d0ca208](https://github.com/breaking-brake/cc-wf-studio/commit/d0ca20880ed22a2ed1550746136487015567545d))
+
 ## [3.8.0](https://github.com/breaking-brake/cc-wf-studio/compare/v3.7.4...v3.8.0) (2025-12-17)
 
 ### Features
