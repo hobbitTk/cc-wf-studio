@@ -86,6 +86,7 @@ export function RefinementChatPanel({
     useCodebaseSearch,
     selectedModel,
     updateMessageToolInfo,
+    allowedTools,
   } = useRefinementStore();
 
   const { activeWorkflow, updateWorkflow, subAgentFlows, updateSubAgentFlow, setNodes, setEdges } =
@@ -240,7 +241,8 @@ export function RefinementChatPanel({
           requestId,
           useSkills,
           timeoutSeconds * 1000,
-          selectedModel
+          selectedModel,
+          allowedTools
         );
 
         if (result.type === 'success') {
@@ -350,7 +352,8 @@ export function RefinementChatPanel({
           useSkills,
           timeoutSeconds * 1000,
           onProgress,
-          selectedModel
+          selectedModel,
+          allowedTools
         );
 
         if (result.type === 'success') {
@@ -400,14 +403,15 @@ export function RefinementChatPanel({
             }
           }
         } else if (result.type === 'clarification') {
-          if (hasReceivedProgress && latestExplanatoryText) {
-            // Replace display text with explanatory text only
-            updateMessageContent(aiMessageId, latestExplanatoryText);
-            updateMessageLoadingState(aiMessageId, false);
+          // Always use the complete clarification message from result.payload
+          updateMessageContent(aiMessageId, result.payload.aiMessage.content);
+          updateMessageLoadingState(aiMessageId, false);
+
+          if (hasReceivedProgress) {
+            // Streaming occurred, use finishProcessing to preserve frontend messages
             finishProcessing();
           } else {
-            updateMessageContent(aiMessageId, result.payload.aiMessage.content);
-            updateMessageLoadingState(aiMessageId, false);
+            // No streaming, update conversation history normally
             handleRefinementSuccess(
               result.payload.aiMessage,
               result.payload.updatedConversationHistory
@@ -469,7 +473,8 @@ export function RefinementChatPanel({
           requestId,
           useSkills,
           timeoutSeconds * 1000,
-          selectedModel
+          selectedModel,
+          allowedTools
         );
 
         if (result.type === 'success') {
@@ -554,7 +559,8 @@ export function RefinementChatPanel({
           useSkills,
           timeoutSeconds * 1000,
           onProgress,
-          selectedModel
+          selectedModel,
+          allowedTools
         );
 
         if (result.type === 'success') {
@@ -585,14 +591,15 @@ export function RefinementChatPanel({
             );
           }
         } else if (result.type === 'clarification') {
-          if (hasReceivedProgress && latestExplanatoryText) {
-            // Replace display text with explanatory text only
-            updateMessageContent(aiMessageId, latestExplanatoryText);
-            updateMessageLoadingState(aiMessageId, false);
+          // Always use the complete clarification message from result.payload
+          updateMessageContent(aiMessageId, result.payload.aiMessage.content);
+          updateMessageLoadingState(aiMessageId, false);
+
+          if (hasReceivedProgress) {
+            // Streaming occurred, use finishProcessing to preserve frontend messages
             finishProcessing();
           } else {
-            updateMessageContent(aiMessageId, result.payload.aiMessage.content);
-            updateMessageLoadingState(aiMessageId, false);
+            // No streaming, update conversation history normally
             handleRefinementSuccess(
               result.payload.aiMessage,
               result.payload.updatedConversationHistory
