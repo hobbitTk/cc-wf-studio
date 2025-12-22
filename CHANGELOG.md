@@ -1,3 +1,14 @@
+## [3.8.5](https://github.com/breaking-brake/cc-wf-studio/compare/v3.8.4...v3.8.5) (2025-12-22)
+
+### Bug Fixes
+
+* remove BM25 codebase indexing feature ([#303](https://github.com/breaking-brake/cc-wf-studio/issues/303)) ([7a5878d](https://github.com/breaking-brake/cc-wf-studio/commit/7a5878dbc73fa7ef15648cf7684382f4b0dc06de))
+* remove unused timeout setting and enable proper AI cancellation ([#305](https://github.com/breaking-brake/cc-wf-studio/issues/305)) ([666a231](https://github.com/breaking-brake/cc-wf-studio/commit/666a231745bcfcd314dd9f3bebacbd7b43d4a037))
+
+### Improvements
+
+* prevent dropdown menu from closing on settings selection ([#304](https://github.com/breaking-brake/cc-wf-studio/issues/304)) ([544cc42](https://github.com/breaking-brake/cc-wf-studio/commit/544cc424f0f6e9c8ad1bcca55e81f95323cd13f5))
+
 ## [3.8.4](https://github.com/breaking-brake/cc-wf-studio/compare/v3.8.3...v3.8.4) (2025-12-20)
 
 ### Improvements
