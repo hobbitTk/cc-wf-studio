@@ -1,7 +1,7 @@
 /**
- * Claude Code Workflow Studio - Property Panel Component
+ * Claude Code Workflow Studio - Property Overlay Component
  *
- * Property editor for selected nodes
+ * Property editor for selected nodes (displayed as overlay on canvas)
  * Based on: /specs/001-cc-wf-studio/plan.md
  * Updated: Phase 3.3 - Added resizable width functionality
  */
@@ -30,11 +30,11 @@ import { ResizeHandle } from './common/ResizeHandle';
 import { McpNodeEditDialog } from './dialogs/McpNodeEditDialog';
 
 /**
- * PropertyPanel Component
+ * PropertyOverlay Component
  */
-export const PropertyPanel: React.FC = () => {
+export const PropertyOverlay: React.FC = () => {
   const { t } = useTranslation();
-  const { nodes, selectedNodeId, updateNodeData, setNodes, closePropertyPanel, subAgentFlows } =
+  const { nodes, selectedNodeId, updateNodeData, setNodes, closePropertyOverlay, subAgentFlows } =
     useWorkflowStore();
   const { width, handleMouseDown } = useResizablePanel();
 
@@ -49,9 +49,11 @@ export const PropertyPanel: React.FC = () => {
         width: `${width}px`,
         height: '100%',
         backgroundColor: 'var(--vscode-sideBar-background)',
-        borderLeft: '1px solid var(--vscode-panel-border)',
+        border: '1px solid var(--vscode-panel-border)',
+        borderRadius: '4px',
         padding: '16px',
         overflowY: 'auto',
+        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
       }}
     >
       <ResizeHandle onMouseDown={handleMouseDown} />
@@ -77,7 +79,7 @@ export const PropertyPanel: React.FC = () => {
         </div>
         <button
           type="button"
-          onClick={closePropertyPanel}
+          onClick={closePropertyOverlay}
           style={{
             padding: '4px 8px',
             backgroundColor: 'transparent',
