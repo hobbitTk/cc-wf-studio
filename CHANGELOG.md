@@ -1,3 +1,9 @@
+## [3.10.2](https://github.com/breaking-brake/cc-wf-studio/compare/v3.10.1...v3.10.2) (2025-12-30)
+
+### Improvements
+
+* remove edge deletion confirmation dialog ([#336](https://github.com/breaking-brake/cc-wf-studio/issues/336)) ([b375974](https://github.com/breaking-brake/cc-wf-studio/commit/b375974429bec41eef2d0cd0ba939c5561d37dd6))
+
 ## [3.10.1](https://github.com/breaking-brake/cc-wf-studio/compare/v3.10.0...v3.10.1) (2025-12-30)
 
 ### Improvements
