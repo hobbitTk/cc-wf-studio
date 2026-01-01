@@ -1,3 +1,14 @@
+## [3.11.1](https://github.com/breaking-brake/cc-wf-studio/compare/v3.11.0...v3.11.1) (2026-01-01)
+
+### Bug Fixes
+
+* use cross-platform path separator for agent file detection ([#348](https://github.com/breaking-brake/cc-wf-studio/issues/348)) ([49479cd](https://github.com/breaking-brake/cc-wf-studio/commit/49479cd0b39b1cb899244b73c2467bd36435f7f0)), closes [#345](https://github.com/breaking-brake/cc-wf-studio/issues/345)
+* use workspace .vscode/ for editor temp files on Windows ([#349](https://github.com/breaking-brake/cc-wf-studio/issues/349)) ([00c13a4](https://github.com/breaking-brake/cc-wf-studio/commit/00c13a4e71d417b8af09cfd3dc44731f0eee25a4))
+
+### Improvements
+
+* remove unnecessary info message from editor ([#347](https://github.com/breaking-brake/cc-wf-studio/issues/347)) ([2f65423](https://github.com/breaking-brake/cc-wf-studio/commit/2f654234a8387d28715e7e39e3dfcebecd2893d0))
+
 ## [3.11.0](https://github.com/breaking-brake/cc-wf-studio/compare/v3.10.2...v3.11.0) (2026-01-01)
 
 ### Features
