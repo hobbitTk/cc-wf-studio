@@ -1,3 +1,9 @@
+## [3.11.3](https://github.com/breaking-brake/cc-wf-studio/compare/v3.11.2...v3.11.3) (2026-01-02)
+
+### Bug Fixes
+
+* rename Convert button to Export in toolbar ([#355](https://github.com/breaking-brake/cc-wf-studio/issues/355)) ([86ff1e3](https://github.com/breaking-brake/cc-wf-studio/commit/86ff1e33bc37a2c98face0f258ea288a09809f00))
+
 ## [3.11.2](https://github.com/breaking-brake/cc-wf-studio/compare/v3.11.1...v3.11.2) (2026-01-02)
 
 ### Bug Fixes
