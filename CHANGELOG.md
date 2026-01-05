@@ -1,3 +1,9 @@
+## [3.12.5](https://github.com/breaking-brake/cc-wf-studio/compare/v3.12.4...v3.12.5) (2026-01-05)
+
+### Bug Fixes
+
+* detect Claude CLI in known installation paths ([#376](https://github.com/breaking-brake/cc-wf-studio/issues/376)) ([b2754b5](https://github.com/breaking-brake/cc-wf-studio/commit/b2754b599482099976a6d488494efec424410155)), closes [#375](https://github.com/breaking-brake/cc-wf-studio/issues/375)
+
 ## [3.12.4](https://github.com/breaking-brake/cc-wf-studio/compare/v3.12.3...v3.12.4) (2026-01-05)
 
 ### Bug Fixes
