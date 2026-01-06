@@ -1,3 +1,14 @@
+## [3.12.8](https://github.com/breaking-brake/cc-wf-studio/compare/v3.12.7...v3.12.8) (2026-01-06)
+
+### Bug Fixes
+
+* handle multiple JSON blocks in AI response parsing ([#393](https://github.com/breaking-brake/cc-wf-studio/issues/393)) ([29c01bf](https://github.com/breaking-brake/cc-wf-studio/commit/29c01bfb59806e74de36daea261a349d659713c0))
+
+### Improvements
+
+* add node name constraint to AI refinement prompts ([#394](https://github.com/breaking-brake/cc-wf-studio/issues/394)) ([055d254](https://github.com/breaking-brake/cc-wf-studio/commit/055d2545616a16c772002a333ddaa9a7737505d8))
+* auto-focus canvas on newly added nodes ([#392](https://github.com/breaking-brake/cc-wf-studio/issues/392)) ([7c1856c](https://github.com/breaking-brake/cc-wf-studio/commit/7c1856c7dba07cacb2a5f06e262299214ce00c2c))
+
 ## [3.12.7](https://github.com/breaking-brake/cc-wf-studio/compare/v3.12.6...v3.12.7) (2026-01-06)
 
 ### Bug Fixes
