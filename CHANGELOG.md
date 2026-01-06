@@ -1,3 +1,10 @@
+## [3.12.7](https://github.com/breaking-brake/cc-wf-studio/compare/v3.12.6...v3.12.7) (2026-01-06)
+
+### Bug Fixes
+
+* sync activeWorkflow with canvas changes for AI refinement ([#390](https://github.com/breaking-brake/cc-wf-studio/issues/390)) ([08947d7](https://github.com/breaking-brake/cc-wf-studio/commit/08947d7aaa3272c5ef229081875b645d1b6272df)), closes [#388](https://github.com/breaking-brake/cc-wf-studio/issues/388)
+* sync conversation history to workflow-store on every change ([#387](https://github.com/breaking-brake/cc-wf-studio/issues/387)) ([d1cf8a4](https://github.com/breaking-brake/cc-wf-studio/commit/d1cf8a4ccc5a82cd4f50bc967e0d12a998fe00ab)), closes [#384](https://github.com/breaking-brake/cc-wf-studio/issues/384)
+
 ## [3.12.6](https://github.com/breaking-brake/cc-wf-studio/compare/v3.12.5...v3.12.6) (2026-01-06)
 
 ### Bug Fixes
