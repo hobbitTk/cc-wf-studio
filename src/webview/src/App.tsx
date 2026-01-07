@@ -17,6 +17,7 @@ import type React from 'react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ProcessingOverlay } from './components/common/ProcessingOverlay';
 import { SimpleOverlay } from './components/common/SimpleOverlay';
+import { Spinner } from './components/common/Spinner';
 import { ConfirmDialog } from './components/dialogs/ConfirmDialog';
 import { RefinementChatPanel } from './components/dialogs/RefinementChatPanel';
 import { SlackConnectionRequiredDialog } from './components/dialogs/SlackConnectionRequiredDialog';
@@ -314,6 +315,7 @@ const App: React.FC = () => {
   }, [setNodes, setEdges, setWorkflowName, setActiveWorkflow]);
 
   // Render loading state (waiting for mode to be determined)
+  // Shows spinner while waiting for INITIAL_STATE or PREVIEW_MODE_INIT from Extension Host
   if (mode === null) {
     return (
       <div
@@ -321,8 +323,13 @@ const App: React.FC = () => {
           width: '100vw',
           height: '100vh',
           backgroundColor: 'var(--vscode-editor-background)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
         }}
-      />
+      >
+        <Spinner size={32} thickness={3} />
+      </div>
     );
   }
 
@@ -421,9 +428,7 @@ const App: React.FC = () => {
 
         {/* Refinement Panel with Radix Collapsible for slide animation */}
         <Collapsible.Root open={isRefinementPanelOpen}>
-          <Collapsible.Content
-            className={`refinement-panel-collapsible${isCompact ? ' compact' : ''}`}
-          >
+          <Collapsible.Content className="refinement-panel-collapsible">
             <RefinementChatPanel chatState={mainChatState} onClose={handleCloseRefinementPanel} />
           </Collapsible.Content>
         </Collapsible.Root>
@@ -618,40 +623,34 @@ const App: React.FC = () => {
 
           /* Refinement Panel Collapsible Animation */
           .refinement-panel-collapsible {
-            --refinement-width: 320px;
             overflow: hidden;
             height: 100%;
-          }
-
-          .refinement-panel-collapsible.compact {
-            --refinement-width: 280px;
+            flex-shrink: 0;
           }
 
           .refinement-panel-collapsible[data-state='open'] {
-            width: var(--refinement-width);
-            animation: slideOpenFromRight 150ms ease-out;
+            animation: slideOpenFromRight 150ms ease-out forwards;
           }
 
           .refinement-panel-collapsible[data-state='closed'] {
-            width: 0px;
-            animation: slideCloseToRight 150ms ease-out;
+            animation: slideCloseToRight 150ms ease-out forwards;
           }
 
           @keyframes slideOpenFromRight {
             from {
-              width: 0px;
+              transform: translateX(100%);
             }
             to {
-              width: var(--refinement-width);
+              transform: translateX(0);
             }
           }
 
           @keyframes slideCloseToRight {
             from {
-              width: var(--refinement-width);
+              transform: translateX(0);
             }
             to {
-              width: 0px;
+              transform: translateX(100%);
             }
           }
         `}
