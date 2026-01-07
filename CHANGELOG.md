@@ -1,3 +1,14 @@
+## [3.12.9](https://github.com/breaking-brake/cc-wf-studio/compare/v3.12.8...v3.12.9) (2026-01-07)
+
+### Bug Fixes
+
+* resolve ConfirmDialog z-index issue in SubAgentFlowDialog ([#399](https://github.com/breaking-brake/cc-wf-studio/issues/399)) ([637c2fc](https://github.com/breaking-brake/cc-wf-studio/commit/637c2fc1a6b5454c1995c655d83e3d0f3e3a6526))
+* use WEBVIEW_READY message instead of setTimeout ([#398](https://github.com/breaking-brake/cc-wf-studio/issues/398)) ([f72f4b2](https://github.com/breaking-brake/cc-wf-studio/commit/f72f4b2bdcde1df8e044689a5651bfdbace0f633))
+
+### Improvements
+
+* add resizable width to AI editing panel ([#397](https://github.com/breaking-brake/cc-wf-studio/issues/397)) ([14918d2](https://github.com/breaking-brake/cc-wf-studio/commit/14918d2545b350a88c6ed57a83e6cb99751c59c8))
+
 ## [3.12.8](https://github.com/breaking-brake/cc-wf-studio/compare/v3.12.7...v3.12.8) (2026-01-06)
 
 ### Bug Fixes
