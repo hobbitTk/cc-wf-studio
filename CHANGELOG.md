@@ -1,3 +1,9 @@
+## [3.12.10](https://github.com/breaking-brake/cc-wf-studio/compare/v3.12.9...v3.12.10) (2026-01-08)
+
+### Bug Fixes
+
+* migrate all custom dialogs to Radix UI ([#403](https://github.com/breaking-brake/cc-wf-studio/issues/403)) ([29987b9](https://github.com/breaking-brake/cc-wf-studio/commit/29987b9d428e14071f85d3e4c88da3e3707c04b5))
+
 ## [3.12.9](https://github.com/breaking-brake/cc-wf-studio/compare/v3.12.8...v3.12.9) (2026-01-07)
 
 ### Bug Fixes
