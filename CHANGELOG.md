@@ -1,3 +1,9 @@
+## [3.13.1](https://github.com/breaking-brake/cc-wf-studio/compare/v3.13.0...v3.13.1) (2026-01-09)
+
+### Improvements
+
+* add session reconnection warning dialog for AI refinement ([#410](https://github.com/breaking-brake/cc-wf-studio/issues/410)) ([c19aa3c](https://github.com/breaking-brake/cc-wf-studio/commit/c19aa3ce526120b22e3516dba88a65e2ad424eac))
+
 ## [3.13.0](https://github.com/breaking-brake/cc-wf-studio/compare/v3.12.10...v3.13.0) (2026-01-09)
 
 ### Features
