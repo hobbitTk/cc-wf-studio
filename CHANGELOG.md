@@ -1,3 +1,16 @@
+## [3.14.0](https://github.com/breaking-brake/cc-wf-studio/compare/v3.13.1...v3.14.0) (2026-01-10)
+
+### Features
+
+* add context: fork option for Slash Command export ([#420](https://github.com/breaking-brake/cc-wf-studio/issues/420)) ([1d860eb](https://github.com/breaking-brake/cc-wf-studio/commit/1d860eb6bd11fa147ec77111463bfca8c174eaaa))
+* add model option to Slash Command export settings ([#421](https://github.com/breaking-brake/cc-wf-studio/issues/421)) ([b1adf52](https://github.com/breaking-brake/cc-wf-studio/commit/b1adf52fc8188723caff96a60d8e73b443ef9747))
+
+### Bug Fixes
+
+* change contextFork boolean to context string for extensibility ([#422](https://github.com/breaking-brake/cc-wf-studio/issues/422)) ([732880a](https://github.com/breaking-brake/cc-wf-studio/commit/732880abd1b4f814a2ca912d61f05c0d65bdc9ca))
+* disable SubAgentFlow submit button when name validation fails ([#417](https://github.com/breaking-brake/cc-wf-studio/issues/417)) ([#418](https://github.com/breaking-brake/cc-wf-studio/issues/418)) ([2edb07d](https://github.com/breaking-brake/cc-wf-studio/commit/2edb07d41d3783516455e5361039a6d6709cdd4b))
+* enforce lowercase-only workflow and SubAgentFlow names ([#415](https://github.com/breaking-brake/cc-wf-studio/issues/415)) ([#416](https://github.com/breaking-brake/cc-wf-studio/issues/416)) ([ccc0cda](https://github.com/breaking-brake/cc-wf-studio/commit/ccc0cda53ae2e3a1ac7c2927ff4f1993532ddc8d))
+
 ## [3.13.1](https://github.com/breaking-brake/cc-wf-studio/compare/v3.13.0...v3.13.1) (2026-01-09)
 
 ### Improvements
