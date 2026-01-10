@@ -8,6 +8,8 @@
 import type {
   Connection,
   ConversationHistory,
+  SlashCommandContext,
+  SlashCommandModel,
   SubAgentFlow,
   Workflow,
   WorkflowNode,
@@ -23,6 +25,8 @@ import type { Edge, Node } from 'reactflow';
  * @param workflowDescription - Workflow description
  * @param conversationHistory - Optional conversation history to preserve
  * @param subAgentFlows - Optional sub-agent flows to include
+ * @param context - Optional context mode for Slash Command execution
+ * @param model - Optional model to use for Slash Command execution
  * @returns Workflow definition
  */
 export function serializeWorkflow(
@@ -31,7 +35,9 @@ export function serializeWorkflow(
   workflowName: string,
   workflowDescription?: string,
   conversationHistory?: ConversationHistory,
-  subAgentFlows?: SubAgentFlow[]
+  subAgentFlows?: SubAgentFlow[],
+  context?: SlashCommandContext,
+  model?: SlashCommandModel
 ): Workflow {
   // Convert React Flow nodes to WorkflowNodes
   const workflowNodes: WorkflowNode[] = nodes.map((node) => ({
@@ -66,6 +72,14 @@ export function serializeWorkflow(
     conversationHistory,
     // Issue #89: Include subAgentFlows if provided
     subAgentFlows,
+    // Include slashCommandOptions if any option is set
+    slashCommandOptions:
+      (context && context !== 'default') || (model && model !== 'default')
+        ? {
+            ...(context && context !== 'default' && { context }),
+            ...(model && model !== 'default' && { model }),
+          }
+        : undefined,
   };
 
   return workflow;

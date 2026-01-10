@@ -48,6 +48,7 @@ export const zhTWWebviewTranslations: WebviewTranslationKeys = {
 
   // Toolbar errors
   'toolbar.error.workflowNameRequired': '工作流名稱為必填',
+  'toolbar.error.workflowNameInvalid': '只能使用英文小寫字母(a-z)、數字、連字號和底線',
   'toolbar.error.workflowNameRequiredForExport': '匯出需要工作流名稱',
   'toolbar.error.selectWorkflowToLoad': '請選擇要載入的工作流',
   'toolbar.error.validationFailed': '工作流驗證失敗',
@@ -60,6 +61,10 @@ export const zhTWWebviewTranslations: WebviewTranslationKeys = {
   // Toolbar slash command group
   'toolbar.run': '執行',
   'toolbar.running': '執行中...',
+
+  // Toolbar slash command options dropdown
+  'toolbar.model.tooltip': '指定執行時使用的模型',
+  'toolbar.contextFork.tooltip': '在隔離的子代理上下文中運行 (Claude Code v2.1.0+)',
 
   // Toolbar more actions dropdown
   'toolbar.moreActions': '更多',
@@ -122,7 +127,7 @@ export const zhTWWebviewTranslations: WebviewTranslationKeys = {
   // SubAgentFlow validation errors
   'error.subAgentFlow.nameRequired': '名稱為必填項',
   'error.subAgentFlow.nameTooLong': '名稱不能超過50個字元',
-  'error.subAgentFlow.invalidName': '名稱只能包含字母、數字、連字符和底線',
+  'error.subAgentFlow.invalidName': '名稱只能包含英文小寫字母(a-z)、數字、連字號和底線',
 
   // Quick start instructions
   'palette.nestedNotAllowed': '在子代理流程中不可用（不支援巢狀）',

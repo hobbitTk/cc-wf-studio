@@ -8,7 +8,12 @@
 import type { McpNodeData } from '@shared/types/mcp-node';
 import { normalizeMcpNodeData } from '@shared/types/mcp-node';
 import type { Workflow } from '@shared/types/messages';
-import type { SubAgentFlow, WorkflowNode } from '@shared/types/workflow-definition';
+import type {
+  SlashCommandContext,
+  SlashCommandModel,
+  SubAgentFlow,
+  WorkflowNode,
+} from '@shared/types/workflow-definition';
 import { NodeType } from '@shared/types/workflow-definition';
 import type { Edge, Node, OnConnect, OnEdgesChange, OnNodesChange } from 'reactflow';
 import { addEdge, applyEdgeChanges, applyNodeChanges } from 'reactflow';
@@ -50,6 +55,10 @@ interface WorkflowStore {
   isMinimapVisible: boolean;
   isDescriptionPanelVisible: boolean;
   isFocusMode: boolean;
+  /** Context mode for Slash Command execution */
+  slashCommandContext: SlashCommandContext;
+  /** Model to use for Slash Command execution */
+  slashCommandModel: SlashCommandModel;
   lastAddedNodeId: string | null;
 
   // Sub-Agent Flow State (Feature: 089-subworkflow)
@@ -75,6 +84,8 @@ interface WorkflowStore {
   toggleMinimapVisibility: () => void;
   toggleDescriptionPanelVisibility: () => void;
   toggleFocusMode: () => void;
+  setSlashCommandContext: (value: SlashCommandContext) => void;
+  setSlashCommandModel: (value: SlashCommandModel) => void;
 
   // Custom Actions
   updateNodeData: (nodeId: string, data: Partial<unknown>) => void;
@@ -248,6 +259,8 @@ export const useWorkflowStore = create<WorkflowStore>((set, get) => ({
     const saved = localStorage.getItem('cc-wf-studio.focusMode');
     return saved !== null ? saved === 'true' : false; // Default: off
   })(),
+  slashCommandContext: 'default',
+  slashCommandModel: 'default',
   lastAddedNodeId: null,
 
   // Sub-Agent Flow Initial State (Feature: 089-subworkflow)
@@ -352,6 +365,11 @@ export const useWorkflowStore = create<WorkflowStore>((set, get) => ({
     set({ isFocusMode: newValue });
   },
 
+  setSlashCommandContext: (slashCommandContext: SlashCommandContext) =>
+    set({ slashCommandContext }),
+
+  setSlashCommandModel: (slashCommandModel: SlashCommandModel) => set({ slashCommandModel }),
+
   // Custom Actions
   updateNodeData: (nodeId: string, data: Partial<unknown>) => {
     set({
@@ -439,6 +457,8 @@ export const useWorkflowStore = create<WorkflowStore>((set, get) => ({
       edges: [],
       selectedNodeId: null,
       workflowDescription: '', // Reset description
+      slashCommandContext: 'default', // Reset context setting
+      slashCommandModel: 'default', // Reset model setting
       // Sub-Agent Flow関連の状態をクリア
       subAgentFlows: [],
       activeSubAgentFlowId: null,

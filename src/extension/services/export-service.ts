@@ -493,13 +493,24 @@ function escapeLabel(label: string): string {
  */
 function generateSlashCommandFile(workflow: Workflow): string {
   // YAML frontmatter
-  const frontmatter = [
+  const frontmatterLines = [
     '---',
     `description: ${workflow.description || workflow.name}`,
     'allowed-tools: Task,AskUserQuestion',
-    '---',
-    '',
-  ].join('\n');
+  ];
+
+  // Add model if specified and not 'default'
+  if (workflow.slashCommandOptions?.model && workflow.slashCommandOptions.model !== 'default') {
+    frontmatterLines.push(`model: ${workflow.slashCommandOptions.model}`);
+  }
+
+  // Add context if specified and not 'default' (Claude Code v2.1.0+ feature)
+  if (workflow.slashCommandOptions?.context && workflow.slashCommandOptions.context !== 'default') {
+    frontmatterLines.push(`context: ${workflow.slashCommandOptions.context}`);
+  }
+
+  frontmatterLines.push('---', '');
+  const frontmatter = frontmatterLines.join('\n');
 
   // Mermaid flowchart
   const mermaidFlowchart = generateMermaidFlowchart(workflow);

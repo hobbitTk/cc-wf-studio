@@ -46,6 +46,7 @@ export interface WebviewTranslationKeys {
 
   // Toolbar errors
   'toolbar.error.workflowNameRequired': string;
+  'toolbar.error.workflowNameInvalid': string;
   'toolbar.error.workflowNameRequiredForExport': string;
   'toolbar.error.selectWorkflowToLoad': string;
   'toolbar.error.validationFailed': string;
@@ -58,6 +59,10 @@ export interface WebviewTranslationKeys {
   // Toolbar slash command group
   'toolbar.run': string;
   'toolbar.running': string;
+
+  // Toolbar slash command options dropdown
+  'toolbar.model.tooltip': string;
+  'toolbar.contextFork.tooltip': string;
 
   // Toolbar more actions dropdown
   'toolbar.moreActions': string;

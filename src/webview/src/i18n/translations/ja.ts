@@ -48,6 +48,8 @@ export const jaWebviewTranslations: WebviewTranslationKeys = {
 
   // Toolbar errors
   'toolbar.error.workflowNameRequired': 'ワークフロー名は必須です',
+  'toolbar.error.workflowNameInvalid':
+    '半角英小文字(a-z)、数字、ハイフン、アンダースコアのみ使用可能です',
   'toolbar.error.workflowNameRequiredForExport': 'エクスポートにはワークフロー名が必要です',
   'toolbar.error.selectWorkflowToLoad': '読み込むワークフローを選択してください',
   'toolbar.error.validationFailed': 'ワークフローの検証に失敗しました',
@@ -62,6 +64,11 @@ export const jaWebviewTranslations: WebviewTranslationKeys = {
   // Toolbar slash command group
   'toolbar.run': '実行',
   'toolbar.running': '実行中...',
+
+  // Toolbar slash command options dropdown
+  'toolbar.model.tooltip': '実行に使用するモデルを指定',
+  'toolbar.contextFork.tooltip':
+    '分離されたサブエージェントコンテキストで実行 (Claude Code v2.1.0+)',
 
   // Toolbar more actions dropdown
   'toolbar.moreActions': 'その他',
@@ -124,7 +131,8 @@ export const jaWebviewTranslations: WebviewTranslationKeys = {
   // SubAgentFlow validation errors
   'error.subAgentFlow.nameRequired': '名前は必須です',
   'error.subAgentFlow.nameTooLong': '名前は50文字以内で入力してください',
-  'error.subAgentFlow.invalidName': '名前は英数字、ハイフン、アンダースコアのみ使用できます',
+  'error.subAgentFlow.invalidName':
+    '名前は半角英小文字(a-z)、数字、ハイフン、アンダースコアのみ使用できます',
 
   // Quick start instructions
   'palette.nestedNotAllowed': 'サブエージェントフロー内では使用できません（ネスト非対応）',
