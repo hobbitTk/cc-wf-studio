@@ -48,6 +48,8 @@ export interface SubAgentData {
   model?: 'sonnet' | 'opus' | 'haiku' | 'inherit';
   color?: 'red' | 'blue' | 'green' | 'yellow' | 'purple' | 'orange' | 'pink' | 'cyan';
   outputPorts: number;
+  /** Context mode for sub-agent execution. 'fork' runs in an isolated sub-agent context. */
+  context?: 'fork';
 }
 
 // Color codes for SubAgent color property
@@ -215,6 +217,8 @@ export interface SubAgentFlowNodeData {
   tools?: string;
   /** Visual color for the node */
   color?: keyof typeof SUB_AGENT_COLORS;
+  /** Context mode for sub-agent flow execution. 'fork' runs in an isolated sub-agent context. */
+  context?: 'fork';
 }
 
 export interface McpNodeData {

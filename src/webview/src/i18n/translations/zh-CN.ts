@@ -160,6 +160,10 @@ export const zhCNWebviewTranslations: WebviewTranslationKeys = {
   'properties.subAgent.colorPlaceholder': '选择颜色...',
   'properties.subAgent.colorNone': '无',
   'properties.subAgent.colorHelp': '此子代理的视觉标识颜色',
+  'properties.subAgent.context': '上下文',
+  'properties.subAgent.contextNone': '默认',
+  'properties.subAgent.contextFork': 'Fork',
+  'properties.subAgent.contextHelp': 'Fork在隔离的子代理上下文中运行（Claude Code v2.1.0+）',
 
   // Skill properties
   'property.skillPath': 'Skill路径',

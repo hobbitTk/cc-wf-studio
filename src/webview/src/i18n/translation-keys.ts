@@ -158,6 +158,10 @@ export interface WebviewTranslationKeys {
   'properties.subAgent.colorPlaceholder': string;
   'properties.subAgent.colorNone': string;
   'properties.subAgent.colorHelp': string;
+  'properties.subAgent.context': string;
+  'properties.subAgent.contextNone': string;
+  'properties.subAgent.contextFork': string;
+  'properties.subAgent.contextHelp': string;
 
   // Skill properties
   'property.skillPath': string;
