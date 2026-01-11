@@ -1,3 +1,9 @@
+## [3.14.1](https://github.com/breaking-brake/cc-wf-studio/compare/v3.14.0...v3.14.1) (2026-01-11)
+
+### Improvements
+
+* add hooks configuration UI for Slash Command export ([#427](https://github.com/breaking-brake/cc-wf-studio/issues/427)) ([a20257a](https://github.com/breaking-brake/cc-wf-studio/commit/a20257ac4d37cb465a804c769f351588760ca35f))
+
 ## [3.14.0](https://github.com/breaking-brake/cc-wf-studio/compare/v3.13.1...v3.14.0) (2026-01-10)
 
 ### Features
