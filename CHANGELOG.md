@@ -1,3 +1,9 @@
+## [3.14.5](https://github.com/breaking-brake/cc-wf-studio/compare/v3.14.4...v3.14.5) (2026-01-13)
+
+### Improvements
+
+* add argument-hint configuration to SlashCommandOptions ([#449](https://github.com/breaking-brake/cc-wf-studio/issues/449)) ([df71af7](https://github.com/breaking-brake/cc-wf-studio/commit/df71af709554852e01145b5b4011959fe3a11c1d))
+
 ## [3.14.4](https://github.com/breaking-brake/cc-wf-studio/compare/v3.14.3...v3.14.4) (2026-01-13)
 
 ### Improvements
