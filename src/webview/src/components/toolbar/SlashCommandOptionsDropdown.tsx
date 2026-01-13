@@ -21,9 +21,11 @@ import {
   ChevronDown,
   ChevronLeft,
   Cpu,
+  ExternalLink,
   GitFork,
   Plus,
   RotateCcw,
+  Shield,
   Terminal,
   Wrench,
   X,
@@ -31,6 +33,7 @@ import {
 import { memo, useCallback, useState } from 'react';
 import { useTranslation } from '../../i18n/i18n-context';
 import type { WebviewTranslationKeys } from '../../i18n/translation-keys';
+import { openExternalUrl } from '../../services/slack-integration-service';
 import { AVAILABLE_TOOLS } from '../../stores/refinement-store';
 import { ToolSelectTagInput } from '../common/ToolSelectTagInput';
 
@@ -55,26 +58,22 @@ const MODEL_PRESETS: { value: SlashCommandModel; label: string }[] = [
 const HOOK_TYPES: {
   type: HookType;
   labelKey: keyof WebviewTranslationKeys;
-  descKey: keyof WebviewTranslationKeys;
   /** Whether to show matcher field (only applicable for tool-based hooks) */
   showMatcher: boolean;
 }[] = [
   {
     type: 'PreToolUse',
     labelKey: 'hooks.preToolUse',
-    descKey: 'hooks.preToolUse.description',
     showMatcher: true, // Tool-based hook - matcher applies
   },
   {
     type: 'PostToolUse',
     labelKey: 'hooks.postToolUse',
-    descKey: 'hooks.postToolUse.description',
     showMatcher: true, // Tool-based hook - matcher applies
   },
   {
     type: 'Stop',
     labelKey: 'hooks.stop',
-    descKey: 'hooks.stop.description',
     showMatcher: false, // Lifecycle hook - matcher is ignored
   },
 ];
@@ -120,6 +119,8 @@ interface SlashCommandOptionsDropdownProps {
   onUpdateHookEntry: (hookType: HookType, entryIndex: number, entry: Partial<HookEntry>) => void;
   allowedTools: string;
   onAllowedToolsChange: (tools: string) => void;
+  disableModelInvocation: boolean;
+  onDisableModelInvocationChange: (value: boolean) => void;
 }
 
 interface NewEntryState {
@@ -139,6 +140,8 @@ export function SlashCommandOptionsDropdown({
   onUpdateHookEntry,
   allowedTools,
   onAllowedToolsChange,
+  disableModelInvocation,
+  onDisableModelInvocationChange,
 }: SlashCommandOptionsDropdownProps) {
   const { t } = useTranslation();
   const [newEntry, setNewEntry] = useState<Record<HookType, NewEntryState>>({
@@ -299,6 +302,7 @@ export function SlashCommandOptionsDropdown({
             <DropdownMenu.Portal>
               <DropdownMenu.SubContent
                 sideOffset={4}
+                collisionPadding={{ right: 300 }}
                 style={{
                   backgroundColor: 'var(--vscode-dropdown-background)',
                   border: '1px solid var(--vscode-dropdown-border)',
@@ -425,6 +429,7 @@ export function SlashCommandOptionsDropdown({
             <DropdownMenu.Portal>
               <DropdownMenu.SubContent
                 sideOffset={4}
+                collisionPadding={{ right: 300 }}
                 style={{
                   backgroundColor: 'var(--vscode-dropdown-background)',
                   border: '1px solid var(--vscode-dropdown-border)',
@@ -485,101 +490,6 @@ export function SlashCommandOptionsDropdown({
             }}
           />
 
-          {/* Hooks Sub-menu */}
-          <DropdownMenu.Sub>
-            <DropdownMenu.SubTrigger
-              style={{
-                padding: '8px 12px',
-                fontSize: `${FONT_SIZES.small}px`,
-                color: 'var(--vscode-foreground)',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                gap: '8px',
-                outline: 'none',
-                borderRadius: '2px',
-              }}
-            >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                <ChevronLeft size={14} />
-                <span style={{ color: 'var(--vscode-descriptionForeground)' }}>
-                  {totalHookEntries > 0 ? `${totalHookEntries} hooks` : 'none'}
-                </span>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <Terminal size={14} />
-                <span>{t('hooks.title')}</span>
-              </div>
-            </DropdownMenu.SubTrigger>
-
-            <DropdownMenu.Portal>
-              <DropdownMenu.SubContent
-                sideOffset={4}
-                style={{
-                  backgroundColor: 'var(--vscode-dropdown-background)',
-                  border: '1px solid var(--vscode-dropdown-border)',
-                  borderRadius: '4px',
-                  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.3)',
-                  zIndex: 10000,
-                  minWidth: '220px',
-                  padding: '4px',
-                }}
-              >
-                {/* Hook Types */}
-                {HOOK_TYPES.map((hookConfig, index) => (
-                  <div key={hookConfig.type}>
-                    {index > 0 && (
-                      <DropdownMenu.Separator
-                        style={{
-                          height: '1px',
-                          backgroundColor: 'var(--vscode-dropdown-border)',
-                          margin: '4px 0',
-                        }}
-                      />
-                    )}
-                    <HookTypeSubMenu
-                      hookType={hookConfig.type}
-                      labelKey={hookConfig.labelKey}
-                      descKey={hookConfig.descKey}
-                      showMatcher={hookConfig.showMatcher}
-                      entries={hooks[hookConfig.type] || []}
-                      newEntry={newEntry[hookConfig.type]}
-                      validationError={validationError[hookConfig.type]}
-                      onNewEntryChange={(updates) => handleNewEntryChange(hookConfig.type, updates)}
-                      onAddEntry={() => handleAddEntry(hookConfig.type)}
-                      onRemoveEntry={(idx) => onRemoveHookEntry(hookConfig.type, idx)}
-                      onUpdateEntry={(idx, entry) => onUpdateHookEntry(hookConfig.type, idx, entry)}
-                      onKeyDown={(e) => handleKeyDown(e, hookConfig.type)}
-                    />
-                  </div>
-                ))}
-
-                {/* Hooks Tooltip */}
-                <div
-                  style={{
-                    padding: '6px 12px',
-                    fontSize: '10px',
-                    color: 'var(--vscode-descriptionForeground)',
-                    lineHeight: '1.4',
-                    borderTop: '1px solid var(--vscode-dropdown-border)',
-                    marginTop: '4px',
-                  }}
-                >
-                  {t('hooks.tooltip')}
-                </div>
-              </DropdownMenu.SubContent>
-            </DropdownMenu.Portal>
-          </DropdownMenu.Sub>
-
-          <DropdownMenu.Separator
-            style={{
-              height: '1px',
-              backgroundColor: 'var(--vscode-dropdown-border)',
-              margin: '4px 0',
-            }}
-          />
-
           {/* Context Sub-menu */}
           <DropdownMenu.Sub>
             <DropdownMenu.SubTrigger
@@ -611,6 +521,7 @@ export function SlashCommandOptionsDropdown({
             <DropdownMenu.Portal>
               <DropdownMenu.SubContent
                 sideOffset={4}
+                collisionPadding={{ right: 300 }}
                 style={{
                   backgroundColor: 'var(--vscode-dropdown-background)',
                   border: '1px solid var(--vscode-dropdown-border)',
@@ -659,23 +570,242 @@ export function SlashCommandOptionsDropdown({
                     </DropdownMenu.RadioItem>
                   ))}
                 </DropdownMenu.RadioGroup>
-
-                {/* Context Description */}
-                <div
-                  style={{
-                    padding: '6px 12px',
-                    fontSize: '10px',
-                    color: 'var(--vscode-descriptionForeground)',
-                    lineHeight: '1.4',
-                    borderTop: '1px solid var(--vscode-dropdown-border)',
-                    marginTop: '4px',
-                  }}
-                >
-                  {t('toolbar.contextFork.tooltip')}
-                </div>
               </DropdownMenu.SubContent>
             </DropdownMenu.Portal>
           </DropdownMenu.Sub>
+
+          <DropdownMenu.Separator
+            style={{
+              height: '1px',
+              backgroundColor: 'var(--vscode-dropdown-border)',
+              margin: '4px 0',
+            }}
+          />
+
+          {/* Disable Model Invocation Sub-menu */}
+          <DropdownMenu.Sub>
+            <DropdownMenu.SubTrigger
+              style={{
+                padding: '8px 12px',
+                fontSize: `${FONT_SIZES.small}px`,
+                color: 'var(--vscode-foreground)',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                gap: '8px',
+                outline: 'none',
+                borderRadius: '2px',
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                <ChevronLeft size={14} />
+                <span style={{ color: 'var(--vscode-descriptionForeground)' }}>
+                  {disableModelInvocation ? 'true' : 'default'}
+                </span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <Shield size={14} />
+                <span>Disable Model Invocation</span>
+              </div>
+            </DropdownMenu.SubTrigger>
+
+            <DropdownMenu.Portal>
+              <DropdownMenu.SubContent
+                sideOffset={4}
+                collisionPadding={{ right: 300 }}
+                style={{
+                  backgroundColor: 'var(--vscode-dropdown-background)',
+                  border: '1px solid var(--vscode-dropdown-border)',
+                  borderRadius: '4px',
+                  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.3)',
+                  zIndex: 10000,
+                  minWidth: '180px',
+                  padding: '4px',
+                }}
+              >
+                <DropdownMenu.RadioGroup value={disableModelInvocation ? 'true' : 'default'}>
+                  <DropdownMenu.RadioItem
+                    value="default"
+                    onSelect={(event) => {
+                      event.preventDefault();
+                      onDisableModelInvocationChange(false);
+                    }}
+                    style={{
+                      padding: '6px 12px',
+                      fontSize: `${FONT_SIZES.small}px`,
+                      color: 'var(--vscode-foreground)',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      outline: 'none',
+                      borderRadius: '2px',
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: '12px',
+                        height: '12px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}
+                    >
+                      <DropdownMenu.ItemIndicator>
+                        <Check size={12} />
+                      </DropdownMenu.ItemIndicator>
+                    </div>
+                    <span>default</span>
+                  </DropdownMenu.RadioItem>
+                  <DropdownMenu.RadioItem
+                    value="true"
+                    onSelect={(event) => {
+                      event.preventDefault();
+                      onDisableModelInvocationChange(true);
+                    }}
+                    style={{
+                      padding: '6px 12px',
+                      fontSize: `${FONT_SIZES.small}px`,
+                      color: 'var(--vscode-foreground)',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      outline: 'none',
+                      borderRadius: '2px',
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: '12px',
+                        height: '12px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}
+                    >
+                      <DropdownMenu.ItemIndicator>
+                        <Check size={12} />
+                      </DropdownMenu.ItemIndicator>
+                    </div>
+                    <span>true</span>
+                  </DropdownMenu.RadioItem>
+                </DropdownMenu.RadioGroup>
+              </DropdownMenu.SubContent>
+            </DropdownMenu.Portal>
+          </DropdownMenu.Sub>
+
+          <DropdownMenu.Separator
+            style={{
+              height: '1px',
+              backgroundColor: 'var(--vscode-dropdown-border)',
+              margin: '4px 0',
+            }}
+          />
+
+          {/* Hooks Sub-menu */}
+          <DropdownMenu.Sub>
+            <DropdownMenu.SubTrigger
+              style={{
+                padding: '8px 12px',
+                fontSize: `${FONT_SIZES.small}px`,
+                color: 'var(--vscode-foreground)',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                gap: '8px',
+                outline: 'none',
+                borderRadius: '2px',
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                <ChevronLeft size={14} />
+                <span style={{ color: 'var(--vscode-descriptionForeground)' }}>
+                  {totalHookEntries > 0 ? `${totalHookEntries} hooks` : 'none'}
+                </span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <Terminal size={14} />
+                <span>{t('hooks.title')}</span>
+              </div>
+            </DropdownMenu.SubTrigger>
+
+            <DropdownMenu.Portal>
+              <DropdownMenu.SubContent
+                sideOffset={4}
+                collisionPadding={{ right: 300 }}
+                style={{
+                  backgroundColor: 'var(--vscode-dropdown-background)',
+                  border: '1px solid var(--vscode-dropdown-border)',
+                  borderRadius: '4px',
+                  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.3)',
+                  zIndex: 10000,
+                  minWidth: '220px',
+                  padding: '4px',
+                }}
+              >
+                {/* Hook Types */}
+                {HOOK_TYPES.map((hookConfig, index) => (
+                  <div key={hookConfig.type}>
+                    {index > 0 && (
+                      <DropdownMenu.Separator
+                        style={{
+                          height: '1px',
+                          backgroundColor: 'var(--vscode-dropdown-border)',
+                          margin: '4px 0',
+                        }}
+                      />
+                    )}
+                    <HookTypeSubMenu
+                      hookType={hookConfig.type}
+                      labelKey={hookConfig.labelKey}
+                      showMatcher={hookConfig.showMatcher}
+                      entries={hooks[hookConfig.type] || []}
+                      newEntry={newEntry[hookConfig.type]}
+                      validationError={validationError[hookConfig.type]}
+                      onNewEntryChange={(updates) => handleNewEntryChange(hookConfig.type, updates)}
+                      onAddEntry={() => handleAddEntry(hookConfig.type)}
+                      onRemoveEntry={(idx) => onRemoveHookEntry(hookConfig.type, idx)}
+                      onUpdateEntry={(idx, entry) => onUpdateHookEntry(hookConfig.type, idx, entry)}
+                      onKeyDown={(e) => handleKeyDown(e, hookConfig.type)}
+                    />
+                  </div>
+                ))}
+              </DropdownMenu.SubContent>
+            </DropdownMenu.Portal>
+          </DropdownMenu.Sub>
+
+          <DropdownMenu.Separator
+            style={{
+              height: '1px',
+              backgroundColor: 'var(--vscode-dropdown-border)',
+              margin: '4px 0',
+            }}
+          />
+
+          {/* Frontmatter Reference Link */}
+          <DropdownMenu.Item
+            onSelect={() => {
+              openExternalUrl(t('toolbar.slashCommandOptions.frontmatterReferenceUrl'));
+            }}
+            style={{
+              padding: '8px 12px',
+              fontSize: `${FONT_SIZES.small}px`,
+              color: 'var(--vscode-textLink-foreground)',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'flex-end',
+              gap: '8px',
+              outline: 'none',
+              borderRadius: '2px',
+            }}
+          >
+            <ExternalLink size={14} />
+            <span>Frontmatter Reference</span>
+          </DropdownMenu.Item>
         </DropdownMenu.Content>
       </DropdownMenu.Portal>
     </DropdownMenu.Root>
@@ -686,7 +816,6 @@ export function SlashCommandOptionsDropdown({
 interface HookTypeSubMenuProps {
   hookType: HookType;
   labelKey: keyof WebviewTranslationKeys;
-  descKey: keyof WebviewTranslationKeys;
   /** Whether to show matcher field (only for tool-based hooks) */
   showMatcher: boolean;
   entries: HookEntry[];
@@ -702,7 +831,6 @@ interface HookTypeSubMenuProps {
 const HookTypeSubMenu = memo(function HookTypeSubMenu({
   hookType: _hookType,
   labelKey,
-  descKey,
   showMatcher,
   entries,
   newEntry,
@@ -746,6 +874,7 @@ const HookTypeSubMenu = memo(function HookTypeSubMenu({
       <DropdownMenu.Portal>
         <DropdownMenu.SubContent
           sideOffset={4}
+          collisionPadding={{ right: 300 }}
           style={{
             backgroundColor: 'var(--vscode-dropdown-background)',
             border: '1px solid var(--vscode-dropdown-border)',
@@ -1046,20 +1175,6 @@ const HookTypeSubMenu = memo(function HookTypeSubMenu({
               <Plus size={14} />
               {t('hooks.addEntry')}
             </button>
-          </div>
-
-          {/* Description */}
-          <div
-            style={{
-              padding: '6px 12px',
-              fontSize: '10px',
-              color: 'var(--vscode-descriptionForeground)',
-              lineHeight: '1.4',
-              borderTop: '1px solid var(--vscode-dropdown-border)',
-              marginTop: '8px',
-            }}
-          >
-            {t(descKey)}
           </div>
         </DropdownMenu.SubContent>
       </DropdownMenu.Portal>
