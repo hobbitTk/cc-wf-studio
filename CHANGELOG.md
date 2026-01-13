@@ -1,3 +1,9 @@
+## [3.14.6](https://github.com/breaking-brake/cc-wf-studio/compare/v3.14.5...v3.14.6) (2026-01-13)
+
+### Bug Fixes
+
+* load argumentHint from JSON when opening workflow ([#451](https://github.com/breaking-brake/cc-wf-studio/issues/451)) ([2965de1](https://github.com/breaking-brake/cc-wf-studio/commit/2965de1bdac906f7ffbebda10646b09e6ae6350e))
+
 ## [3.14.5](https://github.com/breaking-brake/cc-wf-studio/compare/v3.14.4...v3.14.5) (2026-01-13)
 
 ### Improvements
