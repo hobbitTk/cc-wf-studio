@@ -1,3 +1,14 @@
+## [3.14.3](https://github.com/breaking-brake/cc-wf-studio/compare/v3.14.2...v3.14.3) (2026-01-13)
+
+### Bug Fixes
+
+* ensure consistent left-side submenu positioning ([#434](https://github.com/breaking-brake/cc-wf-studio/issues/434)) ([0679f7d](https://github.com/breaking-brake/cc-wf-studio/commit/0679f7dc999ea8ca41d680d810eb8ae49fcb0b84)), closes [#433](https://github.com/breaking-brake/cc-wf-studio/issues/433)
+
+### Improvements
+
+* add disable-model-invocation configuration UI for Slash Command export ([#443](https://github.com/breaking-brake/cc-wf-studio/issues/443)) ([8eac0a0](https://github.com/breaking-brake/cc-wf-studio/commit/8eac0a0efd44db7bd3c676f31725edd0cc1f5cdf))
+* reorganize SlashCommandOptions dropdown and add help link ([#444](https://github.com/breaking-brake/cc-wf-studio/issues/444)) ([d39a702](https://github.com/breaking-brake/cc-wf-studio/commit/d39a702dca7b9ff11b8ab9e53088178b2ac1fe16))
+
 ## [3.14.2](https://github.com/breaking-brake/cc-wf-studio/compare/v3.14.1...v3.14.2) (2026-01-12)
 
 ### Improvements
