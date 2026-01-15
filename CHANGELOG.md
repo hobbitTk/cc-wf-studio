@@ -1,3 +1,9 @@
+## [3.15.1](https://github.com/breaking-brake/cc-wf-studio/compare/v3.15.0...v3.15.1) (2026-01-15)
+
+### Improvements
+
+* add MCP config auto-sync for Copilot export ([#457](https://github.com/breaking-brake/cc-wf-studio/issues/457)) ([f989c66](https://github.com/breaking-brake/cc-wf-studio/commit/f989c6691ee5633a20da3ca861dae976ac85f465))
+
 ## [3.15.0](https://github.com/breaking-brake/cc-wf-studio/compare/v3.14.6...v3.15.0) (2026-01-14)
 
 ### Features
