@@ -1,3 +1,9 @@
+## [3.16.0](https://github.com/breaking-brake/cc-wf-studio/compare/v3.15.3...v3.16.0) (2026-01-19)
+
+### Features
+
+* add Copilot support for AI workflow editing ([#469](https://github.com/breaking-brake/cc-wf-studio/issues/469)) ([e655136](https://github.com/breaking-brake/cc-wf-studio/commit/e65513668246939c7eeebe75f3038ad732fb96b1))
+
 ## [3.15.3](https://github.com/breaking-brake/cc-wf-studio/compare/v3.15.2...v3.15.3) (2026-01-17)
 
 ### Bug Fixes
