@@ -1,3 +1,9 @@
+## [3.16.1](https://github.com/breaking-brake/cc-wf-studio/compare/v3.16.0...v3.16.1) (2026-01-20)
+
+### Bug Fixes
+
+* show correct error messages for Copilot and Claude Code CLI unavailability ([#473](https://github.com/breaking-brake/cc-wf-studio/issues/473)) ([7e7f94c](https://github.com/breaking-brake/cc-wf-studio/commit/7e7f94c016bb53c0ac6474a6b264edf0d810bf56)), closes [#471](https://github.com/breaking-brake/cc-wf-studio/issues/471)
+
 ## [3.16.0](https://github.com/breaking-brake/cc-wf-studio/compare/v3.15.3...v3.16.0) (2026-01-19)
 
 ### Features
