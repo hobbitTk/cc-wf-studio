@@ -1,3 +1,21 @@
+## [3.17.0](https://github.com/breaking-brake/cc-wf-studio/compare/v3.16.1...v3.17.0) (2026-01-22)
+
+### Features
+
+* rename to CC Workflow Studio ([#477](https://github.com/breaking-brake/cc-wf-studio/issues/477)) ([d8239a3](https://github.com/breaking-brake/cc-wf-studio/commit/d8239a3873a4eeef0687f0543fa77ffedde57fb3))
+
+### Bug Fixes
+
+* add ~/.mcp.json support to MCP config reader ([#488](https://github.com/breaking-brake/cc-wf-studio/issues/488)) ([9ef0abf](https://github.com/breaking-brake/cc-wf-studio/commit/9ef0abf2424ad4802c6d28f8819756ea27783b26)), closes [#484](https://github.com/breaking-brake/cc-wf-studio/issues/484)
+* display dynamic provider name in refinement chat initial message ([#476](https://github.com/breaking-brake/cc-wf-studio/issues/476)) ([1e19be6](https://github.com/breaking-brake/cc-wf-studio/commit/1e19be6dd6978e08fb41f284aaadb48e0cd0bb08))
+* hide CLAUDE.md tip in Edit with AI when using Copilot ([#480](https://github.com/breaking-brake/cc-wf-studio/issues/480)) ([f041493](https://github.com/breaking-brake/cc-wf-studio/commit/f0414931a3745f79335eea89474de5740d7491ac))
+* YAML escaping and Copilot tools export improvements ([#485](https://github.com/breaking-brake/cc-wf-studio/issues/485)) ([dbcda41](https://github.com/breaking-brake/cc-wf-studio/commit/dbcda412074bf98ed7f8627a8aefcace8280ff13))
+
+### Improvements
+
+* clarify Copilot uses VSCode Language Model API ([#482](https://github.com/breaking-brake/cc-wf-studio/issues/482)) ([c9e7e2f](https://github.com/breaking-brake/cc-wf-studio/commit/c9e7e2fc83490ddf77256d6b9e13cee77cf614d1))
+* remove Slack import/export demo from README ([#483](https://github.com/breaking-brake/cc-wf-studio/issues/483)) ([1c647c2](https://github.com/breaking-brake/cc-wf-studio/commit/1c647c2c5fec52de7b20359960a420aeb85c1839))
+
 ## [3.16.1](https://github.com/breaking-brake/cc-wf-studio/compare/v3.16.0...v3.16.1) (2026-01-20)
 
 ### Bug Fixes
