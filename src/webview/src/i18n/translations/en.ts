@@ -1,5 +1,5 @@
 /**
- * Claude Code Workflow Studio - Webview English Translations
+ * CC Workflow Studio - Webview English Translations
  */
 
 import type { WebviewTranslationKeys } from '../translation-keys';
@@ -277,7 +277,7 @@ export const enWebviewTranslations: WebviewTranslationKeys = {
 
   // Tour
   'tour.welcome':
-    "Welcome to Claude Code Workflow Studio!\n\nThis tour will introduce the key features and show you where everything is. Let's get familiar with the basics before creating your first workflow.",
+    "Welcome to CC Workflow Studio!\n\nThis tour will introduce the key features and show you where everything is. Let's get familiar with the basics before creating your first workflow.",
   'tour.nodePalette':
     'The Node Palette contains various nodes you can use in your workflow.\n\nClick on Prompt, Sub-Agent, AskUserQuestion, If/Else, Switch, and other nodes to add them to the canvas.',
   'tour.addPrompt':
@@ -327,7 +327,7 @@ export const enWebviewTranslations: WebviewTranslationKeys = {
   'tour.button.skip': 'Skip',
 
   // Terms of Use
-  'terms.title': 'Claude Code Workflow Studio - Terms of Use',
+  'terms.title': 'CC Workflow Studio - Terms of Use',
   'terms.introduction': 'This tool supports workflow creation for legitimate purposes.',
   'terms.prohibitedUse': 'The following uses are prohibited:',
   'terms.cyberAttack': 'Cyber attacks (DDoS attacks, unauthorized access, etc.)',
@@ -534,8 +534,10 @@ export const enWebviewTranslations: WebviewTranslationKeys = {
   // Initial instructional message (Phase 3.12)
   'refinement.initialMessage.description':
     'Describe the workflow you want to achieve in natural language.',
-  'refinement.initialMessage.note':
-    '※ This feature uses Claude Code installed in your environment.',
+  'refinement.initialMessage.note': '※ This feature uses {{providerName}}.',
+  // Copilot-specific note with link
+  'refinement.initialMessage.noteCopilot':
+    '※ This feature requests your GitHub Copilot through the VSCode Language Model API.',
 
   // MCP Node (Feature: 001-mcp-node)
   'node.mcp.title': 'MCP Tool',
@@ -758,7 +760,7 @@ export const enWebviewTranslations: WebviewTranslationKeys = {
 
   // Slack OAuth
   'slack.oauth.description':
-    'Click the Connect to Workspace button to display a confirmation screen for granting "Claude Code Workflow Studio" access to Slack.\nOnce you grant permission, the Slack App for integration will be installed to your workspace.',
+    'Click the Connect to Workspace button to display a confirmation screen for granting "CC Workflow Studio" access to Slack.\nOnce you grant permission, the Slack App for integration will be installed to your workspace.',
   'slack.oauth.termsOfService': 'Terms of Service',
   'slack.oauth.privacyPolicy': 'Privacy Policy',
   'slack.oauth.supportPage': 'Support Page',
