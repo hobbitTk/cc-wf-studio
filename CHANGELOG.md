@@ -1,3 +1,13 @@
+## [3.18.1](https://github.com/breaking-brake/cc-wf-studio/compare/v3.18.0...v3.18.1) (2026-01-24)
+
+### Bug Fixes
+
+* use provider-specific translation keys for AI edit messages ([#504](https://github.com/breaking-brake/cc-wf-studio/issues/504)) ([581ce5c](https://github.com/breaking-brake/cc-wf-studio/commit/581ce5cc34d4158ec7b2e23550925b2d56ad878d))
+
+### Improvements
+
+* add Codex CLI as AI provider for workflow refinement ([#502](https://github.com/breaking-brake/cc-wf-studio/issues/502)) ([0f8c654](https://github.com/breaking-brake/cc-wf-studio/commit/0f8c654d4bf1d6a0ca48ef05d62ea79c6c4d6ff8))
+
 ## [3.18.0](https://github.com/breaking-brake/cc-wf-studio/compare/v3.17.0...v3.18.0) (2026-01-24)
 
 ### Features
