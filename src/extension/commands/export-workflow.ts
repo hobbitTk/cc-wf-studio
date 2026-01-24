@@ -18,6 +18,10 @@ import {
   validateClaudeFileFormat,
 } from '../services/export-service';
 import type { FileService } from '../services/file-service';
+import {
+  hasNonStandardSkills,
+  promptAndNormalizeSkills,
+} from '../services/skill-normalization-service';
 import { validateAIGeneratedWorkflow } from '../utils/validate-workflow';
 
 /**
@@ -40,6 +44,30 @@ export async function handleExportWorkflow(
     if (!validationResult.valid) {
       const errorMessages = validationResult.errors.map((err) => err.message).join('\n');
       throw new Error(`Workflow validation failed:\n${errorMessages}`);
+    }
+
+    // Check if workflow uses skills from non-standard directories (e.g., .github/skills/, .codex/skills/)
+    // For Claude Code execution, skills must be in .claude/skills/
+    if (hasNonStandardSkills(payload.workflow)) {
+      const normalizeResult = await promptAndNormalizeSkills(payload.workflow);
+
+      if (!normalizeResult.success) {
+        if (normalizeResult.cancelled) {
+          webview.postMessage({
+            type: 'EXPORT_CANCELLED',
+            requestId,
+          });
+          return;
+        }
+        throw new Error(normalizeResult.error || 'Failed to copy skills to .claude/skills/');
+      }
+
+      // Log copied skills
+      if (normalizeResult.normalizedSkills && normalizeResult.normalizedSkills.length > 0) {
+        console.log(
+          `[Export] Copied ${normalizeResult.normalizedSkills.length} skill(s) to .claude/skills/`
+        );
+      }
     }
 
     // Check if files already exist (unless overwrite is confirmed)
@@ -140,6 +168,9 @@ export interface ExportForExecutionResult {
  * the "Execute as Slash Command" feature. Unlike handleExportWorkflow,
  * it does not show UI notifications and returns the result directly.
  *
+ * If the workflow uses skills from .github/skills/, prompts the user
+ * to copy them to .claude/skills/ first (Issue #493 Part 2).
+ *
  * @param workflow - Workflow to export
  * @param fileService - File service instance
  * @returns Export result with success status and exported files
@@ -157,6 +188,32 @@ export async function handleExportWorkflowForExecution(
         success: false,
         error: `Workflow validation failed:\n${errorMessages}`,
       };
+    }
+
+    // Check if workflow uses skills from non-standard directories (e.g., .github/skills/, .codex/skills/)
+    // For Claude Code execution, skills must be in .claude/skills/
+    if (hasNonStandardSkills(workflow)) {
+      const normalizeResult = await promptAndNormalizeSkills(workflow);
+
+      if (!normalizeResult.success) {
+        if (normalizeResult.cancelled) {
+          return {
+            success: false,
+            cancelled: true,
+          };
+        }
+        return {
+          success: false,
+          error: normalizeResult.error || 'Failed to copy skills to .claude/skills/',
+        };
+      }
+
+      // Log copied skills
+      if (normalizeResult.normalizedSkills && normalizeResult.normalizedSkills.length > 0) {
+        console.log(
+          `[Export] Copied ${normalizeResult.normalizedSkills.length} skill(s) to .claude/skills/`
+        );
+      }
     }
 
     // Check if files already exist
