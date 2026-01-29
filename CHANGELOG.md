@@ -1,3 +1,18 @@
+## [3.18.2](https://github.com/breaking-brake/cc-wf-studio/compare/v3.18.1...v3.18.2) (2026-01-29)
+
+### Bug Fixes
+
+* add CLI-aware skill normalization to skip native directories ([#512](https://github.com/breaking-brake/cc-wf-studio/issues/512)) ([0c49d94](https://github.com/breaking-brake/cc-wf-studio/commit/0c49d946a1c42218631f583196b5d9e8eaf6e9b2))
+* add MCP server detection for Copilot CLI and Codex CLI ([#509](https://github.com/breaking-brake/cc-wf-studio/issues/509)) ([#510](https://github.com/breaking-brake/cc-wf-studio/issues/510)) ([ef31649](https://github.com/breaking-brake/cc-wf-studio/commit/ef3164914222efbfe1b81c0c4487b0f0101a5b81))
+* add skills detection for Copilot/Codex with grouped UI ([#508](https://github.com/breaking-brake/cc-wf-studio/issues/508)) ([ab89f69](https://github.com/breaking-brake/cc-wf-studio/commit/ab89f69db9ab5a19e0eecc42fcf9e29cb1054d58)), closes [#507](https://github.com/breaking-brake/cc-wf-studio/issues/507)
+* remove Codex project trust workaround ([#513](https://github.com/breaking-brake/cc-wf-studio/issues/513)) ([c5a9c45](https://github.com/breaking-brake/cc-wf-studio/commit/c5a9c45fb1280431f757ca9199773233ccaa9c46)), closes [#495](https://github.com/breaking-brake/cc-wf-studio/issues/495)
+* resolve skill source path correctly for all scopes ([#514](https://github.com/breaking-brake/cc-wf-studio/issues/514)) ([8caf97e](https://github.com/breaking-brake/cc-wf-studio/commit/8caf97e6e19f713a860a8aac30038c60a1ffb3a9))
+* show AI provider badge for user scope skills ([#515](https://github.com/breaking-brake/cc-wf-studio/issues/515)) ([760d411](https://github.com/breaking-brake/cc-wf-studio/commit/760d4111508b9b2c4ac9c30f98a499edbb214b9e))
+
+### Documentation
+
+* add AI coding tools configuration reference ([#505](https://github.com/breaking-brake/cc-wf-studio/issues/505)) ([f3bd005](https://github.com/breaking-brake/cc-wf-studio/commit/f3bd005cc27234d68af4f5633609c1bf8f4b2f96))
+
 ## [3.18.1](https://github.com/breaking-brake/cc-wf-studio/compare/v3.18.0...v3.18.1) (2026-01-24)
 
 ### Bug Fixes
