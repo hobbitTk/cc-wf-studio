@@ -1,3 +1,9 @@
+## [3.19.1](https://github.com/breaking-brake/cc-wf-studio/compare/v3.19.0...v3.19.1) (2026-01-31)
+
+### Bug Fixes
+
+* allow Codex node in Sub-Agent Flow ([#523](https://github.com/breaking-brake/cc-wf-studio/issues/523)) ([4622f88](https://github.com/breaking-brake/cc-wf-studio/commit/4622f88dddae97590bcbb463bbbb138f0bbb9e62))
+
 ## [3.19.0](https://github.com/breaking-brake/cc-wf-studio/compare/v3.18.2...v3.19.0) (2026-01-31)
 
 ### Features
