@@ -1,3 +1,9 @@
+## [3.19.0](https://github.com/breaking-brake/cc-wf-studio/compare/v3.18.2...v3.19.0) (2026-01-31)
+
+### Features
+
+* add Codex Agent node ([#518](https://github.com/breaking-brake/cc-wf-studio/issues/518)) ([#519](https://github.com/breaking-brake/cc-wf-studio/issues/519)) ([9d4b23c](https://github.com/breaking-brake/cc-wf-studio/commit/9d4b23c2050fd949f10379cd6fed72e38232ea62))
+
 ## [3.18.2](https://github.com/breaking-brake/cc-wf-studio/compare/v3.18.1...v3.18.2) (2026-01-29)
 
 ### Bug Fixes
