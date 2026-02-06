@@ -12,16 +12,12 @@
   "homepage": "https://breaking-brake.github.io/",
   "license": "AGPL-3.0-or-later",
   "keywords": [
-    "claude",
-    "claude code",
-    "workflow",
-    "visual-editor",
-    "automation",
     "ai",
-    "mcp",
-    "copilot",
-    "github copilot",
-    "codex"
+    "claude",
+    "claude-code",
+    "cli",
+    "codex",
+    "copilot"
   ],
   "engines": {
     "vscode": "^1.80.0"
@@ -122,7 +118,7 @@
     "vite": "^7.3.0"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.25.2",
+    "@modelcontextprotocol/sdk": "^1.26.0",
     "@slack/web-api": "^7.13.0",
     "@toon-format/toon": "^2.1.0",
     "nano-spawn": "^2.0.0",
