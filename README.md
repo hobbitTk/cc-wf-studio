@@ -9,7 +9,7 @@
   <a href="https://snyk.io/test/github/breaking-brake/cc-wf-studio"><img src="https://snyk.io/test/github/breaking-brake/cc-wf-studio/badge.svg" alt="Known Vulnerabilities" /></a>
   <a href="https://marketplace.visualstudio.com/items?itemName=breaking-brake.cc-wf-studio"><img src="https://img.shields.io/visual-studio-marketplace/v/breaking-brake.cc-wf-studio?label=VS%20Marketplace" alt="VS Code Marketplace" /></a>
   <a href="https://open-vsx.org/extension/breaking-brake/cc-wf-studio"><img src="https://img.shields.io/open-vsx/v/breaking-brake/cc-wf-studio?label=OpenVSX" alt="OpenVSX" /></a>
-  <a href="https://deepwiki.com/breaking-brake/cc-wf-studio"><img src="https://deepwiki.com/badge.svg" alt="Ask DeepWiki" /></a>
+  <a href="https://deepwiki.com/breaking-brake/cc-wf-studio"><img src="https://img.shields.io/badge/Ask-DeepWiki-009485" alt="Ask DeepWiki" /></a>
 </p>
 
 <p align="center">
@@ -90,17 +90,17 @@
 
 ### Save & Load
 
-- Click Save <img src="./resources/icon-save.svg" alt="save" height="16" style="vertical-align: middle"> button in the toolbar to store your workflow as `.vscode/workflows/*.json`
-- Click Load <img src="./resources/icon-file-down.svg" alt="load" height="16" style="vertical-align: middle"> button in the toolbar to open a saved `.json` workflow
+- Click Save <img src="./resources/icon-save.png" alt="save" height="16" style="vertical-align: middle"> button in the toolbar to store your workflow as `.vscode/workflows/*.json`
+- Click Load <img src="./resources/icon-file-down.png" alt="load" height="16" style="vertical-align: middle"> button in the toolbar to open a saved `.json` workflow
 
 ### Export & Run
 
-- Click Export <img src="./resources/icon-export.svg" alt="export" height="16" style="vertical-align: middle"> button in the toolbar to create a `.md` slash command or agent skill (use `/workflow-name` in AI coding agents)
-- Click Run <img src="./resources/icon-play.svg" alt="run" height="16" style="vertical-align: middle"> button in the toolbar to run your workflow directly in AI coding agents
+- Click Export <img src="./resources/icon-export.png" alt="export" height="16" style="vertical-align: middle"> button in the toolbar to create a `.md` slash command or agent skill (use `/workflow-name` in AI coding agents)
+- Click Run <img src="./resources/icon-play.png" alt="run" height="16" style="vertical-align: middle"> button in the toolbar to run your workflow directly in AI coding agents
 
 ### Edit with AI
 
-- Click Edit with AI <img src="./resources/icon-sparkles.svg" alt="sparkles" height="16" style="vertical-align: middle"> button in the toolbar to generate or refine workflows with natural language
+- Click Edit with AI <img src="./resources/icon-sparkles.png" alt="sparkles" height="16" style="vertical-align: middle"> button in the toolbar to generate or refine workflows with natural language
 
 ## Usage Examples
 
